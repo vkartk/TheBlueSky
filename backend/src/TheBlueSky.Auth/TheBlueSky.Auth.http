@@ -1,4 +1,4 @@
-@TheBlueSky.Auth_HostAddress = http://localhost:5023
+@TheBlueSky.Auth_HostAddress = http://localhost:5095
 
 GET {{TheBlueSky.Auth_HostAddress}}/weatherforecast/
 Accept: application/json
