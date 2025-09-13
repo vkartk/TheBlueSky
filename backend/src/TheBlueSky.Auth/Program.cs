@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using TheBlueSky.Auth.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<AuthDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDB"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
