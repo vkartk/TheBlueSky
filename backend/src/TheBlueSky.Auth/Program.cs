@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TheBlueSky.Auth.Models;
+using TheBlueSky.Auth.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,7 @@ builder.Services.AddAuthentication( options =>
 
     });
 
+builder.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 
 
 builder.Services.AddControllers();
