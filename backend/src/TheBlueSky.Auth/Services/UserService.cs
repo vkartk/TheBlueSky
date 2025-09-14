@@ -17,11 +17,6 @@ namespace TheBlueSky.Auth.Services
         {
             var user = await _userManager.FindByEmailAsync(createUserRequest.Email);
 
-            if (user != null)
-            {
-                return IdentityResult.Failed();
-            }
-
             ApplicationUser applicationUser = new ApplicationUser()
             { 
                 Email = createUserRequest.Email,
@@ -29,9 +24,7 @@ namespace TheBlueSky.Auth.Services
                 SecurityStamp= Guid.NewGuid().ToString()
             };
 
-            var result = await _userManager.CreateAsync(applicationUser, createUserRequest.Password);
-
-            return result;
+            return await _userManager.CreateAsync(applicationUser, createUserRequest.Password);
 
         }
 
