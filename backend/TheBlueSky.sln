@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Auth", "src\TheBlueSky.Auth\TheBlueSky.Auth.csproj", "{6EB8FF20-15A1-4BD2-9173-E28EC53E024E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Flights", "TheBlueSky.Flights\TheBlueSky.Flights.csproj", "{401B1AFC-2792-4EB3-8864-1DB69C9A6218}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Flights", "src\TheBlueSky.Flights\TheBlueSky.Flights.csproj", "{3C1B7A8B-761F-43FB-BFF2-97B008FB0A76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{6EB8FF20-15A1-4BD2-9173-E28EC53E024E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EB8FF20-15A1-4BD2-9173-E28EC53E024E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EB8FF20-15A1-4BD2-9173-E28EC53E024E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{401B1AFC-2792-4EB3-8864-1DB69C9A6218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{401B1AFC-2792-4EB3-8864-1DB69C9A6218}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{401B1AFC-2792-4EB3-8864-1DB69C9A6218}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{401B1AFC-2792-4EB3-8864-1DB69C9A6218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C1B7A8B-761F-43FB-BFF2-97B008FB0A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1B7A8B-761F-43FB-BFF2-97B008FB0A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1B7A8B-761F-43FB-BFF2-97B008FB0A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C1B7A8B-761F-43FB-BFF2-97B008FB0A76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
