@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TheBlueSky.Auth.Data.Seeders;
 using TheBlueSky.Auth.Models;
 using TheBlueSky.Auth.Services;
 
@@ -45,6 +46,10 @@ builder.Services.AddAuthentication( options =>
 
 builder.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDataSeeder,RoleSeeder>();
+builder.Services.AddScoped<IDataSeeder, AdminUserSeeder>();
+
+builder.Services.AddScoped<DatabaseSeeder>();
 
 
 builder.Services.AddControllers();
@@ -53,6 +58,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using( var scope =  app.Services.CreateScope() )
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+
+    try
+    {
+        var seeder = services.GetRequiredService<DatabaseSeeder>();
+
+        await seeder.SeedAsync(app.Lifetime.ApplicationStopping);
+    } 
+    catch( Exception e)
+    {
+        logger.LogError("Error during data seeding: "+e);
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
