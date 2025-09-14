@@ -29,7 +29,7 @@ namespace TheBlueSky.Auth.Services
                 SecurityStamp= Guid.NewGuid().ToString()
             };
 
-            var result = await _userManager.CreateAsync(applicationUser);
+            var result = await _userManager.CreateAsync(applicationUser, createUserRequest.Password);
 
             return result;
 
