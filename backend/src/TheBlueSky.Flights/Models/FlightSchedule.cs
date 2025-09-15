@@ -4,7 +4,7 @@ namespace TheBlueSky.Flights.Models
 {
     public class FlightSchedule
     {
-        public int ScheduleId { get; set; }
+        public int FlightScheduleId { get; set; }
 
         [Required]
         public int AircraftId { get; set; }

@@ -7,7 +7,7 @@ namespace TheBlueSky.Flights.Models
         public int ScheduleDayId { get; set; }
 
         [Required]
-        public int ScheduleId { get; set; }
+        public int FlightScheduleId { get; set; }
 
         [Required]
         public DayOfWeek DayOfWeek { get; set; }
