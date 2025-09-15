@@ -17,6 +17,8 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IAirportRepository, AirportRepository>();
 builder.Services.AddScoped<IAirportService, AirportService>();
 
+builder.Services.AddScoped<IRouteRepository, RouteRepository>();
+builder.Services.AddScoped<IRouteService, RouteService>();
 
 
 builder.Services.AddControllers();
