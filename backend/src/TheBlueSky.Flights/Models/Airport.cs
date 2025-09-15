@@ -24,7 +24,7 @@ namespace TheBlueSky.Flights.Models
 
         public bool IsActive { get; set; } = true;
 
-        public Country Country { get; set; }
+        public Country Country { get; set; } = null!;
         public ICollection<Route> OriginRoutes { get; set; } = new List<Route>();
         public ICollection<Route> DestinationRoutes { get; set; } = new List<Route>();
 
