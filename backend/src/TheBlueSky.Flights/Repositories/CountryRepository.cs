@@ -3,7 +3,7 @@ using TheBlueSky.Flights.Models;
 
 namespace TheBlueSky.Flights.Repositories
 {
-    public class CountryRepository
+    public class CountryRepository : ICountryRepository
     {
         private readonly FlightsDbContext _context;
 
