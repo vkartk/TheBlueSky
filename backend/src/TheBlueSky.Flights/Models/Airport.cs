@@ -20,7 +20,7 @@ namespace TheBlueSky.Flights.Models
         public string City { get; set; } = default!;
 
         [ForeignKey("Country")]
-        public int CountryId { get; set; }
+        public string CountryId { get; set; } = default!;
 
         public bool IsActive { get; set; } = true;
 
