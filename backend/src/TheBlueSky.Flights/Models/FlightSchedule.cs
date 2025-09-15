@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheBlueSky.Flights.Models
 {
@@ -25,6 +27,7 @@ namespace TheBlueSky.Flights.Models
         public TimeOnly ArrivalTime { get; set; }
 
         [Required]
+        [Precision(18, 2)]
         public decimal BaseFare { get; set; }
 
         [Required]
