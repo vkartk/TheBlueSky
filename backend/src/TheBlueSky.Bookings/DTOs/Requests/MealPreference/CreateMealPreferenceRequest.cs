@@ -11,7 +11,3 @@ namespace TheBlueSky.Bookings.DTOs.Requests.MealPreference
         string? PreferenceDescription
     );
 }
-
-
-}
-}
