@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TheBlueSky.Bookings.Models;
+using TheBlueSky.Bookings.Repositories.Interfaces;
 
 namespace TheBlueSky.Bookings.Repositories
 {
-    public class BookingCancellationRepository
+    public class BookingCancellationRepository : IBookingCancellationRepository
     {
         private readonly BookingsDbContext _context;
 
