@@ -1,5 +1,8 @@
-﻿namespace TheBlueSky.Bookings.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace TheBlueSky.Bookings.Enums
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum BookingStatus
     {
         Undefined = 0,
