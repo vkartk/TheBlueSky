@@ -14,7 +14,10 @@ namespace TheBlueSky.Bookings.Repositories
 
         public async Task<IEnumerable<Booking>> GetAllAsync()
         {
-            return await _context.Bookings.AsNoTracking().OrderByDescending(b => b.BookingDate).ToListAsync();
+            return await _context.Bookings
+                .AsNoTracking()
+                .OrderByDescending(b => b.BookingDate)
+                .ToListAsync();
         }
 
         public async Task<Booking?> GetByIdAsync(int id)
@@ -47,11 +50,13 @@ namespace TheBlueSky.Bookings.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var existing = await _context.Bookings.FindAsync(id);
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null)
+            {
+                return false;
+            }
 
-            if (existing is null) return false;
-
-            _context.Bookings.Remove(existing);
+            _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
             return true;
         }
