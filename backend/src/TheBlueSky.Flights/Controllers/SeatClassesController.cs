@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TheBlueSky.Flights.DTOs.Requests.SeatClass;
 using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Services;
 
@@ -17,14 +18,14 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SeatClass>>> GetAllSeatClasses()
+        public async Task<ActionResult<IEnumerable<SeatClassDto>>> GetAllSeatClasses()
         {
             var seatClasses = await _seatClassService.GetAllSeatClassesAsync();
             return Ok(seatClasses);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SeatClass>> GetSeatClassById(int id)
+        public async Task<ActionResult<SeatClassDto>> GetSeatClassById(int id)
         {
             var seatClass = await _seatClassService.GetSeatClassByIdAsync(id);
 
@@ -37,17 +38,17 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SeatClass>> CreateSeatClass(SeatClass seatClass)
+        public async Task<ActionResult<SeatClassDto>> CreateSeatClass([FromBody] CreateSeatClassRequest request)
         {
-            var createdSeatClass = await _seatClassService.CreateSeatClassAsync(seatClass);
+            var createdSeatClass = await _seatClassService.CreateSeatClassAsync(request);
 
             return CreatedAtAction("GetSeatClassById", new { id = createdSeatClass.SeatClassId }, createdSeatClass);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSeatClass(int id, SeatClass seatClass)
+        public async Task<IActionResult> UpdateSeatClass(int id, [FromBody] UpdateSeatClassRequest request)
         {
-            var success = await _seatClassService.UpdateSeatClassAsync(id, seatClass);
+            var success = await _seatClassService.UpdateSeatClassAsync(id, request);
 
             if (!success)
             {
