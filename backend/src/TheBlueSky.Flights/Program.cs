@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories;
 using TheBlueSky.Flights.Services;
@@ -10,6 +11,9 @@ builder.Services.AddDbContext<FlightsDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TheBlueSky_FlightDB"));
 });
+
+var autoMapperlicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
+builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = autoMapperlicenseKey, typeof(Program));
 
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<ICountryService, CountryService>();
