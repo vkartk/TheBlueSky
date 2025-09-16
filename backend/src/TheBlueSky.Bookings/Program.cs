@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using TheBlueSky.Bookings.Models;
+using TheBlueSky.Bookings.Repositories;
+using TheBlueSky.Bookings.Repositories.Interfaces;
+using TheBlueSky.Bookings.Services;
+using TheBlueSky.Bookings.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,9 @@ builder.Services.AddDbContext<BookingsDbContext>( options =>
 var autoMapperlicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
 builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = autoMapperlicenseKey, typeof(Program));
 
+builder.Services.AddScoped<IBookingRepository,BookingRepository>();
+
+builder.Services.AddScoped<IBookingService,BookingService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
