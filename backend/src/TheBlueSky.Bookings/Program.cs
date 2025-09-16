@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using TheBlueSky.Bookings.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<BookingsDbContext>( options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TheBlueSky_BookingsDB"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
