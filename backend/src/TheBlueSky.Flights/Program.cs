@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories;
 using TheBlueSky.Flights.Services;
+using TheBlueSky.Flights.Data.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<FlightsDbContext>(options =>
 
 var autoMapperlicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
 builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = autoMapperlicenseKey, typeof(Program));
+
+builder.Services.AddScoped<DatabaseSeeder>();
+builder.Services.AddScoped<IDataSeeder,CountrySeeder>();
 
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<ICountryService, CountryService>();
@@ -51,6 +55,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+
+    try
+    {
+        var seeder = services.GetRequiredService<DatabaseSeeder>();
+
+        await seeder.SeedAsync(app.Lifetime.ApplicationStopping);
+    }
+    catch (Exception e)
+    {
+        logger.LogError("Error during data seeding: " + e);
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
