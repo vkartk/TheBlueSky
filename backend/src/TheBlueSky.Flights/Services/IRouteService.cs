@@ -1,13 +1,15 @@
-﻿using Route = TheBlueSky.Flights.Models.Route;
+﻿using TheBlueSky.Flights.DTOs.Requests.Route;
+using TheBlueSky.Flights.DTOs.Responses.Route;
+using Route = TheBlueSky.Flights.Models.Route;
 
 namespace TheBlueSky.Flights.Services
 {
     public interface IRouteService
     {
-        Task<IEnumerable<Route>> GetAllRoutesAsync();
-        Task<Route?> GetRouteByIdAsync(int id);
-        Task<Route> CreateRouteAsync(Route route);
-        Task<bool> UpdateRouteAsync(int id, Route route);
+        Task<IEnumerable<RouteResponse>> GetAllRoutesAsync();
+        Task<RouteResponse?> GetRouteByIdAsync(int id);
+        Task<RouteResponse> CreateRouteAsync(CreateRouteRequest request);
+        Task<bool> UpdateRouteAsync(UpdateRouteRequest request);
         Task<bool> DeleteRouteAsync(int id);
 
     }

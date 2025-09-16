@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TheBlueSky.Flights.DTOs.Requests.Route;
+using TheBlueSky.Flights.DTOs.Responses.Route;
 using TheBlueSky.Flights.Services;
 using Route = TheBlueSky.Flights.Models.Route;
 
@@ -17,60 +19,57 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Route>>> GetAllRoutes()
+        public async Task<ActionResult<IEnumerable<RouteResponse>>> GetAllRoutes()
         {
             var routes = await _routeService.GetAllRoutesAsync();
             return Ok(routes);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Route>> GetRouteById(int id)
+        public async Task<ActionResult<RouteResponse>> GetRouteById(int id)
         {
             var route = await _routeService.GetRouteByIdAsync(id);
-
             if (route == null)
             {
                 return NotFound();
             }
-
             return Ok(route);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Route>> CreateRoute(Route route)
+        public async Task<ActionResult<RouteResponse>> CreateRoute([FromBody] CreateRouteRequest request)
         {
-            var createdRoute = await _routeService.CreateRouteAsync(route);
-
-            return CreatedAtAction("GetRouteById", new { id = createdRoute.RouteId }, createdRoute);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var createdRoute = await _routeService.CreateRouteAsync(request);
+            return CreatedAtAction(nameof(GetRouteById), new { id = createdRoute.RouteId }, createdRoute);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRoute(int id, Route route)
+        [HttpPut]
+        public async Task<ActionResult> UpdateRoute([FromBody] UpdateRouteRequest request)
         {
-            var success = await _routeService.UpdateRouteAsync(id, route);
-
-            if (!success)
+            if (!ModelState.IsValid)
             {
-                if (await _routeService.GetRouteByIdAsync(id) == null)
-                {
-                    return NotFound();
-                }
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-
+            var updated = await _routeService.UpdateRouteAsync(request);
+            if (!updated)
+            {
+                return NotFound();
+            }
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRoute(int id)
+        public async Task<ActionResult> DeleteRouteById(int id)
         {
-            var success = await _routeService.DeleteRouteAsync(id);
-
-            if (!success)
+            var deleted = await _routeService.DeleteRouteAsync(id);
+            if (!deleted)
             {
                 return NotFound();
             }
-
             return NoContent();
         }
     }

@@ -6,10 +6,10 @@ namespace TheBlueSky.Flights.Repositories
     {
         Task<IEnumerable<Route>> GetAllRoutesAsync();
         Task<Route?> GetRouteByIdAsync(int id);
-        Task AddRouteAsync(Route route);
-        Task UpdateRouteAsync(Route route);
-        Task DeleteRouteAsync(int id);
-        Task<bool> RouteExists(int id);
+        Task<Route> AddRouteAsync(Route route);
+        Task<bool> UpdateRouteAsync(Route route);
+        Task<bool> DeleteRouteAsync(int id);
+        Task<bool> ExistsAsync(int id);
 
     }
 }
