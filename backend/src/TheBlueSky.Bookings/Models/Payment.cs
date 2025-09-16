@@ -13,8 +13,8 @@ namespace TheBlueSky.Bookings.Models
         public int BookingId { get; set; }
         public Booking Booking { get; set; } = null!;
 
-        [MaxLength(32)]
-        public string PaymentMethod { get; set; } = "unknown";
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PaymentStatus PaymentMethod { get; set; } = PaymentStatus.Pending;
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal PaymentAmount { get; set; }
