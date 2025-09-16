@@ -21,12 +21,14 @@ builder.Services.AddScoped<IPassengerRepository,PassengerRepository>();
 builder.Services.AddScoped<IBookingPassengerRepository,BookingPassengerRepository>();
 builder.Services.AddScoped<IMealPreferenceRepository,MealPreferenceRepository>();
 builder.Services.AddScoped<IBookingCancellationRepository,BookingCancellationRepository>();
+builder.Services.AddScoped<IPaymentRepository,PaymentRepository>();
 
 builder.Services.AddScoped<IBookingService,BookingService>();
 builder.Services.AddScoped<IPassengerService, PassengerService>();
 builder.Services.AddScoped<IBookingPassengerService,BookingPassengerService>();
 builder.Services.AddScoped<IMealPreferenceService,MealPreferenceService>();
 builder.Services.AddScoped<IBookingCancellationService,BookingCancellationService>();
+builder.Services.AddScoped<IPaymentService,PaymentService>();
 
 
 builder.Services.AddControllers();
