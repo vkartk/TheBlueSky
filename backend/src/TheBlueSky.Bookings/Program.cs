@@ -17,8 +17,10 @@ var autoMapperlicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
 builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = autoMapperlicenseKey, typeof(Program));
 
 builder.Services.AddScoped<IBookingRepository,BookingRepository>();
+builder.Services.AddScoped<IPassengerRepository,PassengerRepository>();
 
 builder.Services.AddScoped<IBookingService,BookingService>();
+builder.Services.AddScoped<IPassengerService, PassengerService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
