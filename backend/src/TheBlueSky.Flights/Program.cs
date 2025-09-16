@@ -30,6 +30,9 @@ builder.Services.AddScoped<ISeatClassService, SeatClassService>();
 builder.Services.AddScoped<IAircraftRepository, AircraftRepository>();
 builder.Services.AddScoped<IAircraftService, AircraftService>();
 
+builder.Services.AddScoped<IAircraftSeatRepository, AircraftSeatRepository>();
+builder.Services.AddScoped<IAircraftSeatService, AircraftSeatService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
