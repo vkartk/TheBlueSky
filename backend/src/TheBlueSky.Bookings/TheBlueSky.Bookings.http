@@ -1,0 +1,6 @@
+@TheBlueSky.Bookings_HostAddress = http://localhost:5234
+
+GET {{TheBlueSky.Bookings_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
