@@ -10,7 +10,7 @@ namespace TheBlueSky.Bookings.Mappings
         public BookingProfile()
         {
             CreateMap<Booking, BookingResponse>()
-                .ForMember(d => d.TotalAmount, cfg => cfg.MapFrom(s => s.SubtotalAmount + s.TaxAmount));
+                .ForCtorParam("TotalAmount", opt => opt.MapFrom(src => src.SubtotalAmount + src.TaxAmount));
 
             CreateMap<CreateBookingRequest, Booking>()
                 .ForMember(d => d.BookingDate, cfg => cfg.MapFrom(_ => DateTime.UtcNow))
@@ -18,6 +18,7 @@ namespace TheBlueSky.Bookings.Mappings
 
             CreateMap<UpdateBookingRequest, Booking>()
                 .ForMember(d => d.LastUpdated, cfg => cfg.MapFrom(_ => DateTime.UtcNow));
+
         }
 
     }
