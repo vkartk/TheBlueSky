@@ -39,6 +39,9 @@ builder.Services.AddScoped<IFlightScheduleService, FlightScheduleService>();
 builder.Services.AddScoped<IScheduleDayRepository, ScheduleDayRepository>();
 builder.Services.AddScoped<IScheduleDayService, ScheduleDayService>();
 
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+builder.Services.AddScoped<IFlightService, FlightService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
