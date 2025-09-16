@@ -1,4 +1,7 @@
-﻿using TheBlueSky.Flights.Models;
+﻿using AutoMapper;
+using TheBlueSky.Flights.DTOs.Requests.Airport;
+using TheBlueSky.Flights.DTOs.Responses.Airport;
+using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories;
 
 namespace TheBlueSky.Flights.Services
@@ -6,55 +9,48 @@ namespace TheBlueSky.Flights.Services
     public class AirportService : IAirportService
     {
         private readonly IAirportRepository _airportRepository;
+        private readonly IMapper _mapper;
 
-        public AirportService(IAirportRepository airportRepository)
+        public AirportService(IAirportRepository airportRepository, IMapper mapper)
         {
             _airportRepository = airportRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Airport>> GetAllAirportsAsync()
+        public async Task<IEnumerable<AirportResponse>> GetAllAirportsAsync()
         {
-            return await _airportRepository.GetAllAirportsAsync();
+            var airports = await _airportRepository.GetAllAirportsAsync();
+            return _mapper.Map<IEnumerable<AirportResponse>>(airports);
         }
 
-        public async Task<Airport?> GetAirportByIdAsync(int id)
+        public async Task<AirportResponse?> GetAirportByIdAsync(int id)
         {
-            return await _airportRepository.GetAirportByIdAsync(id);
+            var airport = await _airportRepository.GetAirportByIdAsync(id);
+            return _mapper.Map<AirportResponse>(airport);
         }
 
-        public async Task<Airport> CreateAirportAsync(Airport airport)
+        public async Task<AirportResponse> CreateAirportAsync(CreateAirportRequest request)
         {
-            await _airportRepository.AddAirportAsync(airport);
-            return airport;
+            var airport = _mapper.Map<Airport>(request);
+            var createdAirport = await _airportRepository.AddAirportAsync(airport);
+            return _mapper.Map<AirportResponse>(createdAirport);
         }
 
-        public async Task<bool> UpdateAirportAsync(int id, Airport airport)
+        public async Task<bool> UpdateAirportAsync(UpdateAirportRequest request)
         {
-            if (id != airport.AirportId)
+            var existingAirport = await _airportRepository.GetAirportByIdAsync(request.AirportId);
+            if (existingAirport == null)
             {
                 return false;
             }
 
-            var exists = await _airportRepository.AirportExists(id);
-            if (!exists)
-            {
-                return false;
-            }
-
-            await _airportRepository.UpdateAirportAsync(airport);
-            return true;
+            _mapper.Map(request, existingAirport);
+            return await _airportRepository.UpdateAirportAsync(existingAirport);
         }
 
         public async Task<bool> DeleteAirportAsync(int id)
         {
-            var exists = await _airportRepository.AirportExists(id);
-            if (!exists)
-            {
-                return false;
-            }
-
-            await _airportRepository.DeleteAirportAsync(id);
-            return true;
+            return await _airportRepository.DeleteAirportAsync(id);
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TheBlueSky.Flights.DTOs.Requests.Airport;
+using TheBlueSky.Flights.DTOs.Responses.Airport;
 using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Services;
 
@@ -17,60 +19,57 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Airport>>> GetAirports()
+        public async Task<ActionResult<IEnumerable<AirportResponse>>> GetAllAirports()
         {
             var airports = await _airportService.GetAllAirportsAsync();
             return Ok(airports);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Airport>> GetAirportById(int id)
+        public async Task<ActionResult<AirportResponse>> GetAirportById(int id)
         {
             var airport = await _airportService.GetAirportByIdAsync(id);
-
             if (airport == null)
             {
                 return NotFound();
             }
-
             return Ok(airport);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Airport>> CreateAirport(Airport airport)
+        public async Task<ActionResult<AirportResponse>> CreateAirport([FromBody] CreateAirportRequest request)
         {
-            var createdAirport = await _airportService.CreateAirportAsync(airport);
-
-            return CreatedAtAction("GetAirportById", new { id = createdAirport.AirportId }, createdAirport);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var createdAirport = await _airportService.CreateAirportAsync(request);
+            return CreatedAtAction(nameof(GetAirportById), new { id = createdAirport.AirportId }, createdAirport);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAirport(int id, Airport airport)
+        [HttpPut]
+        public async Task<ActionResult> UpdateAirport([FromBody] UpdateAirportRequest request)
         {
-            var success = await _airportService.UpdateAirportAsync(id, airport);
-
-            if (!success)
+            if (!ModelState.IsValid)
             {
-                if (await _airportService.GetAirportByIdAsync(id) == null)
-                {
-                    return NotFound();
-                }
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-
+            var updated = await _airportService.UpdateAirportAsync(request);
+            if (!updated)
+            {
+                return NotFound();
+            }
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAirport(int id)
+        public async Task<ActionResult> DeleteAirportById(int id)
         {
-            var success = await _airportService.DeleteAirportAsync(id);
-
-            if (!success)
+            var deleted = await _airportService.DeleteAirportAsync(id);
+            if (!deleted)
             {
                 return NotFound();
             }
-
             return NoContent();
         }
 

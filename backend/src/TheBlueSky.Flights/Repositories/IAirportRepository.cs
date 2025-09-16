@@ -6,10 +6,11 @@ namespace TheBlueSky.Flights.Repositories
     {
         Task<IEnumerable<Airport>> GetAllAirportsAsync();
         Task<Airport?> GetAirportByIdAsync(int id);
-        Task AddAirportAsync(Airport airport);
-        Task UpdateAirportAsync(Airport airport);
-        Task DeleteAirportAsync(int id);
-        Task<bool> AirportExists(int id);
+        Task<Airport> AddAirportAsync(Airport airport);
+        Task<bool> UpdateAirportAsync(Airport airport);
+        Task<bool> DeleteAirportAsync(int id);
+        Task<bool> ExistsAsync(int id);
+
 
     }
 }
