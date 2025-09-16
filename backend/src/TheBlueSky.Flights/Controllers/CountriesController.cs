@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TheBlueSky.Flights.DTOs.Responses.Country;
 using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Services;
 
@@ -17,22 +18,23 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Country>>> GetAllCountries()
+        public async Task<ActionResult<IEnumerable<CountryResponse>>> GetAllCountries()
         {
-            var countries = await _countryService.GetAllCountries();
+            var countries = await _countryService.GetAllCountriesAsync();
             return Ok(countries);
         }
 
-        [HttpGet("{countryId}")]
-        public async Task<ActionResult<Country>> GetCountryById(string countryId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CountryResponse>> GetCountryById(string id)
         {
-            var country = await _countryService.GetCountryById(countryId);
+            var country = await _countryService.GetCountryByIdAsync(id);
+
             if (country == null)
             {
                 return NotFound();
             }
+
             return Ok(country);
         }
-
     }
 }

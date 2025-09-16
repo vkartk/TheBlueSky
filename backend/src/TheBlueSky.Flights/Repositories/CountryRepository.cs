@@ -17,7 +17,7 @@ namespace TheBlueSky.Flights.Repositories
             return await _context.Countries.ToListAsync();
         }
 
-        public async Task<Country> GetCountryByIdAsync(string countryId)
+        public async Task<Country?> GetCountryByIdAsync(string countryId)
         {
             return await _context.Countries.FindAsync(countryId);
         }

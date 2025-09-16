@@ -1,4 +1,6 @@
-﻿using TheBlueSky.Flights.Models;
+﻿using AutoMapper;
+using TheBlueSky.Flights.DTOs.Responses.Country;
+using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories;
 
 namespace TheBlueSky.Flights.Services
@@ -6,20 +8,28 @@ namespace TheBlueSky.Flights.Services
     public class CountryService : ICountryService
     {
         private readonly ICountryRepository _countryRepository;
+        private readonly IMapper _mapper;
 
-        public CountryService(ICountryRepository countryRepository)
+        public CountryService(ICountryRepository countryRepository, IMapper mapper)
         {
             _countryRepository = countryRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Country>> GetAllCountries()
+        public async Task<IEnumerable<CountryResponse>> GetAllCountriesAsync()
         {
-            return await _countryRepository.GetAllCountriesAsync();
+            var countries = await _countryRepository.GetAllCountriesAsync();
+            return _mapper.Map<IEnumerable<CountryResponse>>(countries);
         }
 
-        public async Task<Country> GetCountryById(string countryId)
+        public async Task<CountryResponse?> GetCountryByIdAsync(string id)
         {
-            return await _countryRepository.GetCountryByIdAsync(countryId);
+            var country = await _countryRepository.GetCountryByIdAsync(id);
+            if (country == null)
+            {
+                return null;
+            }
+            return _mapper.Map<CountryResponse>(country);
         }
     }
 }
