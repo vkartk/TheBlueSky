@@ -1,4 +1,6 @@
-﻿using TheBlueSky.Flights.Models;
+﻿using AutoMapper;
+using TheBlueSky.Flights.DTOs.Requests.SeatClass;
+using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories;
 
 namespace TheBlueSky.Flights.Services
@@ -6,40 +8,42 @@ namespace TheBlueSky.Flights.Services
     public class SeatClassService : ISeatClassService
     {
         private readonly ISeatClassRepository _seatClassRepository;
+        private readonly IMapper _mapper;
 
-        public SeatClassService(ISeatClassRepository seatClassRepository)
+        public SeatClassService(ISeatClassRepository seatClassRepository, IMapper mapper)
         {
             _seatClassRepository = seatClassRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<SeatClass>> GetAllSeatClassesAsync()
+        public async Task<IEnumerable<SeatClassDto>> GetAllSeatClassesAsync()
         {
-            return await _seatClassRepository.GetAllSeatClassesAsync();
+            var seatClasses = await _seatClassRepository.GetAllSeatClassesAsync();
+            return _mapper.Map<IEnumerable<SeatClassDto>>(seatClasses);
         }
 
-        public async Task<SeatClass?> GetSeatClassByIdAsync(int id)
+        public async Task<SeatClassDto?> GetSeatClassByIdAsync(int id)
         {
-            return await _seatClassRepository.GetSeatClassByIdAsync(id);
+            var seatClass = await _seatClassRepository.GetSeatClassByIdAsync(id);
+            return _mapper.Map<SeatClassDto>(seatClass);
         }
 
-        public async Task<SeatClass> CreateSeatClassAsync(SeatClass seatClass)
+        public async Task<SeatClassDto> CreateSeatClassAsync(CreateSeatClassRequest request)
         {
+            var seatClass = _mapper.Map<SeatClass>(request);
             await _seatClassRepository.AddSeatClassAsync(seatClass);
-            return seatClass;
+            return _mapper.Map<SeatClassDto>(seatClass);
         }
 
-        public async Task<bool> UpdateSeatClassAsync(int id, SeatClass seatClass)
+        public async Task<bool> UpdateSeatClassAsync(int id, UpdateSeatClassRequest request)
         {
-            if (id != seatClass.SeatClassId)
+            var seatClass = await _seatClassRepository.GetSeatClassByIdAsync(id);
+            if (seatClass == null)
             {
                 return false;
             }
 
-            var exists = await _seatClassRepository.SeatClassExists(id);
-            if (!exists)
-            {
-                return false;
-            }
+            _mapper.Map(request, seatClass);
 
             await _seatClassRepository.UpdateSeatClassAsync(seatClass);
             return true;
