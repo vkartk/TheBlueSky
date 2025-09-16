@@ -9,6 +9,10 @@ builder.Services.AddDbContext<BookingsDbContext>( options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TheBlueSky_BookingsDB"));
 });
 
+var autoMapperlicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
+builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = autoMapperlicenseKey, typeof(Program));
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
