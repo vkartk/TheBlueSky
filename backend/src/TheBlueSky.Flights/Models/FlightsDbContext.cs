@@ -9,7 +9,7 @@ namespace TheBlueSky.Flights.Models
         public DbSet<Country> Countries { get; set; }
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Route> Routes { get; set; }
-        public DbSet<Aircraft> Aircraft { get; set; }
+        public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<SeatClass> SeatClasses { get; set; }
         public DbSet<AircraftSeat> AircraftSeats { get; set; }
         public DbSet<FlightSchedule> FlightSchedules { get; set; }
