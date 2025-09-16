@@ -27,6 +27,8 @@ builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<ISeatClassRepository, SeatClassRepository>();
 builder.Services.AddScoped<ISeatClassService, SeatClassService>();
 
+builder.Services.AddScoped<IAircraftRepository, AircraftRepository>();
+builder.Services.AddScoped<IAircraftService, AircraftService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
