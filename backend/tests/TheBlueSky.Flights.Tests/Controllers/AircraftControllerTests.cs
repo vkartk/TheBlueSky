@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using TheBlueSky.Flights.Controllers;
@@ -14,6 +15,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
     public class AircraftControllerTests
     {
         private Mock<IAircraftService> _serviceMock = null!;
+        private Mock<ILogger<AircraftController>> _loggerMock = null!;
         private AircraftController _sut = null!;
 
         [SetUp]
@@ -21,7 +23,8 @@ namespace TheBlueSky.Flights.Tests.Controllers
         {
             // Arrange
             _serviceMock = new Mock<IAircraftService>(MockBehavior.Strict);
-            _sut = new AircraftController(_serviceMock.Object);
+            _loggerMock = new Mock<ILogger<AircraftController>>();
+            _sut = new AircraftController(_serviceMock.Object, _loggerMock.Object);
         }
 
         [Test]
