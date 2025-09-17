@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TheBlueSky.Bookings.Models;
 using TheBlueSky.Bookings.Repositories;
 using TheBlueSky.Bookings.Repositories.Interfaces;
@@ -12,6 +15,36 @@ builder.Services.AddDbContext<BookingsDbContext>( options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TheBlueSky_BookingsDB"));
 });
+
+var jwtSecretKey = builder.Configuration["Jwt:SecretKey"];
+
+if (string.IsNullOrWhiteSpace(jwtSecretKey))
+{
+    throw new InvalidOperationException("Missing Jwt:SecretKey. In dev: 'dotnet user-secrets set \"Jwt:SecretKey\" <value>'. In prod: set env var Jwt__SecretKey.");
+}
+
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey));
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey,
+
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 var autoMapperlicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
 builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = autoMapperlicenseKey, typeof(Program));
@@ -46,6 +79,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
