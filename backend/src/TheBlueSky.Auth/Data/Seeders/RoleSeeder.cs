@@ -16,7 +16,7 @@ namespace TheBlueSky.Auth.Data.Seeders
 
         public async Task SeedAsync(CancellationToken cancellationToken = default)
         {
-            string[] roles = { UserRoles.Admin, UserRoles.User };
+            string[] roles = { UserRoles.Admin, UserRoles.User, UserRoles.FlightsOwner };
 
             foreach (var role in roles)
             {
