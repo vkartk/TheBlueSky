@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
+using NUnit.Framework;
 using TheBlueSky.Bookings.Controllers;
 using TheBlueSky.Bookings.DTOs.Requests.Passenger;
 using TheBlueSky.Bookings.DTOs.Responses.Passenger;
@@ -11,6 +13,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
     public class PassengerControllerTests
     {
         private Mock<IPassengerService> _service = null!;
+        private Mock<ILogger<PassengerController>> _logger = null!;
         private PassengerController _sut = null!;
 
         [SetUp]
@@ -18,7 +21,8 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         {
             // Arrange
             _service = new Mock<IPassengerService>(MockBehavior.Strict);
-            _sut = new PassengerController(_service.Object);
+            _logger = new Mock<ILogger<PassengerController>>(MockBehavior.Loose);
+            _sut = new PassengerController(_service.Object, _logger.Object);
         }
 
         [TearDown]
@@ -55,7 +59,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         {
             // Arrange
             var req = new CreatePassengerRequest(1, "John", "Doe", System.DateTime.UtcNow.Date, null, null, null, null);
-
+        
             var created = new PassengerResponse(
                 PassengerId: 55,
                 ManagedByUserId: 1,
