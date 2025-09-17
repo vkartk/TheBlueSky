@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Flights", "src\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Bookings", "src\TheBlueSky.Bookings\TheBlueSky.Bookings.csproj", "{9645C068-34F6-4481-8522-577B6B2AE829}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Gateway", "src\TheBlueSky.Gateway\TheBlueSky.Gateway.csproj", "{C74C7F94-4F9B-4697-B50E-CA546E1552DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9645C068-34F6-4481-8522-577B6B2AE829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9645C068-34F6-4481-8522-577B6B2AE829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9645C068-34F6-4481-8522-577B6B2AE829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74C7F94-4F9B-4697-B50E-CA546E1552DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C74C7F94-4F9B-4697-B50E-CA546E1552DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C74C7F94-4F9B-4697-B50E-CA546E1552DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C74C7F94-4F9B-4697-B50E-CA546E1552DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

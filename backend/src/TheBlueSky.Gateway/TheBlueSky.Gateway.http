@@ -1,0 +1,6 @@
+@TheBlueSky.Gateway_HostAddress = http://localhost:5211
+
+GET {{TheBlueSky.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
