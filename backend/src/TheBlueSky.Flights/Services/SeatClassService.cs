@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using TheBlueSky.Flights.DTOs.Requests.SeatClass;
 using TheBlueSky.Flights.Models;
-using TheBlueSky.Flights.Repositories;
+using TheBlueSky.Flights.Repositories.Interfaces;
 
 namespace TheBlueSky.Flights.Services
 {

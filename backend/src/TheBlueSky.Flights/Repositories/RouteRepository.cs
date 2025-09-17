@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TheBlueSky.Flights.Models;
+using TheBlueSky.Flights.Repositories.Interfaces;
 using Route = TheBlueSky.Flights.Models.Route;
 
 namespace TheBlueSky.Flights.Repositories

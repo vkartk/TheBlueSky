@@ -1,6 +1,6 @@
 ﻿using TheBlueSky.Flights.Models;
 
-namespace TheBlueSky.Flights.Repositories
+namespace TheBlueSky.Flights.Repositories.Interfaces
 {
     public interface IFlightRepository
     {

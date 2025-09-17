@@ -1,6 +1,6 @@
 ﻿using Route = TheBlueSky.Flights.Models.Route;
 
-namespace TheBlueSky.Flights.Repositories
+namespace TheBlueSky.Flights.Repositories.Interfaces
 {
     public interface IRouteRepository
     {

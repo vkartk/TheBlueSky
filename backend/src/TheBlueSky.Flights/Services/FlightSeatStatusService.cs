@@ -2,7 +2,7 @@
 using TheBlueSky.Flights.DTOs.Requests.FlightSeatStatus;
 using TheBlueSky.Flights.DTOs.Responses.FlightSeatStatus;
 using TheBlueSky.Flights.Models;
-using TheBlueSky.Flights.Repositories;
+using TheBlueSky.Flights.Repositories.Interfaces;
 
 namespace TheBlueSky.Flights.Services
 {

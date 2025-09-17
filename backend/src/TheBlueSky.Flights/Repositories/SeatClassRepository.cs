@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TheBlueSky.Flights.Models;
+using TheBlueSky.Flights.Repositories.Interfaces;
 
 namespace TheBlueSky.Flights.Repositories
 {

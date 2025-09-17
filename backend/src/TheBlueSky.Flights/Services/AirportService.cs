@@ -2,7 +2,7 @@
 using TheBlueSky.Flights.DTOs.Requests.Airport;
 using TheBlueSky.Flights.DTOs.Responses.Airport;
 using TheBlueSky.Flights.Models;
-using TheBlueSky.Flights.Repositories;
+using TheBlueSky.Flights.Repositories.Interfaces;
 
 namespace TheBlueSky.Flights.Services
 {

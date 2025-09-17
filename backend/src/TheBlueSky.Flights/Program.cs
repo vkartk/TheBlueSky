@@ -4,6 +4,7 @@ using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories;
 using TheBlueSky.Flights.Services;
 using TheBlueSky.Flights.Data.Seeders;
+using TheBlueSky.Flights.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

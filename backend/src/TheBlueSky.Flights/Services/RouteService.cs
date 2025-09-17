@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using TheBlueSky.Flights.DTOs.Requests.Route;
 using TheBlueSky.Flights.DTOs.Responses.Route;
-using TheBlueSky.Flights.Repositories;
+using TheBlueSky.Flights.Repositories.Interfaces;
 using Route = TheBlueSky.Flights.Models.Route;
 
 namespace TheBlueSky.Flights.Services

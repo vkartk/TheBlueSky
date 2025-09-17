@@ -2,7 +2,7 @@
 using TheBlueSky.Flights.DTOs.Requests.ScheduleDay;
 using TheBlueSky.Flights.DTOs.Responses.ScheduleDay;
 using TheBlueSky.Flights.Models;
-using TheBlueSky.Flights.Repositories;
+using TheBlueSky.Flights.Repositories.Interfaces;
 
 namespace TheBlueSky.Flights.Services
 {
