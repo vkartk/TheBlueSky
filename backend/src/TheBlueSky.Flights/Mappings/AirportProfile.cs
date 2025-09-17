@@ -10,8 +10,18 @@ namespace TheBlueSky.Flights.Mappings
         public AirportProfile()
         {
             CreateMap<Airport, AirportResponse>();
-            CreateMap<CreateAirportRequest, Airport>();
-            CreateMap<UpdateAirportRequest, Airport>();
+
+            CreateMap<CreateAirportRequest, Airport>()
+                .ForMember(d => d.AirportId, opt => opt.Ignore())
+                .ForMember(d => d.IsActive, opt => opt.Ignore())
+                .ForMember(d => d.Country, opt => opt.Ignore())
+                .ForMember(d => d.OriginRoutes, opt => opt.Ignore())
+                .ForMember(d => d.DestinationRoutes, opt => opt.Ignore());
+
+            CreateMap<UpdateAirportRequest, Airport>()
+                .ForMember(d => d.Country, opt => opt.Ignore())
+                .ForMember(d => d.OriginRoutes, opt => opt.Ignore())
+                .ForMember(d => d.DestinationRoutes, opt => opt.Ignore());
         }
 
     }
