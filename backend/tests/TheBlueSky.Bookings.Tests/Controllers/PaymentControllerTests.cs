@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
+using NUnit.Framework;
 using TheBlueSky.Bookings.Controllers;
 using TheBlueSky.Bookings.DTOs.Requests.Payment;
 using TheBlueSky.Bookings.DTOs.Responses.Payment;
@@ -12,6 +14,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
     public class PaymentControllerTests
     {
         private Mock<IPaymentService> _service = null!;
+        private Mock<ILogger<PaymentController>> _logger = null!;
         private PaymentController _sut = null!;
 
         [SetUp]
@@ -19,7 +22,8 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         {
             // Arrange
             _service = new Mock<IPaymentService>(MockBehavior.Strict);
-            _sut = new PaymentController(_service.Object);
+            _logger = new Mock<ILogger<PaymentController>>(MockBehavior.Loose);
+            _sut = new PaymentController(_service.Object, _logger.Object);
         }
 
         [TearDown]
