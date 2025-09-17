@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using TheBlueSky.Bookings.Enums;
+using TheBlueSky.Bookings.Validation;
 
 namespace TheBlueSky.Bookings.Models
 {
@@ -16,6 +17,7 @@ namespace TheBlueSky.Bookings.Models
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.Unknown;
 
+        [CurrencyAmount]
         [Column(TypeName = "decimal(18,2)")]
         public decimal PaymentAmount { get; set; }
 
