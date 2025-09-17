@@ -13,7 +13,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.Payment
         int BookingId,
 
         [Required]
-        PaymentStatus PaymentMethod,
+        PaymentMethod PaymentMethod,
 
         [Range(0, double.MaxValue)]
         decimal PaymentAmount,

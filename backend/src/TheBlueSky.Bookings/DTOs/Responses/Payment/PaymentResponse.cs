@@ -8,7 +8,7 @@ namespace TheBlueSky.Bookings.DTOs.Responses.Payment
 
         int BookingId,
 
-        PaymentStatus PaymentMethod,
+        PaymentMethod PaymentMethod,
         decimal PaymentAmount,
         DateTime? PaymentDate,
         PaymentStatus PaymentStatus,

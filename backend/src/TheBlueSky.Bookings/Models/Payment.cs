@@ -14,7 +14,7 @@ namespace TheBlueSky.Bookings.Models
         public Booking Booking { get; set; } = null!;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PaymentStatus PaymentMethod { get; set; } = PaymentStatus.Pending;
+        public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.Unknown;
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal PaymentAmount { get; set; }
