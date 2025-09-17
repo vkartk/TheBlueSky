@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using TheBlueSky.Bookings.Controllers;
 using TheBlueSky.Bookings.DTOs.Requests.Booking;
@@ -12,6 +13,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
     public class BookingControllerTests
     {
         private Mock<IBookingService> _service = null!;
+        private Mock<ILogger<BookingController>> _logger = null!;
         private BookingController _sut = null!;
 
         [SetUp]
@@ -19,7 +21,8 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         {
             // Arrange
             _service = new Mock<IBookingService>(MockBehavior.Strict);
-            _sut = new BookingController(_service.Object);
+            _logger = new Mock<ILogger<BookingController>>(MockBehavior.Loose);
+            _sut = new BookingController(_service.Object, _logger.Object);
         }
 
         [TearDown]
