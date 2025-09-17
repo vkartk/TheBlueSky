@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Gateway", "src\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Flights.Tests", "tests\TheBlueSky.Flights.Tests\TheBlueSky.Flights.Tests.csproj", "{11BB1F0F-AF11-4DA2-90D4-CE87108004C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlueSky.Bookings.Tests", "tests\TheBlueSky.Bookings.Tests\TheBlueSky.Bookings.Tests.csproj", "{3FC5E78B-50EC-4787-88CD-B83F18BC06CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{11BB1F0F-AF11-4DA2-90D4-CE87108004C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11BB1F0F-AF11-4DA2-90D4-CE87108004C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11BB1F0F-AF11-4DA2-90D4-CE87108004C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC5E78B-50EC-4787-88CD-B83F18BC06CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC5E78B-50EC-4787-88CD-B83F18BC06CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC5E78B-50EC-4787-88CD-B83F18BC06CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC5E78B-50EC-4787-88CD-B83F18BC06CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
