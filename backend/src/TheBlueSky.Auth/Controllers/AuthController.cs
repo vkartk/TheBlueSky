@@ -30,89 +30,83 @@ namespace TheBlueSky.Auth.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] CreateUserRequest request)
         {
-            var result = await _userService.RegisterUser(request);
-
-            if (!result.Succeeded)
+            try
             {
-                return BadRequest(new
-                {
-                    Status = "Error",
-                    result.Errors
-                });
+                var result = await _userService.RegisterUser(request);
+
+                if (!result.Succeeded)
+                    return BadRequest(new AuthResponse { Status = "Error", Message = "Registration failed. Please try again." });
+
+                var createdUser = await _userManager.FindByEmailAsync(request.Email);
+
+                if (createdUser == null)
+                    return StatusCode(500, new AuthResponse { Status = "Error", Message = "Something went wrong. Please try again." });
+
+                if (!await _userManager.IsInRoleAsync(createdUser, UserRoles.User))
+                    await _userManager.AddToRoleAsync(createdUser, UserRoles.User);
+
+                return Ok(new AuthResponse { Status = "Success", Message = "User created successfully!" });
             }
-
-            var createdUser = await _userManager.FindByNameAsync(request.Email);
-            if (createdUser != null && !await _userManager.IsInRoleAsync(createdUser, UserRoles.User))
+            catch
             {
-                await _userManager.AddToRoleAsync(createdUser, UserRoles.User);
+                return StatusCode(500, new AuthResponse { Status = "Error", Message = "An error occurred. Please try again." });
             }
-
-            return Ok(new AuthResponse
-            {
-                Status = "Success",
-                Message = "User created successfully!"
-            });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = await _userManager.FindByNameAsync(request.Username);
-            if (user == null) return Unauthorized(new LoginResponse
+            try
             {
-                Status = "Error",
-                Message = "Invalid credentials."
-            });
+                var user = await _userManager.FindByEmailAsync(request.Username);
 
-            var isValidPassword = await _userManager.CheckPasswordAsync(user, request.Password);
-            if (!isValidPassword) return Unauthorized(new LoginResponse
+                if (user == null)
+                    return Unauthorized(new LoginResponse { Status = "Error", Message = "Invalid credentials." });
+
+                var isValidPassword = await _userManager.CheckPasswordAsync(user, request.Password);
+                if (!isValidPassword)
+                    return Unauthorized(new LoginResponse { Status = "Error", Message = "Invalid credentials." });
+
+                var token = await _authTokenService.CreateJwtToken(user);
+
+                return Ok(new LoginResponse
+                {
+                    Status = "Success",
+                    Message = "Login successful.",
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo
+                });
+            }
+            catch
             {
-                Status = "Error",
-                Message = "Invalid credentials."
-            });
-
-            var token = await _authTokenService.CreateJwtToken(user);
-
-            return Ok(new LoginResponse
-            {
-                Status = "Success",
-                Message = "Login successful.",
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo
-            });
+                return StatusCode(500, new AuthResponse { Status = "Error", Message = "An error occurred. Please try again." });
+            }
         }
 
         [HttpPost("admin/register")]
         [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> RegisterAdmin([FromBody] CreateUserRequest request)
         {
-            var result = await _userService.RegisterUser(request);
-            if (!result.Succeeded)
+            try
             {
-                return BadRequest(new
-                {
-                    Status = "Error",
-                    result.Errors
-                });
+                var result = await _userService.RegisterUser(request);
+
+                if (!result.Succeeded)
+                    return BadRequest(new AuthResponse { Status = "Error", Message = "Registration failed. Please try again." });
+
+                var createdUser = await _userManager.FindByEmailAsync(request.Email);
+
+                if (createdUser == null)
+                    return StatusCode(500, new AuthResponse { Status = "Error", Message = "Something went wrong. Please try again." });
+
+                await _userManager.AddToRoleAsync(createdUser, UserRoles.Admin);
+
+                return Ok(new AuthResponse { Status = "Success", Message = "Admin created successfully!" });
             }
-
-            var createdUser = await _userManager.FindByNameAsync(request.Email);
-            if (createdUser is null)
+            catch
             {
-                return StatusCode(500, new AuthResponse
-                {
-                    Status = "Error",
-                    Message = "User created but could not be reloaded."
-                });
+                return StatusCode(500, new AuthResponse { Status = "Error", Message = "An error occurred. Please try again." });
             }
-
-            await _userManager.AddToRoleAsync(createdUser, UserRoles.Admin);
-
-            return Ok(new AuthResponse
-            {
-                Status = "Success",
-                Message = "Admin user created successfully!"
-            });
         }
     }
 }
