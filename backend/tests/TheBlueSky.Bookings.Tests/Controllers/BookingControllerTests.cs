@@ -58,11 +58,16 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Create_Returns201_WithRouteValues()
         {
             // Arrange
-            var req = new CreateBookingRequest(
-                UserId: 7, FlightId: 100, NumberOfPassengers: 2,
-                SubtotalAmount: 1000m, TaxAmount: 100m,
-                BookingStatus: BookingStatus.Pending, PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new CreateBookingRequest
+            {
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 2,
+                SubtotalAmount = 1000m,
+                TaxAmount = 100m,
+                BookingStatus = BookingStatus.Pending,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             var created = new BookingResponse(
                 BookingId: 55, UserId: 7, FlightId: 100, BookingDate: System.DateTime.UtcNow,
@@ -87,11 +92,17 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_Found_Returns204()
         {
             // Arrange
-            var req = new UpdateBookingRequest(
-                BookingId: 5, UserId: 7, FlightId: 100, NumberOfPassengers: 3,
-                SubtotalAmount: 1200m, TaxAmount: 120m,
-                BookingStatus: BookingStatus.Confirmed, PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new UpdateBookingRequest
+            {
+                BookingId = 5,
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 3,
+                SubtotalAmount = 1200m,
+                TaxAmount = 120m,
+                BookingStatus = BookingStatus.Confirmed,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(true);
 
@@ -106,11 +117,18 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_NotFound_Returns404()
         {
             // Arrange
-            var req = new UpdateBookingRequest(
-                BookingId: 999, UserId: 7, FlightId: 100, NumberOfPassengers: 3,
-                SubtotalAmount: 1200m, TaxAmount: 120m,
-                BookingStatus: BookingStatus.Confirmed, PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new UpdateBookingRequest
+            {
+                BookingId = 999,
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 3,
+                SubtotalAmount = 1200m,
+                TaxAmount = 120m,
+                BookingStatus = BookingStatus.Confirmed,
+                PaymentStatus = PaymentStatus.Pending
+            };
+
 
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(false);
 
@@ -152,9 +170,19 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         {
             // Arrange
             _sut.ModelState.AddModelError("UserId", "Required");
+            var badReq = new CreateBookingRequest
+            {
+                UserId = 0, //  trigger model error you added
+                FlightId = 100,
+                NumberOfPassengers = 2,
+                SubtotalAmount = 1000m,
+                TaxAmount = 100m,
+                BookingStatus = BookingStatus.Pending,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             // Act
-            var result = await _sut.Create(new CreateBookingRequest(0, 100, 2, 1000m, 100m, BookingStatus.Pending, PaymentStatus.Pending));
+            var result = await _sut.Create(badReq);
 
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());

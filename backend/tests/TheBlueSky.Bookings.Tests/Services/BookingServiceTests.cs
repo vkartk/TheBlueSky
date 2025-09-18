@@ -84,15 +84,16 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Create_ReturnsCreatedItem()
         {
             // Arrange
-            var req = new CreateBookingRequest(
-                UserId: 7,
-                FlightId: 100,
-                NumberOfPassengers: 2,
-                SubtotalAmount: 1000m,
-                TaxAmount: 100m,
-                BookingStatus: BookingStatus.Pending,
-                PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new CreateBookingRequest
+            {
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 2,
+                SubtotalAmount = 1000m,
+                TaxAmount = 100m,
+                BookingStatus = BookingStatus.Pending,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             var toAdd = new Booking
             {
@@ -143,11 +144,17 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_Found_ReturnsTrue()
         {
             // Arrange
-            var req = new UpdateBookingRequest(
-                BookingId: 5, UserId: 7, FlightId: 100, NumberOfPassengers: 3,
-                SubtotalAmount: 1200m, TaxAmount: 120m,
-                BookingStatus: BookingStatus.Confirmed, PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new UpdateBookingRequest
+            {
+                BookingId = 5,
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 3,
+                SubtotalAmount = 1200m,
+                TaxAmount = 120m,
+                BookingStatus = BookingStatus.Confirmed,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             var existing = new Booking { BookingId = 5 };
 
@@ -166,11 +173,17 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_NotFound_ReturnsFalse()
         {
             // Arrange
-            var req = new UpdateBookingRequest(
-                BookingId: 999, UserId: 7, FlightId: 100, NumberOfPassengers: 3,
-                SubtotalAmount: 1200m, TaxAmount: 120m,
-                BookingStatus: BookingStatus.Confirmed, PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new UpdateBookingRequest
+            {
+                BookingId = 999,
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 3,
+                SubtotalAmount = 1200m,
+                TaxAmount = 120m,
+                BookingStatus = BookingStatus.Confirmed,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             _repo.Setup(r => r.GetByIdAsync(999)).ReturnsAsync((Booking?)null);
 
@@ -198,15 +211,20 @@ namespace TheBlueSky.Bookings.Tests.Services
         public void Create_WhenRepositoryFails_ThrowsException()
         {
             // Arrange
-            var req = new CreateBookingRequest(
-                UserId: 7, FlightId: 100, NumberOfPassengers: 2,
-                SubtotalAmount: 1000m, TaxAmount: 100m,
-                BookingStatus: BookingStatus.Pending, PaymentStatus: PaymentStatus.Pending
-            );
+            var req = new CreateBookingRequest
+            {
+                UserId = 7,
+                FlightId = 100,
+                NumberOfPassengers = 2,
+                SubtotalAmount = 1000m,
+                TaxAmount = 100m,
+                BookingStatus = BookingStatus.Pending,
+                PaymentStatus = PaymentStatus.Pending
+            };
 
             var mapped = new Booking();
             _mapper.Setup(m => m.Map<Booking>(req)).Returns(mapped);
-            _repo.Setup(r => r.AddAsync(mapped)).ThrowsAsync(new InvalidOperationException("boom"));
+            _repo.Setup(r => r.AddAsync(mapped)).ThrowsAsync(new InvalidOperationException("Error"));
 
             // Act / Assert
             Assert.That(async () => await _sut.CreateAsync(req), Throws.InvalidOperationException);

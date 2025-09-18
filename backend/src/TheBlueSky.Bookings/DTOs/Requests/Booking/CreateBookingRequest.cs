@@ -3,24 +3,21 @@ using TheBlueSky.Bookings.Enums;
 
 namespace TheBlueSky.Bookings.DTOs.Requests.Booking
 {
-    public record CreateBookingRequest(
-
-        [Required] 
-        int UserId,
-
-        [Required] 
-        int FlightId,
+    public record CreateBookingRequest
+    {
+        public required int UserId { get; init; }
+        public required int FlightId { get; init; }
 
         [Range(1, 50)]
-        int NumberOfPassengers,
+        public required int NumberOfPassengers { get; init; }
 
-        [Range(0, double.MaxValue)] 
-        decimal SubtotalAmount,
+        [Range(0, double.MaxValue)]
+        public required decimal SubtotalAmount { get; init; }
 
-        [Range(0, double.MaxValue)] 
-        decimal TaxAmount,
+        [Range(0, double.MaxValue)]
+        public required decimal TaxAmount { get; init; }
 
-        BookingStatus BookingStatus = BookingStatus.Pending,
-        PaymentStatus PaymentStatus = PaymentStatus.Pending
-    );
+        public BookingStatus BookingStatus { get; init; } = BookingStatus.Pending;
+        public PaymentStatus PaymentStatus { get; init; } = PaymentStatus.Pending;
+    }
 }
