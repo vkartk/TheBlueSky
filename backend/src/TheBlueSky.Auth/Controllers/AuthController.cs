@@ -31,6 +31,9 @@ namespace TheBlueSky.Auth.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] CreateUserRequest request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(new AuthResponse { Status = "Error", Message = "Invalid request." });
+
             try
             {
                 var result = await _userService.RegisterUser(request);
