@@ -9,7 +9,7 @@ using TheBlueSky.Auth.Services;
 
 namespace TheBlueSky.Auth.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
