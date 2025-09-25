@@ -77,7 +77,7 @@ namespace TheBlueSky.Auth.Controllers
                 {
                     Status = "Success",
                     Message = "Login successful.",
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                     Expiration = token.ValidTo
                 });
             }
