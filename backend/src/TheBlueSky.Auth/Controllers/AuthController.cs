@@ -10,6 +10,7 @@ using TheBlueSky.Auth.Services;
 namespace TheBlueSky.Auth.Controllers
 {
     //[Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -56,9 +57,12 @@ namespace TheBlueSky.Auth.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(new LoginResponse { Status = "Error", Message = "Invalid request." });
+
             try
             {
-                var user = await _userManager.FindByEmailAsync(request.Username);
+                var user = await _userManager.FindByEmailAsync(request.Email);
 
                 if (user == null)
                     return Unauthorized(new LoginResponse { Status = "Error", Message = "Invalid credentials." });
