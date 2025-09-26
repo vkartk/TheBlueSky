@@ -1,18 +1,15 @@
 import './App.css'
-import { Route, Routes } from 'react-router'
+import { RouterProvider } from 'react-router'
 import { Toaster } from 'sonner'
-import LoginPage from './pages/auth/login'
-import RegisterPage from './pages/auth/register'
+
+import router from './router'
+
 
 function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element="Home" />
-        <Route path='/login' element={<LoginPage/>} />
-        <Route path='/register' element={<RegisterPage />} />
-      </Routes>
+      <RouterProvider router={router} />
       <Toaster />
     </>
   )
