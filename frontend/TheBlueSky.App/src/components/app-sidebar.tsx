@@ -93,7 +93,7 @@ const data = {
       items: [
         {
           title: "Airports",
-          url: "#",
+          url: "/dashboard/airports",
         },
         {
           title: "Routes",

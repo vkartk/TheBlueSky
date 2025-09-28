@@ -4,6 +4,7 @@ import DashboardLayout from "./layouts/dashboard";
 import LoginPage from "./pages/auth/login";
 import RegisterPage from "./pages/auth/register";
 import DashboardHome from "./pages/dashboard";
+import { AirportsPage } from "./pages/dashboard/Airports";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
         element: <DashboardHome />,
         handle: { crumb: "Home" },
       },
+      {
+        path: "airports",
+        element: <AirportsPage />,
+        handle: { crumb: "Airports" },
+      }
     ],
   },
 ])
