@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { airportsService } from '@/services/airportsService';
+import { airportsService } from '@/services/flights/airportsService';
 import type { Airport, NewAirport } from '@/types/airports';
 
 export const fetchAirports = createAsyncThunk(
