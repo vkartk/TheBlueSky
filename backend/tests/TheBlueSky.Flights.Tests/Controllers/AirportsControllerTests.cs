@@ -74,7 +74,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             var request = new UpdateAirportRequest(99, "DEL", "Indira Gandhi", "Delhi", "IN", true);
             _service.Setup(s => s.UpdateAirportAsync(request)).ReturnsAsync(false);
 
-            var result = await _controller.UpdateAirport(request);
+            var result = await _controller.UpdateAirport(request.AirportId,request);
 
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
@@ -85,7 +85,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             var request = new UpdateAirportRequest(1, "DEL", "Indira Gandhi", "Delhi", "IN", true);
             _service.Setup(s => s.UpdateAirportAsync(request)).ReturnsAsync(true);
 
-            var result = await _controller.UpdateAirport(request);
+            var result = await _controller.UpdateAirport(request.AirportId, request);
 
             Assert.That(result, Is.TypeOf<NoContentResult>());
         }
