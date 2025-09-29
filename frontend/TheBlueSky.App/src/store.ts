@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import airportsReducer from '@/features/airports/airportsSlice';
 import routesReducer from '@/features/routes/routesSlice';
+import seatClassReducer from '@/features/seatClass/seatClassSlice';
 
 export const store = configureStore({
   reducer: {
     airports: airportsReducer,
     routes: routesReducer,
+    seatClasses: seatClassReducer,
   },
 });
 
