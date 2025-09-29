@@ -43,7 +43,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         {
             var aircraft = new Aircraft
             {
-                OwnerUserId = 1,
+                OwnerUserId = "1",
                 AircraftName = "Test Aircraft",
                 AircraftModel = "Model X",
                 EconomySeats = 100,

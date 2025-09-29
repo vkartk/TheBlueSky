@@ -47,14 +47,14 @@ namespace TheBlueSky.Flights.Tests.Repositories
             {
                 new Aircraft
                 {
-                    AircraftId = 1, OwnerUserId = 10, AircraftName = "A320",
+                    AircraftId = 1, OwnerUserId = "10", AircraftName = "A320",
                     AircraftModel = "A320neo", Manufacturer = AircraftManufacturer.Airbus,
                     EconomySeats = 150, BusinessSeats = 12, FirstClassSeats = 0, IsActive = true,
                     CreatedDate = DateTime.UtcNow
                 },
                 new Aircraft
                 {
-                    AircraftId = 2, OwnerUserId = 11, AircraftName = "737",
+                    AircraftId = 2, OwnerUserId = "11", AircraftName = "737",
                     AircraftModel = "737-800", Manufacturer = AircraftManufacturer.Boeing,
                     EconomySeats = 160, BusinessSeats = 8, FirstClassSeats = 0, IsActive = true,
                     CreatedDate = DateTime.UtcNow

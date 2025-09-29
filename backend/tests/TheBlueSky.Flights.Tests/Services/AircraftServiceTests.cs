@@ -72,7 +72,7 @@ namespace TheBlueSky.Flights.Tests.Services
             {
                 new()
                 {
-                    AircraftId = 1, OwnerUserId = 10, AircraftName = "A320",
+                    AircraftId = 1, OwnerUserId = "10", AircraftName = "A320",
                     AircraftModel = "A320neo", Manufacturer = AircraftManufacturer.Airbus,
                     EconomySeats = 150, BusinessSeats = 12, FirstClassSeats = 0, IsActive = true,
                     CreatedDate = DateTime.UtcNow
@@ -122,7 +122,7 @@ namespace TheBlueSky.Flights.Tests.Services
             var entity = new Aircraft
             {
                 AircraftId = 42,
-                OwnerUserId = 10,
+                OwnerUserId = "10",
                 AircraftName = "737",
                 AircraftModel = "737-800",
                 Manufacturer = AircraftManufacturer.Boeing,
@@ -180,7 +180,7 @@ namespace TheBlueSky.Flights.Tests.Services
             var existing = new Aircraft
             {
                 AircraftId = 1,
-                OwnerUserId = 77,
+                OwnerUserId = "77",
                 AircraftName = "Old",
                 AircraftModel = "OldModel",
                 Manufacturer = AircraftManufacturer.Airbus,

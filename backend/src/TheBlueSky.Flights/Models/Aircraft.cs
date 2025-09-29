@@ -8,7 +8,7 @@ namespace TheBlueSky.Flights.Models
         public int AircraftId { get; set; }
 
         [Required(ErrorMessage = "Flight Owner user ID is required.")]
-        public int OwnerUserId { get; set; }
+        public string OwnerUserId { get; set; } = default!;
 
         [Required(ErrorMessage = "Aircraft name is required.")]
         [StringLength(100, ErrorMessage = "Aircraft name cannot exceed 100 characters.")]
