@@ -97,7 +97,7 @@ const data = {
         },
         {
           title: "Routes",
-          url: "#",
+          url: "/dashboard/routes",
         }
       ],
     },
