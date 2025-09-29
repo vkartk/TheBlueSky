@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router";
 
-import DashboardLayout from "./layouts/dashboard";
-import LoginPage from "./pages/auth/login";
-import RegisterPage from "./pages/auth/register";
-import DashboardHome from "./pages/dashboard";
-import { AirportsPage } from "./pages/dashboard/Airports";
-import RoutePage from "./pages/dashboard/Route";
+import DashboardLayout from "@/layouts/dashboard";
+import LoginPage from "@/pages/auth/login";
+import RegisterPage from "@/pages/auth/register";
+import DashboardHome from "@/pages/dashboard";
+import { AirportsPage } from "@/pages/dashboard/Airports";
+import RoutePage from "@/pages/dashboard/Route";
+import SeatClassesPage from "@/pages/dashboard/seatClass";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
         path: "routes",
         element: <RoutePage />,
         handle: { crumb: "Routes" },
+      },
+      {
+        path: "seat-classes",
+        element: <SeatClassesPage />,
+        handle: { crumb: "Seat Classes" },
       }
     ],
   },

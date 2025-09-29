@@ -112,7 +112,7 @@ const data = {
         },
         {
           title: "Seat Classes",
-          url: "#",
+          url: "/dashboard/seat-classes",
         }
       ],
     },
