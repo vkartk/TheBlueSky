@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using TheBlueSky.Auth.DTOs.Requests;
 using TheBlueSky.Auth.DTOs.Responses;
 using TheBlueSky.Auth.Models;
@@ -109,6 +110,29 @@ namespace TheBlueSky.Auth.Controllers
                 await _userManager.AddToRoleAsync(createdUser, UserRoles.Admin);
 
                 return Ok(new AuthResponse { Status = "Success", Message = "Admin created successfully!" });
+            }
+            catch
+            {
+                return StatusCode(500, new AuthResponse { Status = "Error", Message = "An error occurred. Please try again." });
+            }
+        }
+
+        [HttpGet("whoami")]
+        [Authorize]
+        public  IActionResult WhoAmI()
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var email = User.FindFirstValue(ClaimTypes.Email);
+                var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+
+                return Ok(new
+                {
+                    userId,
+                    email,
+                    roles
+                });
             }
             catch
             {
