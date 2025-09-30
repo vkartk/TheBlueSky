@@ -60,6 +60,29 @@ namespace TheBlueSky.Flights.Controllers
             }
         }
 
+        [HttpGet("{id:int}/seats")]
+        public async Task<ActionResult<AircraftWithSeatsResponse>> GetAircraftWithSeats(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Fetching aircraft {Id} with its seats", id);
+                var aircraftWithSeats = await _aircraftService.GetAircraftWithSeatsByIdAsync(id);
+
+                if (aircraftWithSeats == null)
+                {
+                    _logger.LogInformation("Aircraft {Id} not found when fetching with seats", id);
+                    return NotFound();
+                }
+
+                return Ok(aircraftWithSeats);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while fetching aircraft {Id} with seats", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+            }
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin,FlightsOwner")]
         public async Task<ActionResult<AircraftResponse>> CreateAircraft([FromBody] CreateAircraftRequest request)

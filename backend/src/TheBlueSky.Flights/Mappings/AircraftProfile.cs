@@ -10,6 +10,11 @@ namespace TheBlueSky.Flights.Mappings
         public AircraftProfile()
         {
             CreateMap<Aircraft, AircraftResponse>();
+
+            CreateMap<Aircraft, AircraftWithSeatsResponse>()
+                .ForMember(d => d.Aircraft, opt => opt.MapFrom(s => s))
+                .ForMember(d => d.Seats, opt => opt.MapFrom(s => s.Seats));
+
             CreateMap<CreateAircraftRequest, Aircraft>()
                 .ForMember(d => d.AircraftId, opt => opt.Ignore())
                 .ForMember(d => d.IsActive, opt => opt.Ignore())

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TheBlueSky.Flights.DTOs.Requests.Aircraft;
 using TheBlueSky.Flights.DTOs.Responses.Aircraft;
+using TheBlueSky.Flights.DTOs.Responses.AircraftSeat;
 using TheBlueSky.Flights.Models;
 using TheBlueSky.Flights.Repositories.Interfaces;
 
@@ -27,6 +28,12 @@ namespace TheBlueSky.Flights.Services
         {
             var aircraft = await _aircraftRepository.GetAircraftByIdAsync(id);
             return _mapper.Map<AircraftResponse>(aircraft);
+        }
+
+        public async Task<AircraftWithSeatsResponse?> GetAircraftWithSeatsByIdAsync(int id)
+        {
+            var aircraftWithSeats = await _aircraftRepository.GetAircraftWithSeatsByIdAsync(id);
+            return _mapper.Map<AircraftWithSeatsResponse>(aircraftWithSeats);
         }
 
         public async Task<AircraftResponse> CreateAircraftAsync(CreateAircraftRequest request, string ownerId)

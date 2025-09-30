@@ -6,6 +6,8 @@ namespace TheBlueSky.Flights.Repositories.Interfaces
     {
         Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
         Task<Aircraft?> GetAircraftByIdAsync(int id);
+        Task<Aircraft?> GetAircraftWithSeatsByIdAsync(int id);
+
         Task<Aircraft> AddAircraftAsync(Aircraft aircraft);
         Task<bool> UpdateAircraftAsync(Aircraft aircraft);
         Task<bool> DeleteAircraftAsync(int id);
