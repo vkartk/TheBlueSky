@@ -7,7 +7,7 @@ namespace TheBlueSky.Flights.Services
     {
         Task<IEnumerable<AircraftResponse>> GetAllAircraftsAsync();
         Task<AircraftResponse?> GetAircraftByIdAsync(int id);
-        Task<AircraftResponse> CreateAircraftAsync(CreateAircraftRequest request);
+        Task<AircraftResponse> CreateAircraftAsync(CreateAircraftRequest request, string ownerId);
         Task<bool> UpdateAircraftAsync(UpdateAircraftRequest request);
         Task<bool> DeleteAircraftAsync(int id);
 

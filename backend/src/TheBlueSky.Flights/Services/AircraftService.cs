@@ -29,9 +29,11 @@ namespace TheBlueSky.Flights.Services
             return _mapper.Map<AircraftResponse>(aircraft);
         }
 
-        public async Task<AircraftResponse> CreateAircraftAsync(CreateAircraftRequest request)
+        public async Task<AircraftResponse> CreateAircraftAsync(CreateAircraftRequest request, string ownerId)
         {
             var aircraft = _mapper.Map<Aircraft>(request);
+            aircraft.OwnerUserId = ownerId;
+
             var createdAircraft = await _aircraftRepository.AddAircraftAsync(aircraft);
             return _mapper.Map<AircraftResponse>(createdAircraft);
         }

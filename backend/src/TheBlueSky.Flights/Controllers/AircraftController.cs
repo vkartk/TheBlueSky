@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using TheBlueSky.Flights.DTOs.Requests.Aircraft;
 using TheBlueSky.Flights.DTOs.Responses.Aircraft;
 using TheBlueSky.Flights.Services;
@@ -69,10 +70,18 @@ namespace TheBlueSky.Flights.Controllers
                 return BadRequest(ModelState);
             }
 
+            var ownerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(ownerId))
+            {
+                _logger.LogWarning("CreateAircraft called but user ID claim (NameIdentifier) was not found in the token.");
+                return Unauthorized("User ID could not be determined from the token.");
+            }
+
             try
             {
-                _logger.LogInformation("Creating aircraft");
-                var createdAircraft = await _aircraftService.CreateAircraftAsync(request);
+                _logger.LogInformation("User {OwnerId} is creating an aircraft", ownerId);
+                var createdAircraft = await _aircraftService.CreateAircraftAsync(request, ownerId);
+                
                 _logger.LogInformation("Aircraft {Id} created", createdAircraft.AircraftId);
                 return CreatedAtAction(nameof(GetAircraftById), new { id = createdAircraft.AircraftId }, createdAircraft);
             }

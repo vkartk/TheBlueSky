@@ -69,7 +69,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             _sut.ModelState.AddModelError("AircraftName", "Required");
 
             var request = new CreateAircraftRequest(
-                OwnerUserId: "1", AircraftName: "", AircraftModel: "X",
+                AircraftName: "", AircraftModel: "X",
                 Manufacturer: AircraftManufacturer.Airbus, EconomySeats: 1, BusinessSeats: 0, FirstClassSeats: 0
             );
 
@@ -85,7 +85,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         {
             // Arrange
             var request = new CreateAircraftRequest(
-                OwnerUserId: "1", AircraftName: "A", AircraftModel: "B",
+                AircraftName: "A", AircraftModel: "B",
                 Manufacturer: AircraftManufacturer.Airbus, EconomySeats: 1, BusinessSeats: 0, FirstClassSeats: 0
             );
 
@@ -95,7 +95,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
                 IsActive: true, CreatedDate: System.DateTime.UtcNow
             );
 
-            _serviceMock.Setup(s => s.CreateAircraftAsync(request)).ReturnsAsync(created);
+            _serviceMock.Setup(s => s.CreateAircraftAsync(request, "1")).ReturnsAsync(created);
 
             // Act
             var result = await _sut.CreateAircraft(request);
@@ -105,7 +105,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             Assert.That(createdAt, Is.Not.Null);
             Assert.That(createdAt!.StatusCode, Is.EqualTo(201));
             Assert.That(createdAt.Value, Is.EqualTo(created));
-            _serviceMock.Verify(s => s.CreateAircraftAsync(request), Times.Once);
+            _serviceMock.Verify(s => s.CreateAircraftAsync(request, "1"), Times.Once);
         }
 
         [Test]

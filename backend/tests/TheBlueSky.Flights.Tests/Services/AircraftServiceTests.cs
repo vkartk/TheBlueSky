@@ -110,7 +110,6 @@ namespace TheBlueSky.Flights.Tests.Services
         {
             // Arrange
             var request = new CreateAircraftRequest(
-                OwnerUserId: "10",
                 AircraftName: "737",
                 AircraftModel: "737-800",
                 Manufacturer: AircraftManufacturer.Boeing,
@@ -138,7 +137,7 @@ namespace TheBlueSky.Flights.Tests.Services
                 .ReturnsAsync(entity);
 
             // Act
-            var result = await _sut.CreateAircraftAsync(request);
+            var result = await _sut.CreateAircraftAsync(request, "10");
 
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -219,7 +218,6 @@ namespace TheBlueSky.Flights.Tests.Services
         {
             // Arrange
             var request = new CreateAircraftRequest(
-                OwnerUserId: "1",
                 AircraftName: "X",
                 AircraftModel: "Y",
                 Manufacturer: AircraftManufacturer.Airbus,
@@ -233,7 +231,7 @@ namespace TheBlueSky.Flights.Tests.Services
                 .ThrowsAsync(new InvalidOperationException("boom"));
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.CreateAircraftAsync(request));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.CreateAircraftAsync(request,"1"));
             _repoMock.Verify(r => r.AddAircraftAsync(It.IsAny<Aircraft>()), Times.Once);
         }
     }
