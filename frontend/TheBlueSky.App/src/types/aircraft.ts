@@ -1,4 +1,11 @@
-export type AircraftManufacturer = 'Unknown' | 'Airbus' | 'Boeing';
+export const AIRCRAFT_MANUFACTURERS = [
+  'Unknown',
+  'Airbus',
+  'Boeing'
+] as const;
+
+export type AircraftManufacturer = typeof AIRCRAFT_MANUFACTURERS[number];
+
 
 export type Aircraft = {
   aircraftId: number;
@@ -12,4 +19,4 @@ export type Aircraft = {
   isActive: boolean;
 };
 
-export type NewAircraft = Omit<Aircraft, 'aircraftId'>;
+export type NewAircraft = Omit<Aircraft, 'aircraftId' | 'ownerUserId'>;

@@ -108,7 +108,7 @@ const data = {
       items: [
         {
           title: "Aircrafts",
-          url: "#",
+          url: "/dashboard/aircrafts",
         },
         {
           title: "Seat Classes",

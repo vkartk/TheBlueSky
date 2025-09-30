@@ -1,7 +1,7 @@
 import type { Aircraft, NewAircraft } from '@/types/aircraft';
 import { flightsApiClient } from './flightsApiClient';
 
-const API_PATH = '/aircrafts';
+const API_PATH = '/aircraft';
 
 const getAll = async (): Promise<Aircraft[]> => {
   const response = await flightsApiClient.get<Aircraft[]>(API_PATH);
@@ -18,7 +18,7 @@ const update = async (id: number, data: Aircraft): Promise<Aircraft> => {
   return response.data;
 };
 
-export const aircraftsService = {
+export const aircraftService = {
   getAll,
   create,
   update,
