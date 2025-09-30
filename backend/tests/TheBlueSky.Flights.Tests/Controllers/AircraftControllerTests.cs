@@ -69,7 +69,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             _sut.ModelState.AddModelError("AircraftName", "Required");
 
             var request = new CreateAircraftRequest(
-                OwnerUserId: 1, AircraftName: "", AircraftModel: "X",
+                OwnerUserId: "1", AircraftName: "", AircraftModel: "X",
                 Manufacturer: AircraftManufacturer.Airbus, EconomySeats: 1, BusinessSeats: 0, FirstClassSeats: 0
             );
 
@@ -85,7 +85,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         {
             // Arrange
             var request = new CreateAircraftRequest(
-                OwnerUserId: 1, AircraftName: "A", AircraftModel: "B",
+                OwnerUserId: "1", AircraftName: "A", AircraftModel: "B",
                 Manufacturer: AircraftManufacturer.Airbus, EconomySeats: 1, BusinessSeats: 0, FirstClassSeats: 0
             );
 

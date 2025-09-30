@@ -6,7 +6,7 @@ namespace TheBlueSky.Flights.DTOs.Requests.Aircraft
     public record CreateAircraftRequest(
 
         [Required]
-        int OwnerUserId,
+        string OwnerUserId,
 
         [Required]
         [StringLength(100)]

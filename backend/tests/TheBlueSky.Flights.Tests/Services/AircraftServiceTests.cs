@@ -110,7 +110,7 @@ namespace TheBlueSky.Flights.Tests.Services
         {
             // Arrange
             var request = new CreateAircraftRequest(
-                OwnerUserId: 10,
+                OwnerUserId: "10",
                 AircraftName: "737",
                 AircraftModel: "737-800",
                 Manufacturer: AircraftManufacturer.Boeing,
@@ -219,7 +219,7 @@ namespace TheBlueSky.Flights.Tests.Services
         {
             // Arrange
             var request = new CreateAircraftRequest(
-                OwnerUserId: 1,
+                OwnerUserId: "1",
                 AircraftName: "X",
                 AircraftModel: "Y",
                 Manufacturer: AircraftManufacturer.Airbus,
