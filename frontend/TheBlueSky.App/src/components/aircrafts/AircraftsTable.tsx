@@ -60,7 +60,7 @@ export const AircraftsTable = ({ aircrafts }: AircraftsTableProps) => {
               </TableCell>
               <TableCell className="text-right">
                 <Button asChild variant="ghost" size="icon">
-                  <Link to={`/aircrafts/edit/${aircraft.aircraftId}`}>
+                  <Link to={`/dashboard/aircrafts/edit/${aircraft.aircraftId}`}>
                     <Pencil className="h-4 w-4" />
                     <span className="sr-only">Edit Aircraft</span>
                   </Link>
