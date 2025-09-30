@@ -33,7 +33,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             // Arrange
             var list = new List<AircraftResponse>
             {
-                new(1, 10, "A320", "A320neo", AircraftManufacturer.Airbus, 150, 12, 0, true, System.DateTime.UtcNow)
+                new(1, "10", "A320", "A320neo", AircraftManufacturer.Airbus, 150, 12, 0, true, System.DateTime.UtcNow)
             };
             _serviceMock.Setup(s => s.GetAllAircraftsAsync()).ReturnsAsync(list);
 
@@ -90,7 +90,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             );
 
             var created = new AircraftResponse(
-                AircraftId: 42, OwnerUserId: 1, AircraftName: "A", AircraftModel: "B",
+                AircraftId: 42, OwnerUserId: "1", AircraftName: "A", AircraftModel: "B",
                 Manufacturer: AircraftManufacturer.Airbus, EconomySeats: 1, BusinessSeats: 0, FirstClassSeats: 0,
                 IsActive: true, CreatedDate: System.DateTime.UtcNow
             );

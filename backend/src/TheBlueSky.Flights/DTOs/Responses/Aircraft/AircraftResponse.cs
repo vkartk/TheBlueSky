@@ -6,7 +6,7 @@ namespace TheBlueSky.Flights.DTOs.Responses.Aircraft
 
         int AircraftId,
 
-        int OwnerUserId,
+        string OwnerUserId,
 
         string AircraftName,
 
