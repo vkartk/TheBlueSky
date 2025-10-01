@@ -104,7 +104,7 @@ namespace TheBlueSky.Flights.Controllers
             {
                 _logger.LogInformation("User {OwnerId} is creating an aircraft", ownerId);
                 var createdAircraft = await _aircraftService.CreateAircraftAsync(request, ownerId);
-                
+
                 _logger.LogInformation("Aircraft {Id} created", createdAircraft.AircraftId);
                 return CreatedAtAction(nameof(GetAircraftById), new { id = createdAircraft.AircraftId }, createdAircraft);
             }
@@ -115,14 +115,19 @@ namespace TheBlueSky.Flights.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [Authorize(Roles = "Admin,FlightsOwner")]
-        public async Task<ActionResult> UpdateAircraft([FromBody] UpdateAircraftRequest request)
+        public async Task<ActionResult> UpdateAircraft(int id,[FromBody] UpdateAircraftRequest request)
         {
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid update aircraft request: {@ModelState}", ModelState);
                 return BadRequest(ModelState);
+            }
+
+            if(id != request.AircraftId)
+            {
+                return BadRequest(new ProblemDetails { Title = "Route/body ID mismatch." });
             }
 
             try

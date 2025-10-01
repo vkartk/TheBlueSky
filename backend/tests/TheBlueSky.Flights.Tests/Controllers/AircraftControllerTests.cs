@@ -119,7 +119,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             _serviceMock.Setup(s => s.UpdateAircraftAsync(update)).ReturnsAsync(false);
 
             // Act
-            var result = await _sut.UpdateAircraft(update);
+            var result = await _sut.UpdateAircraft(update.AircraftId,update);
 
             // Assert
             Assert.That(result, Is.TypeOf<NotFoundResult>());
