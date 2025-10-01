@@ -6,6 +6,7 @@ import routesReducer from '@/features/routes/routesSlice';
 import seatClassReducer from '@/features/seatClass/seatClassSlice';
 import aircraftsReducer from '@/features/aircrafts/aircraftsSlice';
 import editAircraftReducer from '@/features/aircrafts/edit/editAircraftSlice';
+import flightSchedulesReducer from '@/features/flightSchedule/flightScheduleSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     seatClasses: seatClassReducer,
     aircrafts: aircraftsReducer,
     editAircraft: editAircraftReducer,
+    flightSchedules: flightSchedulesReducer,
   },
 });
 
