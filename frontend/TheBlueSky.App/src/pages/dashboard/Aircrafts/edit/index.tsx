@@ -12,7 +12,7 @@ import { selectAllSeatClasses } from '@/features/seatClass/seatClassSlice';
 import { fetchSeatClasses } from '@/features/seatClass/seatClassThunks';
 
 import { AircraftDetailsForm } from '@/components/aircrafts/edit/AircraftDetailsForm';
-import { AircraftSeatLayout } from '@/components/aircrafts/edit/AircraftSeatLayout';
+import { AircraftSeatLayout } from '@/components/aircrafts/aircraftSeatLayout';
 import { AircraftSeatForm } from '@/components/aircrafts/edit/AircraftSeatForm';
 import type { Aircraft } from '@/types/aircraft';
 import type { AircraftSeat, NewAircraftSeat } from '@/types/aircraftSeat';
