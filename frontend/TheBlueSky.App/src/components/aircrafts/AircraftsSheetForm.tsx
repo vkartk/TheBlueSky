@@ -114,7 +114,7 @@ export const AircraftsSheetForm = ({ onSave, onClose, isLoading }: AircraftsShee
                                     <FormLabel>Manufacturer</FormLabel>
                                     <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select..." />
                                             </SelectTrigger>
                                         </FormControl>
@@ -142,7 +142,7 @@ export const AircraftsSheetForm = ({ onSave, onClose, isLoading }: AircraftsShee
                                         disabled={filteredModels.length === 0}
                                     >
                                         <FormControl>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select..." />
                                             </SelectTrigger>
                                         </FormControl>
