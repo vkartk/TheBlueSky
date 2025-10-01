@@ -75,11 +75,13 @@ namespace TheBlueSky.Flights.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [Authorize(Roles = "Admin,FlightsOwner")]
-        public async Task<ActionResult> UpdateAircraftSeat([FromBody] UpdateAircraftSeatRequest request)
+        public async Task<ActionResult> UpdateAircraftSeat(int id,[FromBody] UpdateAircraftSeatRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if(id != request.AircraftSeatId) return BadRequest(new ProblemDetails { Title = "Route/body ID mismatch." });
 
             try
             {
