@@ -8,6 +8,7 @@ import { AirportsPage } from "@/pages/dashboard/Airports";
 import RoutePage from "@/pages/dashboard/Route";
 import SeatClassesPage from "@/pages/dashboard/seatClass";
 import  AircraftsPage  from "@/pages/dashboard/Aircrafts";
+import  AircraftEditPage  from "@/pages/dashboard/Aircrafts/edit";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
         path: "aircrafts",
         element: <AircraftsPage />,
         handle: { crumb: "Aircrafts" },
+      },
+      {
+        path: "aircrafts/edit/:aircraftId",
+        element: <AircraftEditPage />,
+        handle: { crumb: "Edit Aircraft" },
       },
       {
         path: "seat-classes",
