@@ -47,7 +47,7 @@ const AircraftsPage = () => {
       setSheetOpen(false);
 
       toast.success(`Redirecting to edit the aircraft...`);
-      navigate(`/aircrafts/edit/${newAircraft.aircraftId}`);
+      navigate(`/dashboard/aircrafts/edit/${newAircraft.aircraftId}`);
     } catch (error: any) {
       toast.error(error?.message || `Failed to create aircraft.`);
     }
