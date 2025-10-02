@@ -12,6 +12,8 @@ namespace TheBlueSky.Flights.Models
         [Required]
         public DayOfWeek DayOfWeek { get; set; }
 
+        public bool IsActive { get; set; } = true;
+
         public FlightSchedule Schedule { get; set; } = null!;
     }
 }

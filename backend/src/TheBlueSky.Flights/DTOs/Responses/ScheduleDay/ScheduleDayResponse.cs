@@ -6,7 +6,9 @@
 
         int FlightScheduleId,
 
-        DayOfWeek DayOfWeek
+        DayOfWeek DayOfWeek,
+
+        bool IsActive
     );
 
 }

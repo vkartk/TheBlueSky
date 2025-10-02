@@ -8,7 +8,9 @@ namespace TheBlueSky.Flights.DTOs.Requests.ScheduleDay
         int ScheduleDayId,
 
         [Required] 
-        DayOfWeek DayOfWeek
+        DayOfWeek DayOfWeek,
+
+        bool IsActive
     );
 
 }
