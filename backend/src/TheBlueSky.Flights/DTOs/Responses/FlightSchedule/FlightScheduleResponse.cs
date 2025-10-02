@@ -1,4 +1,6 @@
-﻿namespace TheBlueSky.Flights.DTOs.Responses.FlightSchedule
+﻿using TheBlueSky.Flights.DTOs.Responses.ScheduleDay;
+
+namespace TheBlueSky.Flights.DTOs.Responses.FlightSchedule
 {
     public record FlightScheduleResponse(
 
@@ -28,7 +30,9 @@
 
         bool IsActive,
 
-        DateTime CreatedDate
+        DateTime CreatedDate,
+
+        List<ScheduleDayResponse> ScheduleDays
     );
 
 }

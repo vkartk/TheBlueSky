@@ -31,7 +31,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             var list = new List<FlightScheduleResponse>
             {
                 new(1, 10, 20, "TB101", "Daily", new TimeOnly(9,0), new TimeOnly(11,30), 4500m, 15, 7,
-                    DateOnly.FromDateTime(DateTime.Today), DateOnly.FromDateTime(DateTime.Today.AddDays(30)), true, DateTime.UtcNow)
+                    DateOnly.FromDateTime(DateTime.Today), DateOnly.FromDateTime(DateTime.Today.AddDays(30)), true, DateTime.UtcNow,[])
             };
             _service.Setup(s => s.GetAllFlightSchedulesAsync()).ReturnsAsync(list);
 
@@ -85,7 +85,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             );
             var created = new FlightScheduleResponse(
                 5, 10, 20, "TB202", "Test", new TimeOnly(10, 0), new TimeOnly(12, 0),
-                3500m, 15, 7, req.ValidFrom, req.ValidUntil, true, DateTime.UtcNow);
+                3500m, 15, 7, req.ValidFrom, req.ValidUntil, true, DateTime.UtcNow, []);
 
             _service.Setup(s => s.CreateFlightScheduleAsync(req)).ReturnsAsync(created);
 
