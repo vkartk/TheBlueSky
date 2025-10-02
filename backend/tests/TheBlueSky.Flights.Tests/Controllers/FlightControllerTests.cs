@@ -78,7 +78,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             var request = new UpdateFlightRequest(99, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), FlightStatus.Scheduled, 100);
             _service.Setup(s => s.UpdateFlightAsync(request)).ReturnsAsync(false);
 
-            var result = await _controller.UpdateFlight(request);
+            var result = await _controller.UpdateFlight(request.FlightId,request);
 
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
@@ -89,7 +89,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
             var request = new UpdateFlightRequest(1, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), FlightStatus.Scheduled, 100);
             _service.Setup(s => s.UpdateFlightAsync(request)).ReturnsAsync(true);
 
-            var result = await _controller.UpdateFlight(request);
+            var result = await _controller.UpdateFlight(request.FlightId, request);
 
             Assert.That(result, Is.TypeOf<NoContentResult>());
         }

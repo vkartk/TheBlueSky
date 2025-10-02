@@ -101,12 +101,17 @@ namespace TheBlueSky.Flights.Services
                 return 0; // No active schedule days to generate flights for
             }
 
+            // Find all flights that already exist in the requested date range
+            var existingFlights = await _flightRepository.GetFlightsByScheduleIdAndDateRangeAsync(flightScheduleId, startDate, endDate);
+            var existingFlightDates = existingFlights.Select(f => f.FlightDate).ToHashSet();
+
+
             var activeDays = schedule.ScheduleDays.Where(d => d.IsActive).Select(d => d.DayOfWeek).ToHashSet();
             var newFlights = new List<Flight>();
 
             for (var date = startDate; date <= endDate; date = date.AddDays(1))
             {
-                if (activeDays.Contains(date.DayOfWeek))
+                if (activeDays.Contains(date.DayOfWeek) && !existingFlightDates.Contains(date))
                 {
                     var departureDateTime = new DateTimeOffset(date.ToDateTime(schedule.DepartureTime));
 
