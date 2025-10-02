@@ -1,7 +1,7 @@
 import { flightsApiClient } from './flightsApiClient';
 import type { FlightSchedule, NewFlightSchedule } from '@/types/flightSchedule';
 
-const API_URL = '/flightSchedules';
+const API_URL = '/flightSchedule';
 
 const getAll = async (): Promise<FlightSchedule[]> => {
   const response = await flightsApiClient.get<FlightSchedule[]>(API_URL);

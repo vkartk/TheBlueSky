@@ -9,6 +9,7 @@ import RoutePage from "@/pages/dashboard/Route";
 import SeatClassesPage from "@/pages/dashboard/seatClass";
 import  AircraftsPage  from "@/pages/dashboard/Aircrafts";
 import  AircraftEditPage  from "@/pages/dashboard/Aircrafts/edit";
+import  FlightSchedulesPage  from "@/pages/dashboard/flightSchedule";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +61,12 @@ const router = createBrowserRouter([
         path: "seat-classes",
         element: <SeatClassesPage />,
         handle: { crumb: "Seat Classes" },
-      }
+      },
+      {
+        path: "flight-schedules",
+        element: <FlightSchedulesPage />,
+        handle: { crumb: "Flight Schedules" },
+      },
     ],
   },
 ])

@@ -123,7 +123,7 @@ const data = {
       items: [
         {
           title: "Flight Scheduling",
-          url: "#",
+          url: "/dashboard/flight-schedules",
         },
         {
           title: "Flights",
