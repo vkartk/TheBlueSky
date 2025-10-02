@@ -50,7 +50,7 @@ namespace TheBlueSky.Flights.Models
 
         public Aircraft Aircraft { get; set; } = null!;
         public Route Route { get; set; } = null!;
-        public ICollection<ScheduleDay> Days { get; set; } = new List<ScheduleDay>();
+        public ICollection<ScheduleDay> ScheduleDays { get; set; } = new List<ScheduleDay>();
         public ICollection<Flight> Flights { get; set; } = new List<Flight>();
 
     }

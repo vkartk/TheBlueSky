@@ -17,7 +17,7 @@ namespace TheBlueSky.Flights.Mappings
                 .ForMember(d => d.CreatedDate, opt => opt.Ignore())
                 .ForMember(d => d.Aircraft, opt => opt.Ignore())
                 .ForMember(d => d.Route, opt => opt.Ignore())
-                .ForMember(d => d.Days, opt => opt.Ignore())
+                .ForMember(d => d.ScheduleDays, opt => opt.Ignore())
                 .ForMember(d => d.Flights, opt => opt.Ignore());
            
             CreateMap<UpdateFlightScheduleRequest, FlightSchedule>()
@@ -26,7 +26,7 @@ namespace TheBlueSky.Flights.Mappings
                 .ForMember(d => d.CreatedDate, opt => opt.Ignore())
                 .ForMember(d => d.Aircraft, opt => opt.Ignore())
                 .ForMember(d => d.Route, opt => opt.Ignore())
-                .ForMember(d => d.Days, opt => opt.Ignore())
+                .ForMember(d => d.ScheduleDays, opt => opt.Ignore())
                 .ForMember(d => d.Flights, opt => opt.Ignore());
         }
 
