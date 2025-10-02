@@ -14,6 +14,9 @@ namespace TheBlueSky.Flights.Repositories.Interfaces
         Task<IEnumerable<Flight>> GetFlightsByScheduleIdAsync(int scheduleId);
         Task AddFlightsAsync(IEnumerable<Flight> flights);
 
+        Task<IEnumerable<Flight>> GetFlightsByScheduleIdAndDateRangeAsync(int scheduleId, DateOnly startDate, DateOnly endDate);
+
+
 
     }
 }

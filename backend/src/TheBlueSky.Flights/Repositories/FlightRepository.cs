@@ -80,5 +80,15 @@ namespace TheBlueSky.Flights.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Flight>> GetFlightsByScheduleIdAndDateRangeAsync(int scheduleId, DateOnly startDate, DateOnly endDate)
+        {
+            return await _context.Flights
+                .Where(f => f.FlightScheduleId == scheduleId &&
+                             f.FlightDate >= startDate &&
+                             f.FlightDate <= endDate)
+                .ToListAsync();
+        }
+
+
     }
 }
