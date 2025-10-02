@@ -65,5 +65,25 @@ namespace TheBlueSky.Flights.Repositories
         {
             return await _context.ScheduleDays.AnyAsync(e => e.ScheduleDayId == id);
         }
+
+        public async Task<IEnumerable<ScheduleDay>> GetByScheduleIdAsync(int scheduleId)
+        {
+            return await _context.ScheduleDays
+                .Where(d => d.FlightScheduleId == scheduleId)
+                .ToListAsync();
+        }
+
+        public async Task AddRangeAsync(IEnumerable<ScheduleDay> scheduleDays)
+        {
+            await _context.ScheduleDays.AddRangeAsync(scheduleDays);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveRangeAsync(IEnumerable<ScheduleDay> scheduleDays)
+        {
+            _context.ScheduleDays.RemoveRange(scheduleDays);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

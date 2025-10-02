@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TheBlueSky.Flights.DTOs.Requests.Flight;
 using TheBlueSky.Flights.DTOs.Requests.FlightSchedule;
+using TheBlueSky.Flights.DTOs.Responses.Flight;
 using TheBlueSky.Flights.DTOs.Responses.FlightSchedule;
+using TheBlueSky.Flights.DTOs.Responses.ScheduleDay;
 using TheBlueSky.Flights.Services;
 
 namespace TheBlueSky.Flights.Controllers
@@ -112,5 +115,65 @@ namespace TheBlueSky.Flights.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
             }
         }
+
+        [HttpGet("{id:int}/flights")]
+        public async Task<ActionResult<IEnumerable<FlightResponse>>> GetFlightsForSchedule(int id)
+        {
+            try
+            {
+                var flights = await _flightScheduleService.GetFlightsForScheduleAsync(id);
+                if (flights == null || !flights.Any())
+                {
+                    _logger.LogInformation("No flights found for schedule {Id}", id);
+                    return NotFound();
+                }
+                return Ok(flights);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while fetching flights for schedule {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+            }
+        }
+
+        [HttpPost("{id:int}/scheduleDays")]
+        [Authorize(Roles = "Admin,FlightsOwner")]
+        public async Task<ActionResult<IEnumerable<ScheduleDayResponse>>> UpdateScheduleDays(int id, [FromBody] IEnumerable<string> daysOfWeek)
+        {
+            if (daysOfWeek == null || !daysOfWeek.Any())
+            {
+                return BadRequest("Days of week cannot be null or empty.");
+            }
+
+            try
+            {
+                var updatedScheduleDays = await _flightScheduleService.UpdateScheduleDaysAsync(id, daysOfWeek);
+                if (updatedScheduleDays == null || !updatedScheduleDays.Any())
+                {
+                    _logger.LogInformation("No schedule days found or updated for flight schedule {Id}", id);
+                    return NotFound();
+                }
+                return Ok(updatedScheduleDays);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while updating schedule days for flight schedule {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+            }
+        }
+
+        [HttpPost("{id:int}/generate")]
+        [Authorize(Roles = "Admin,FlightsOwner")]
+        public async Task<IActionResult> GenerateFlights(int id, [FromBody] GenerateFlightsRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var count = await _flightScheduleService.GenerateFlightsAsync(id, request.StartDate, request.EndDate);
+            return Ok(new { message = $"Successfully generated {count} flights.", count });
+        }
+
+
     }
 }

@@ -66,5 +66,19 @@ namespace TheBlueSky.Flights.Repositories
             return await _context.Flights.AnyAsync(e => e.FlightId == id);
         }
 
+        public async Task<IEnumerable<Flight>> GetFlightsByScheduleIdAsync(int scheduleId)
+        {
+            return await _context.Flights
+                .Where(f => f.FlightScheduleId == scheduleId)
+                .OrderBy(f => f.FlightDate)
+                .ToListAsync();
+        }
+
+        public async Task AddFlightsAsync(IEnumerable<Flight> flights)
+        {
+            await _context.Flights.AddRangeAsync(flights);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

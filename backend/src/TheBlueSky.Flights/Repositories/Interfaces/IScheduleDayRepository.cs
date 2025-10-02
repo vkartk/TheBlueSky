@@ -11,5 +11,10 @@ namespace TheBlueSky.Flights.Repositories.Interfaces
         Task<bool> DeleteScheduleDayAsync(int id);
         Task<bool> ExistsAsync(int id);
 
+        Task<IEnumerable<ScheduleDay>> GetByScheduleIdAsync(int scheduleId);
+        Task AddRangeAsync(IEnumerable<ScheduleDay> scheduleDays);
+        Task RemoveRangeAsync(IEnumerable<ScheduleDay> scheduleDays);
+
+
     }
 }

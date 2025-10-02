@@ -20,8 +20,12 @@ namespace TheBlueSky.Flights.Repositories
 
         public async Task<FlightSchedule?> GetFlightScheduleByIdAsync(int id)
         {
-            return await _context.FlightSchedules.FindAsync(id);
+            return await _context.FlightSchedules
+                .Include(s => s.ScheduleDays)
+                .Include(s => s.Aircraft)
+                .FirstOrDefaultAsync(s => s.FlightScheduleId == id);
         }
+
 
         public async Task<FlightSchedule> AddFlightScheduleAsync(FlightSchedule flightSchedule)
         {
