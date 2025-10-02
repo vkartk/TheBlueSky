@@ -10,6 +10,7 @@ import SeatClassesPage from "@/pages/dashboard/seatClass";
 import  AircraftsPage  from "@/pages/dashboard/Aircrafts";
 import  AircraftEditPage  from "@/pages/dashboard/Aircrafts/edit";
 import  FlightSchedulesPage  from "@/pages/dashboard/flightSchedule";
+import { ManageFlightSchedulePage } from "@/pages/dashboard/flightSchedule/manage";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
         element: <FlightSchedulesPage />,
         handle: { crumb: "Flight Schedules" },
       },
+      {
+        path: "flight-schedules/manage/:scheduleId",
+        element: <ManageFlightSchedulePage />,
+        handle: { crumb: "Manage Flight Schedule" },
+      }
     ],
   },
 ])
