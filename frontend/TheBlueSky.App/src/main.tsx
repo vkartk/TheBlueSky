@@ -5,6 +5,9 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './App.tsx'
 import { store } from './store.ts'
+import { setupAxiosInterceptors } from '@/services/axiosSetup.ts'
+
+setupAxiosInterceptors(store);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
