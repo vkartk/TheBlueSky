@@ -19,6 +19,8 @@ namespace TheBlueSky.Auth.Services
 
             ApplicationUser applicationUser = new ApplicationUser()
             { 
+                FirstName = createUserRequest.FirstName,
+                LastName = createUserRequest.LastName,
                 Email = createUserRequest.Email,
                 UserName = createUserRequest.Email,
                 SecurityStamp= Guid.NewGuid().ToString()

@@ -27,6 +27,8 @@ namespace TheBlueSky.Auth.Data.Seeders
             {
                 var newAdmin = new ApplicationUser
                 {
+                    FirstName = "TBS",
+                    LastName = "Admin",
                     UserName = _configuration["DefaultAdminUser:Username"],
                     Email = adminEmail,
                     EmailConfirmed = true
