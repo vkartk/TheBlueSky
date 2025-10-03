@@ -1,3 +1,5 @@
+import type { User } from "@/types/auth"
+
 export const getNameInitials = (name: string | null | undefined): string => {
     if (!name) return "GU"
 
@@ -8,4 +10,10 @@ export const getNameInitials = (name: string | null | undefined): string => {
         .join("")
         .toUpperCase()
         .slice(0, 2)
+}
+
+export const getUserAvatar = (user:User) => {
+    const text = getNameInitials(user.firstName+ ' '+ user.lastName);
+    return `https://avatar.vercel.sh/${encodeURIComponent(user.id)}.svg?text=${encodeURIComponent(text)}`;
+
 }
