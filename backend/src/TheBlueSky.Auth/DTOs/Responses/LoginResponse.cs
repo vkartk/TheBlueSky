@@ -5,6 +5,8 @@
         public string Status { get; set; } = default!;
         public string Message { get; set; } = default!;
 
+        public UserDto User { get; set; }
+
         public string? AccessToken { get; set; }
 
         public string? RefreshToken { get; set; }

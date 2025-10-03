@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using TheBlueSky.Auth.DTOs;
 using TheBlueSky.Auth.DTOs.Requests;
 using TheBlueSky.Auth.DTOs.Responses;
 using TheBlueSky.Auth.Models;
@@ -73,6 +74,16 @@ namespace TheBlueSky.Auth.Controllers
             if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
             {
                 var tokenResponse = await _authTokenService.GenerateTokensAsync(user);
+
+                tokenResponse.User = new UserDto
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Roles = await _userManager.GetRolesAsync(user)
+                };
+
                 return Ok(tokenResponse);
             }
 
