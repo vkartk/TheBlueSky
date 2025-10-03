@@ -14,6 +14,7 @@ interface AuthState {
     refreshToken: string | null;
     isAuthenticated: boolean;
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    sessionStatus: 'idle' | 'initializing' | 'initialized';
     error: string | null;
 }
 
@@ -23,6 +24,7 @@ const initialState: AuthState = {
     refreshToken: getRefreshToken(),
     isAuthenticated: !!getAccessToken(),
     loading: 'idle',
+    sessionStatus: 'idle',
     error: null,
 };
 
@@ -56,6 +58,7 @@ const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
 
                 state.loading = 'succeeded';
+                state.sessionStatus = 'initialized';
                 state.isAuthenticated = true;
                 state.accessToken = action.payload.accessToken ?? null;
                 state.refreshToken = action.payload.refreshToken ?? null;
@@ -97,9 +100,13 @@ const authSlice = createSlice({
             })
 
             // fetch user
+            .addCase(fetchCurrentUser.pending, (state) => {
+                state.sessionStatus = 'initializing';
+            })
             .addCase(fetchCurrentUser.fulfilled, (state, action) => {
                 state.isAuthenticated = true;
                 state.user = action.payload;
+                state.sessionStatus = 'initialized';
             })
 
             .addCase(fetchCurrentUser.rejected, (state) => {
