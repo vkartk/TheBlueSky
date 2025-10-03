@@ -127,7 +127,7 @@ const data = {
         },
         {
           title: "Flights",
-          url: "#",
+          url: "/dashboard/flights",
         }
       ],
     }
