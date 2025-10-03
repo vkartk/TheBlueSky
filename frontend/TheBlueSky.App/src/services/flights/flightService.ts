@@ -1,7 +1,7 @@
 import type { Flight } from '@/types/flight';
 import { flightsApiClient } from './flightsApiClient';
 
-const API_ENDPOINT = '/api/flight';
+const API_ENDPOINT = '/flight';
 
 const getAll = async (): Promise<Flight[]> => {
     const response = await flightsApiClient.get<Flight[]>(API_ENDPOINT);
