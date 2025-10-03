@@ -6,10 +6,12 @@ import { ACCESS_KEY, REFRESH_KEY } from '@/config';
 import type { User } from '@/types/auth';
 
 const getAccessToken = () => localStorage.getItem(ACCESS_KEY);
+const getRefreshToken = () => localStorage.getItem(REFRESH_KEY);
 
 interface AuthState {
     user: User | null;
     accessToken: string | null;
+    refreshToken: string | null;
     isAuthenticated: boolean;
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
     error: string | null;
@@ -18,6 +20,7 @@ interface AuthState {
 const initialState: AuthState = {
     user: null,
     accessToken: getAccessToken(),
+    refreshToken: getRefreshToken(),
     isAuthenticated: !!getAccessToken(),
     loading: 'idle',
     error: null,
@@ -35,6 +38,13 @@ const authSlice = createSlice({
             localStorage.removeItem(REFRESH_KEY);
             toast.info("You have been logged out.");
         },
+
+        tokensRefreshed: (state, action) => {
+            state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
+            localStorage.setItem(ACCESS_KEY, action.payload.accessToken);
+            localStorage.setItem(REFRESH_KEY, action.payload.refreshToken);
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -87,6 +97,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, tokensRefreshed } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AUTH_BASE_URL } from '@/config';
-import { store } from '@/store';
+import { attachAuthToken, handleTokenRefresh } from '@/services/interceptors';
 
 export const authApiClient = axios.create({
   baseURL: AUTH_BASE_URL,
@@ -9,13 +9,5 @@ export const authApiClient = axios.create({
   },
 });
 
-authApiClient.interceptors.request.use(
-  (config) => {
-    const { accessToken } = store.getState().auth;
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+authApiClient.interceptors.request.use(attachAuthToken);
+authApiClient.interceptors.response.use((response) => response, handleTokenRefresh);
