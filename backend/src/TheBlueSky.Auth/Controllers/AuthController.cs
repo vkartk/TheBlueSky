@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using TheBlueSky.Auth.DTOs.Requests;
@@ -18,15 +19,18 @@ namespace TheBlueSky.Auth.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
         private readonly IAuthTokenService _authTokenService;
+        private readonly AuthDbContext _context;
 
         public AuthController(
             UserManager<ApplicationUser> userManager,
             IUserService userService,
-            IAuthTokenService authTokenService)
+            IAuthTokenService authTokenService,
+            AuthDbContext context)
         {
             _userManager = userManager;
             _userService = userService;
             _authTokenService = authTokenService;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -62,33 +66,57 @@ namespace TheBlueSky.Auth.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new LoginResponse { Status = "Error", Message = "Invalid request." });
+                return BadRequest(new { Status = "Error", Message = "Invalid request." });
 
-            try
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                var user = await _userManager.FindByEmailAsync(request.Email);
-
-                if (user == null)
-                    return Unauthorized(new LoginResponse { Status = "Error", Message = "Invalid credentials." });
-
-                var isValidPassword = await _userManager.CheckPasswordAsync(user, request.Password);
-                if (!isValidPassword)
-                    return Unauthorized(new LoginResponse { Status = "Error", Message = "Invalid credentials." });
-
-                var token = await _authTokenService.CreateJwtToken(user);
-
-                return Ok(new LoginResponse
-                {
-                    Status = "Success",
-                    Message = "Login successful.",
-                    AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                    Expiration = token.ValidTo
-                });
+                var tokenResponse = await _authTokenService.GenerateTokensAsync(user);
+                return Ok(tokenResponse);
             }
-            catch
-            {
-                return StatusCode(500, new AuthResponse { Status = "Error", Message = "An error occurred. Please try again." });
-            }
+
+            return Unauthorized(new { Status = "Error", Message = "Invalid credentials." });
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequest tokenRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new { Status = "Error", Message = "Invalid request." });
+
+            var result = await _authTokenService.VerifyAndGenerateTokensAsync(tokenRequest);
+
+            if (result.Status == "Error")
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest logoutRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new { Status = "Error", Message = "Invalid request." });
+
+            // Find and revoke the refresh token
+            var refreshToken = await _context.RefreshTokens
+                .FirstOrDefaultAsync(rt => rt.Token == logoutRequest.RefreshToken);
+
+            if (refreshToken == null)
+                return BadRequest(new { Status = "Error", Message = "Invalid refresh token." });
+
+            // Ensure the token belongs to the currently logged-in user
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (refreshToken.UserId != userId)
+                return Unauthorized();
+
+            refreshToken.IsRevoked = true;
+            _context.RefreshTokens.Update(refreshToken);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Status = "Success", Message = "User logged out successfully." });
         }
 
         [HttpPost("admin/register")]

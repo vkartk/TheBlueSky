@@ -8,6 +8,9 @@ namespace TheBlueSky.Auth.Models
         public AuthDbContext(DbContextOptions<AuthDbContext> options): base(options) { }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
     }
 
 }
