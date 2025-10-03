@@ -21,3 +21,11 @@ export type RegisterResponse = {
     success: boolean;
     message?: string;
 }
+
+export type User = {
+    id: string;
+    firstName: string,
+    lastName: string,
+    email: string;
+    roles?: string[];
+}
