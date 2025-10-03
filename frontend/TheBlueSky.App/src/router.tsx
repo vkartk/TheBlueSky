@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 
-import DashboardLayout from "@/layouts/dashboard";
+import DashboardLayout from "@/components/layouts/dashboard";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
 import DashboardHome from "@/pages/dashboard";
