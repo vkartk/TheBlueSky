@@ -9,6 +9,7 @@ export type LoginResponse = {
     message?: string;
     accessToken?: string;
     refreshToken?: string;
+    user: User
 };
 
 export type RegisterRequest = {
@@ -27,5 +28,5 @@ export type User = {
     firstName: string,
     lastName: string,
     email: string;
-    roles?: string[];
+    roles: string[];
 }

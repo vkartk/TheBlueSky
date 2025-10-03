@@ -4,6 +4,7 @@ import type {
   LoginResponse, 
   RegisterRequest,
   RegisterResponse,
+  User,
 } from '@/types/auth';
 
 
@@ -22,9 +23,15 @@ const logout = async (): Promise<void> => {
   await authApiClient.post('/logout', { refreshToken });
 };
 
+const fetchCurrentUser = async (): Promise<User> => {
+  const response = await authApiClient.get<User>('/whoami');
+  return response.data;
+};
+
 export const authService = {
   login,
   register,
   logout,
+  fetchCurrentUser
 };
 
