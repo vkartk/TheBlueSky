@@ -9,6 +9,8 @@ import editAircraftReducer from '@/features/aircrafts/edit/editAircraftSlice';
 import flightSchedulesReducer from '@/features/flightSchedule/flightScheduleSlice';
 import flightScheduleManageReducer from '@/features/flightSchedule/Manage/flightScheduleManageSlice';
 import flightsReducer from '@/features/flight/flightSlice';
+import authReducer from '@/features/auth/authSlice';
+
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +22,7 @@ export const store = configureStore({
     flightSchedules: flightSchedulesReducer,
     flightScheduleManage: flightScheduleManageReducer,
     flights: flightsReducer,
+    auth: authReducer,
   },
 });
 
