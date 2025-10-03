@@ -27,9 +27,18 @@ import {
 } from "@/components/ui/sidebar"
 
 import { getNameInitials } from "@/utils/users"
+import { logoutUser } from "@/features/auth/authThunks"
+import { useAppDispatch } from "@/store"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
+
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
 
   const user = {
     firstName: "Sam",
@@ -89,7 +98,7 @@ export function NavUser() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
+              <LogOut onClick={handleLogout}/>
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
