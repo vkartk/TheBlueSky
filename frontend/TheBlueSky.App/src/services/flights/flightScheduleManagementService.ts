@@ -1,6 +1,7 @@
 import { flightsApiClient } from './flightsApiClient';
 import type { ScheduleDay, DayOfWeek } from '@/types/scheduleDay';
-import type { GeneratedFlight, FlightScheduleDetails } from '@/types/generatedFlight';
+import type { FlightScheduleDetails } from '@/types/generatedFlight';
+import type { Flight } from '@/types/flight';
 
 interface GenerateFlightsRequest {
   startDate: string;
@@ -27,8 +28,8 @@ const generateFlights = async (scheduleId: number, dateRange: GenerateFlightsReq
   return response.data;
 };
 
-const getFlightsForSchedule = async (scheduleId: number): Promise<GeneratedFlight[]> => {
-  const response = await flightsApiClient.get<GeneratedFlight[]>(`/flightSchedule/${scheduleId}/flights`);
+const getFlightsForSchedule = async (scheduleId: number): Promise<Flight[]> => {
+  const response = await flightsApiClient.get<Flight[]>(`/flightSchedule/${scheduleId}/flights`);
   return response.data;
 };
 

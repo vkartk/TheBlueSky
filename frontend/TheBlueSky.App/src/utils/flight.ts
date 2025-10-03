@@ -1,6 +1,6 @@
 import type { FlightStatus } from "@/types/flight";
 
-export const getStatusVariant = (status: FlightStatus) => {
+export const getFlightStatusVariant = (status: FlightStatus) => {
   switch (status) {
 
     case 'Boarding':

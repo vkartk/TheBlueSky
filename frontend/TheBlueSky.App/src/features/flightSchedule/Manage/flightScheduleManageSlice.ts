@@ -1,7 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
 import type { ScheduleDay } from '@/types/scheduleDay';
-import type { GeneratedFlight, FlightScheduleDetails } from '@/types/generatedFlight';
+import type { Flight } from '@/types/flight';
+import type { FlightScheduleDetails } from '@/types/generatedFlight';
 import {
   fetchScheduleDetails,
   fetchFlightsForSchedule,
@@ -12,7 +13,7 @@ import {
 interface FlightScheduleManageState {
   details: FlightScheduleDetails | null;
   scheduleDays: ScheduleDay[];
-  generatedFlights: GeneratedFlight[];
+  generatedFlights: Flight[];
   loading: {
     details: boolean;
     flights: boolean;
@@ -59,7 +60,7 @@ const flightScheduleManageSlice = createSlice({
       .addCase(fetchFlightsForSchedule.pending, (state) => {
         state.loading.flights = true;
       })
-      .addCase(fetchFlightsForSchedule.fulfilled, (state, action: PayloadAction<GeneratedFlight[]>) => {
+      .addCase(fetchFlightsForSchedule.fulfilled, (state, action: PayloadAction<Flight[]>) => {
         state.loading.flights = false;
         state.generatedFlights = action.payload;
       })
@@ -80,7 +81,7 @@ const flightScheduleManageSlice = createSlice({
         state.loading.isSavingDays = false;
         state.error = action.payload as string;
       })
-      
+
       // Generate Flights
       .addCase(generateFlights.pending, (state) => {
         state.loading.isGenerating = true;

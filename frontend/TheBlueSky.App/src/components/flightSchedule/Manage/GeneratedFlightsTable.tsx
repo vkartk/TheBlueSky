@@ -7,34 +7,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import type { GeneratedFlight } from '@/types/generatedFlight';
+import type { Flight } from '@/types/flight';
+import { getFlightStatusVariant } from '@/utils/flight';
 
 interface GeneratedFlightsTableProps {
-  flights: GeneratedFlight[];
+  flights: Flight[];
 }
-
-const getStatusVariant = (status: GeneratedFlight['flightStatus']) => {
-  switch (status) {
-
-    case 'Boarding':
-    case 'Arrived':
-      return 'default';
-
-    case 'Scheduled':
-      return 'secondary';
-
-    case 'Departed':
-      return 'outline'; 
-
-    case 'Delayed':
-    case 'Cancelled':
-    case 'Diverted':
-      return 'destructive';
-
-    default:
-      return 'secondary';
-  }
-};
 
 export const GeneratedFlightsTable = ({ flights }: GeneratedFlightsTableProps) => {
 
@@ -75,7 +53,7 @@ export const GeneratedFlightsTable = ({ flights }: GeneratedFlightsTableProps) =
                   {new Date(flight.arrivalDateTime).toLocaleTimeString(undefined, timeOptions)}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={getStatusVariant(flight.flightStatus)}>
+                  <Badge variant={getFlightStatusVariant(flight.flightStatus)}>
                     {flight.flightStatus}
                   </Badge>
                 </TableCell>
