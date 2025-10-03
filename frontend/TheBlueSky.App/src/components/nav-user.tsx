@@ -26,9 +26,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-import { getNameInitials } from "@/utils/users"
+import { getNameInitials, getUserAvatar } from "@/utils/users"
 import { logoutUser } from "@/features/auth/authThunks"
-import { useAppDispatch } from "@/store"
+import { useAppDispatch, useAppSelector } from "@/store"
+
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -40,12 +41,10 @@ export function NavUser() {
   };
 
 
-  const user = {
-    firstName: "Sam",
-    lastName: "Smith",
-    email: "sam@example.com",
-    avatar: "/avatars/sam.jpg",
-  }
+  const user = useAppSelector(state => state.auth.user);
+  if(!user) return
+
+  const avatar = getUserAvatar(user)
 
   return (
     <SidebarMenu>
@@ -57,7 +56,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.firstName} />
+                <AvatarImage src={avatar} alt={user.firstName} />
                 <AvatarFallback className="rounded-lg">{getNameInitials(user.firstName + " " + user.lastName)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -76,7 +75,7 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.firstName} />
+                  <AvatarImage src={avatar} alt={user.firstName} />
                   <AvatarFallback className="rounded-lg">{getNameInitials(user.firstName + " " + user.lastName)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
