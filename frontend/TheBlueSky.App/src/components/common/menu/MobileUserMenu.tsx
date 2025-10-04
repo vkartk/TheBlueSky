@@ -3,10 +3,12 @@ import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "@/store";
+import { useAuthActions } from "@/hooks/useAuthActions";
 
 export const MobileUserMenu = () => {
 
     const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+    const { handleLogout } = useAuthActions();
 
     if (!isAuthenticated || !user) {
         return (
@@ -57,7 +59,7 @@ export const MobileUserMenu = () => {
                 <Settings className="mr-2 h-4 w-4" />
                 Settings
             </Button>
-            <Button variant="ghost" className="w-full justify-start text-red-600">
+            <Button variant="ghost" className="w-full justify-start text-red-600" onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
             </Button>

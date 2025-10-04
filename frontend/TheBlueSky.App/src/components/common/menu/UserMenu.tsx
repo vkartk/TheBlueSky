@@ -20,11 +20,13 @@ import {
 
 
 import { useAppSelector } from "@/store";
+import { useAuthActions } from "@/hooks/useAuthActions";
 
 
 export const UserMenu = () => {
 
     const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+    const { handleLogout } = useAuthActions();
 
     if (!isAuthenticated || !user) {
         return (
@@ -84,7 +86,7 @@ export const UserMenu = () => {
                         Settings
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-red-600">
+                    <DropdownMenuItem className="text-red-600" onClick={handleLogout}>
                         <LogOut className="mr-2 h-4 w-4" />
                         Logout
                     </DropdownMenuItem>

@@ -27,19 +27,14 @@ import {
 } from "@/components/ui/sidebar"
 
 import { getNameInitials, getUserAvatar } from "@/utils/users"
-import { logoutUser } from "@/features/auth/authThunks"
-import { useAppDispatch, useAppSelector } from "@/store"
+import { useAppSelector } from "@/store"
+import { useAuthActions } from "@/hooks/useAuthActions"
 
 
 export function NavUser() {
+  
   const { isMobile } = useSidebar()
-
-  const dispatch = useAppDispatch();
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
-
+  const { handleLogout } = useAuthActions();
 
   const user = useAppSelector(state => state.auth.user);
   if(!user) return
