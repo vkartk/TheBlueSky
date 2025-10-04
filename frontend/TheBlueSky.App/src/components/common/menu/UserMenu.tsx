@@ -6,6 +6,7 @@ import {
     Settings,
     LogOut
 } from "lucide-react";
+import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -28,8 +29,14 @@ export const UserMenu = () => {
     if (!isAuthenticated || !user) {
         return (
             <div className="flex items-center gap-3">
-                <Button variant="ghost">Login</Button>
-                <Button className="bg-blue-500 hover:bg-blue-600">Sign Up</Button>
+                <Button asChild variant="ghost">
+                    <Link to="/login" aria-label="Login">Login</Link>
+                </Button>
+
+                <Button asChild className="bg-blue-500 hover:bg-blue-600">
+                    <Link to="/register" aria-label="Sign up">Sign Up</Link>
+                </Button>
+
             </div>
         );
     }

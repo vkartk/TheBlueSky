@@ -1,4 +1,6 @@
 import { User, Bell, Badge, LayoutDashboard, Settings, LogOut } from "lucide-react";
+import { Link } from "react-router";
+
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "@/store";
 
@@ -9,8 +11,18 @@ export const MobileUserMenu = () => {
     if (!isAuthenticated || !user) {
         return (
             <div className="flex flex-col gap-2">
-                <Button variant="outline" className="w-full">Login</Button>
-                <Button className="w-full bg-blue-500 hover:bg-blue-600">Sign Up</Button>
+                <Button asChild variant="outline" className="w-full">
+                    <Link to="/login" aria-label="Login">
+                        Login
+                    </Link>
+                </Button>
+
+                <Button asChild className="w-full bg-blue-500 hover:bg-blue-600">
+                    <Link to="/register" aria-label="Sign up">
+                        Sign Up
+                    </Link>
+                </Button>
+
             </div>
         );
     }
