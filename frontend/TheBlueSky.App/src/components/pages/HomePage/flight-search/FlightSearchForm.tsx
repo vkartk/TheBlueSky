@@ -1,41 +1,40 @@
-import { useState } from "react";
+import * as React from "react";
 import { Search } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { LocationInputs } from "./LocationInputs";
+import { selectAllRoutes } from "@/features/routes/routesSlice";
+import { selectAllAirports } from "@/features/airports/airportsSlice";
+import { fetchAirports } from "@/features/airports/airportsThunks";
+import { fetchRoutes } from "@/features/routes/routesThunks";
+
 import { DatePickers } from "./DatePickers";
 import { PassengerSelector, type PassengerCount } from "./PassengerSelector";
+import { LocationInputs } from "./LocationInputs";
 
-export const  FlightSearchForm = () => {
-  
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useState } from "react";
+
+
+export function FlightSearchForm() {
+  const routes = useAppSelector(selectAllRoutes);
+  const airports = useAppSelector(selectAllAirports);
+
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+      dispatch(fetchRoutes());
+      dispatch(fetchAirports());
+    }, [dispatch]);
+
   const [tripType, setTripType] = useState("Round Trip");
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  const [routeId, setRouteId] = useState<number>();
   const [departureDate, setDepartureDate] = useState<Date | undefined>();
   const [returnDate, setReturnDate] = useState<Date | undefined>();
-  const [passengers, setPassengers] = useState<PassengerCount>({
-    adults: 1,
-    children: 0,
-    infants: 0,
-  });
+  const [passengers, setPassengers] = useState<PassengerCount>({ adults: 1, children: 0, infants: 0 });
   const [flightClass, setFlightClass] = useState("Economy");
 
   const handleTripTypeChange = (value: string) => {
@@ -48,15 +47,13 @@ export const  FlightSearchForm = () => {
   const handleSearch = () => {
     const searchData = {
       tripType,
-      origin,
-      destination,
+      routeId,
       departureDate,
       returnDate: tripType === "One Way" ? undefined : returnDate,
       passengers,
       flightClass,
     };
     console.log("Flight Search Data:", searchData);
-    
   };
 
   return (
@@ -81,12 +78,12 @@ export const  FlightSearchForm = () => {
 
         <div className="space-y-6">
           <LocationInputs
-            origin={origin}
-            setOrigin={setOrigin}
-            destination={destination}
-            setDestination={setDestination}
+            airports={airports}
+            routes={routes}
+            value={routeId}
+            onChange={setRouteId}
           />
-          
+
           <DatePickers
             tripType={tripType}
             departureDate={departureDate}
@@ -98,7 +95,7 @@ export const  FlightSearchForm = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <PassengerSelector value={passengers} onChange={setPassengers} />
             <Select onValueChange={setFlightClass} defaultValue={flightClass}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select flight class" />
               </SelectTrigger>
               <SelectContent>
