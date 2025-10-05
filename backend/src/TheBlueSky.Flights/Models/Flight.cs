@@ -19,6 +19,8 @@ namespace TheBlueSky.Flights.Models
         [Required]
         public DateTimeOffset ArrivalDateTime { get; set; }
 
+        public decimal BaseFare { get; set; }
+
         [Required]
         public FlightStatus FlightStatus { get; set; } = FlightStatus.Scheduled;
 

@@ -18,6 +18,8 @@ namespace TheBlueSky.Flights.DTOs.Responses.Flight
 
         int AvailableSeats,
 
+        decimal BaseFare,
+
         DateTime LastUpdated
     );
 

@@ -30,7 +30,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         {
             var list = new List<FlightResponse>
             {
-                new(1, 10, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(2), FlightStatus.Scheduled, 100, DateTime.UtcNow)
+                new(1, 10, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(2), FlightStatus.Scheduled, 100,5000, DateTime.UtcNow)
             };
             _service.Setup(s => s.GetAllFlightsAsync()).ReturnsAsync(list);
 
@@ -63,7 +63,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         public async Task Create_ValidRequest_Returns201()
         {
             var request = new CreateFlightRequest(10, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(2), FlightStatus.Scheduled, 100);
-            var created = new FlightResponse(1, 10, request.FlightDate, request.DepartureDateTime, request.ArrivalDateTime, FlightStatus.Scheduled, 100, DateTime.UtcNow);
+            var created = new FlightResponse(1, 10, request.FlightDate, request.DepartureDateTime, request.ArrivalDateTime, FlightStatus.Scheduled, 100,5000, DateTime.UtcNow);
 
             _service.Setup(s => s.CreateFlightAsync(request)).ReturnsAsync(created);
 

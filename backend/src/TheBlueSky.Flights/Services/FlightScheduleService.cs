@@ -134,6 +134,7 @@ namespace TheBlueSky.Flights.Services
                         DepartureDateTime = departureDateTime,
                         ArrivalDateTime = arrivalDateTime,
                         FlightStatus = FlightStatus.Scheduled,
+                        BaseFare = schedule.BaseFare,
                         AvailableSeats = totalSeats
                     });
                 }
