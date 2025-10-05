@@ -66,5 +66,16 @@ namespace TheBlueSky.Flights.Repositories
         {
             return await _context.Routes.AnyAsync(e => e.RouteId == id);
         }
+
+        public async Task<Route?> GetReverseRouteAsync(int routeId)
+        {
+            var originalRoute = await _context.Routes.FindAsync(routeId);
+            if (originalRoute == null) return null;
+
+            return await _context.Routes.FirstOrDefaultAsync(r =>
+                r.OriginAirportId == originalRoute.DestinationAirportId &&
+                r.DestinationAirportId == originalRoute.OriginAirportId);
+        }
+
     }
 }

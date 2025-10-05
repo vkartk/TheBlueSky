@@ -10,6 +10,8 @@ namespace TheBlueSky.Flights.Repositories.Interfaces
         Task<bool> UpdateRouteAsync(Route route);
         Task<bool> DeleteRouteAsync(int id);
         Task<bool> ExistsAsync(int id);
+        Task<Route?> GetReverseRouteAsync(int routeId);
+
 
     }
 }
