@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { FlightSearchForm } from "./flight-search/FlightSearchForm";
 
 export const HeroSection: React.FC = () => (
@@ -7,8 +8,9 @@ export const HeroSection: React.FC = () => (
     <img src="/images/home/hero-bg.jpg" alt="Aircraft wing in the sky" className="absolute inset-0 w-full h-full object-cover"/>
     <div className="relative z-20 container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
       <div className="space-y-4 text-center md:text-left">
+        <Badge className="font-bold uppercase tracking-widest"> Ready to Fly? </Badge>
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-          Your Journey Begins with TheBlueSky
+        Find Your Perfect,<br/> Flight Now
         </h1>
         <p className="text-lg md:text-xl text-slate-200">
           Discover seamless flight booking with unbeatable prices and 24/7 support. Your next adventure is just a click away.
