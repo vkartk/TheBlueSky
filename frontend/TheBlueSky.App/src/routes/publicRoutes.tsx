@@ -3,6 +3,7 @@ import { MainLayout } from '@/components/layouts/MainLayout';
 import LoginPage from '@/pages/auth/login';
 import RegisterPage from '@/pages/auth/register';
 import HomePage from '@/pages/public/HomePage';
+import SearchPage from '@/pages/public/Search';
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -13,6 +14,10 @@ export const publicRoutes: RouteObject[] = [
         index: true,
         element: <HomePage/>,
       },
+      {
+        path: 'search',
+        element:<SearchPage/>
+      }
     ],
   },
   {

@@ -17,5 +17,6 @@ export type Flight = {
   departureDateTime: string;
   arrivalDateTime: string;
   flightStatus: FlightStatus;
+  baseFare: number,
   availableSeats: number;
 };
