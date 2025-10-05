@@ -115,5 +115,18 @@ namespace TheBlueSky.Flights.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet("search")]
+        public async Task<ActionResult<FlightSearchResponse>> SearchFlights([FromQuery] FlightSearchRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var results = await _flightService.SearchFlightsAsync(request);
+            return Ok(results);
+        }
+
     }
 }

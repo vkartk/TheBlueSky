@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using TheBlueSky.Flights.DTOs.Requests.Flight;
 using TheBlueSky.Flights.DTOs.Responses.Flight;
+using TheBlueSky.Flights.Enums;
 using TheBlueSky.Flights.Models;
+using TheBlueSky.Flights.Repositories;
 using TheBlueSky.Flights.Repositories.Interfaces;
 
 namespace TheBlueSky.Flights.Services
@@ -9,11 +11,13 @@ namespace TheBlueSky.Flights.Services
     public class FlightService : IFlightService
     {
         private readonly IFlightRepository _flightRepository;
+        private readonly IRouteRepository _routeRepository;
         private readonly IMapper _mapper;
 
-        public FlightService(IFlightRepository flightRepository, IMapper mapper)
+        public FlightService(IFlightRepository flightRepository, IRouteRepository routeRepository, IMapper mapper)
         {
             _flightRepository = flightRepository;
+            _routeRepository = routeRepository;
             _mapper = mapper;
         }
 
@@ -54,5 +58,25 @@ namespace TheBlueSky.Flights.Services
         {
             return await _flightRepository.DeleteFlightAsync(id);
         }
+
+        public async Task<FlightSearchResponse> SearchFlightsAsync(FlightSearchRequest request)
+        {
+            var response = new FlightSearchResponse();
+
+            var outboundFlights = await _flightRepository.SearchFlightsAsync(request.RouteId, request.DepartureDate, request.Adults);
+            response.OutboundFlights = _mapper.Map<IEnumerable<FlightDetailResponse>>(outboundFlights);
+
+            if (request.TripType == TripType.RoundTrip && request.ReturnDate.HasValue)
+            {
+                var reverseRoute = await _routeRepository.GetReverseRouteAsync(request.RouteId);
+                if (reverseRoute != null)
+                {
+                    var returnFlights = await _flightRepository.SearchFlightsAsync(reverseRoute.RouteId, request.ReturnDate.Value, request.Adults);
+                    response.ReturnFlights = _mapper.Map<IEnumerable<FlightDetailResponse>>(returnFlights);
+                }
+            }
+            return response;
+        }
+
     }
 }

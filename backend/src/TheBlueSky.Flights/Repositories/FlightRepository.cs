@@ -89,6 +89,23 @@ namespace TheBlueSky.Flights.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Flight>> SearchFlightsAsync(int routeId, DateOnly flightDate, int requiredSeats)
+        {
+            return await _context.Flights
+                .Include(f => f.Schedule)
+                    .ThenInclude(fs => fs.Route)
+                        .ThenInclude(r => r.OriginAirport)
+                .Include(f => f.Schedule)
+                    .ThenInclude(fs => fs.Route)
+                        .ThenInclude(r => r.DestinationAirport)
+                .Include(f => f.Schedule)
+                    .ThenInclude(fs => fs.Aircraft)
+                .Where(f => f.Schedule.RouteId == routeId
+                          && f.FlightDate == flightDate
+                          && f.AvailableSeats >= requiredSeats)
+                .OrderBy(f => f.DepartureDateTime)
+                .ToListAsync();
+        }
 
     }
 }

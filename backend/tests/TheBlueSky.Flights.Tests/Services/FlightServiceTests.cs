@@ -15,6 +15,7 @@ namespace TheBlueSky.Flights.Tests.Services
     public class FlightServiceTests
     {
         private Mock<IFlightRepository> _repo = null!;
+        private Mock<IRouteRepository> _routeRepository = null!;
         private IMapper _mapper = null!;
         private FlightService _service = null!;
 
@@ -30,7 +31,8 @@ namespace TheBlueSky.Flights.Tests.Services
             _mapper = config.CreateMapper();
 
             _repo = new Mock<IFlightRepository>();
-            _service = new FlightService(_repo.Object, _mapper);
+            _routeRepository = new Mock<IRouteRepository>();
+            _service = new FlightService(_repo.Object,_routeRepository.Object, _mapper);
         }
 
         [Test]

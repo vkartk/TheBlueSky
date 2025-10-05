@@ -22,6 +22,15 @@ namespace TheBlueSky.Flights.Mappings
                 .ForMember(d => d.LastUpdated, opt => opt.Ignore())
                 .ForMember(d => d.Schedule, opt => opt.Ignore())
                 .ForMember(d => d.SeatStatuses, opt => opt.Ignore());
+
+            CreateMap<Flight, FlightDetailResponse>()
+                .ForMember(dest => dest.Origin, opt => opt.MapFrom(src => src.Schedule.Route.OriginAirport))
+                .ForMember(dest => dest.Destination, opt => opt.MapFrom(src => src.Schedule.Route.DestinationAirport))
+                .ForMember(dest => dest.Aircraft, opt => opt.MapFrom(src => src.Schedule.Aircraft))
+
+                .ForMember(dest => dest.DepartureDateTime, opt => opt.MapFrom(src => src.DepartureDateTime.UtcDateTime))
+                .ForMember(dest => dest.ArrivalDateTime, opt => opt.MapFrom(src => src.ArrivalDateTime.UtcDateTime));
+
         }
     }
 }

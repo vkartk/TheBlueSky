@@ -11,5 +11,8 @@ namespace TheBlueSky.Flights.Services
         Task<bool> UpdateFlightAsync(UpdateFlightRequest request);
         Task<bool> DeleteFlightAsync(int id);
 
+        Task<FlightSearchResponse> SearchFlightsAsync(FlightSearchRequest request);
+
+
     }
 }
