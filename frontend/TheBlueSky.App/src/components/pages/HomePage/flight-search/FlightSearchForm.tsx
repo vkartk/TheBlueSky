@@ -1,5 +1,9 @@
-import * as React from "react";
 import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { useNavigate } from "react-router";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +20,7 @@ import { PassengerSelector, type PassengerCount } from "./PassengerSelector";
 import { LocationInputs } from "./LocationInputs";
 
 import { useAppDispatch, useAppSelector } from "@/store";
-import { useState } from "react";
+
 
 
 export function FlightSearchForm() {
@@ -24,11 +28,13 @@ export function FlightSearchForm() {
   const airports = useAppSelector(selectAllAirports);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
-      dispatch(fetchRoutes());
-      dispatch(fetchAirports());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchRoutes());
+    dispatch(fetchAirports());
+  }, [dispatch]);
+
 
   const [tripType, setTripType] = useState("Round Trip");
   const [routeId, setRouteId] = useState<number>();
@@ -45,15 +51,34 @@ export function FlightSearchForm() {
   };
 
   const handleSearch = () => {
-    const searchData = {
-      tripType,
-      routeId,
-      departureDate,
-      returnDate: tripType === "One Way" ? undefined : returnDate,
-      passengers,
-      flightClass,
-    };
-    console.log("Flight Search Data:", searchData);
+
+    if (!routeId || !departureDate) {
+      toast.error("Please select a route and a departure date.");
+      return;
+    }
+
+    const searchParams = new URLSearchParams();
+
+    searchParams.append('routeId', routeId.toString());
+    searchParams.append('departureDate', format(departureDate, 'yyyy-MM-dd'));
+    searchParams.append('adults', passengers.adults.toString());
+    searchParams.append('children', passengers.children.toString());
+    searchParams.append('infants', passengers.infants.toString());
+    searchParams.append('flightClass', flightClass);
+
+    if (tripType === 'Round Trip') {
+      if (!returnDate) {
+        toast.error("Please select a return date for a round trip.");
+        return;
+      }
+      searchParams.append('tripType', 'round-trip');
+      searchParams.append('returnDate', format(returnDate, 'yyyy-MM-dd'));
+    } else {
+      searchParams.append('tripType', 'one-way');
+    }
+
+    navigate(`/search?${searchParams.toString()}`);
+
   };
 
   return (
