@@ -4,6 +4,7 @@ import LoginPage from '@/pages/auth/login';
 import RegisterPage from '@/pages/auth/register';
 import HomePage from '@/pages/public/HomePage';
 import SearchPage from '@/pages/public/Search';
+import NotFoundPage from '@/components/pages/errors/not-found';
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -12,11 +13,11 @@ export const publicRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <HomePage/>,
+        element: <HomePage />,
       },
       {
         path: 'search',
-        element:<SearchPage/>
+        element: <SearchPage />
       }
     ],
   },
@@ -28,4 +29,8 @@ export const publicRoutes: RouteObject[] = [
     path: 'register',
     element: <RegisterPage />,
   },
+  {
+    path: '*',
+    element: <NotFoundPage />
+  }
 ];
