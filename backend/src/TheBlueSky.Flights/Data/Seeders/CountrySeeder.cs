@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using TheBlueSky.Flights.Models;
 
 namespace TheBlueSky.Flights.Data.Seeders
@@ -16,34 +17,31 @@ namespace TheBlueSky.Flights.Data.Seeders
 
         public async Task SeedAsync(CancellationToken cancellationToken = default)
         {
-            var countriesToSeed = new List<Country>
-            {
-                new Country { CountryID = "US", CountryName = "United States", CurrencyCode = "USD", isActive = true },
-                new Country { CountryID = "GB", CountryName = "United Kingdom", CurrencyCode = "GBP", isActive = true },
-                new Country { CountryID = "CA", CountryName = "Canada", CurrencyCode = "CAD", isActive = true },
-                new Country { CountryID = "AU", CountryName = "Australia", CurrencyCode = "AUD", isActive = true },
-                new Country { CountryID = "IN", CountryName = "India", CurrencyCode = "INR", isActive = true },
-                new Country { CountryID = "DE", CountryName = "Germany", CurrencyCode = "EUR", isActive = true },
-                new Country { CountryID = "FR", CountryName = "France", CurrencyCode = "EUR", isActive = true },
-                new Country { CountryID = "JP", CountryName = "Japan", CurrencyCode = "JPY", isActive = true },
-            };
+            var filePath = Path.Combine(AppContext.BaseDirectory, "Data", "Seed", "countries.json");
 
-            var existingCountryIdsList = await _context.Countries
+            if (!File.Exists(filePath))
+                return;
+
+            var json = await File.ReadAllTextAsync(filePath, cancellationToken);
+            var countries = JsonSerializer.Deserialize<List<Country>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }) ?? new();
+
+            var existingIds = await _context.Countries
                 .Select(c => c.CountryID)
                 .ToListAsync(cancellationToken);
 
-            var existingCountryIds = new HashSet<string>(existingCountryIdsList);
-
-            var newCountries = countriesToSeed
-                .Where(c => !existingCountryIds.Contains(c.CountryID))
+            var newCountries = countries
+                .Where(c => !existingIds.Contains(c.CountryID))
                 .ToList();
 
-            
             if (newCountries.Any())
             {
                 await _context.Countries.AddRangeAsync(newCountries, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
             }
+
         }
     }
 }
