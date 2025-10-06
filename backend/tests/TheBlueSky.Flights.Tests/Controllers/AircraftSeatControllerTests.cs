@@ -84,7 +84,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         public async Task Update_InvalidModel_Returns400()
         {
             _controller.ModelState.AddModelError("SeatNumber", "Required");
-            var request = new UpdateAircraftSeatRequest(5, "", "Window", 0, 1, 1, true);
+            var request = new UpdateAircraftSeatRequest(5, "", "Window",SeatClass.Economy, 0, 1, 1, true);
 
             var result = await _controller.UpdateAircraftSeat(request.AircraftSeatId,request);
 
@@ -94,7 +94,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         [Test]
         public async Task Update_NotFound_Returns404()
         {
-            var request = new UpdateAircraftSeatRequest(999, "X", "Aisle", 0, 1, 1, true);
+            var request = new UpdateAircraftSeatRequest(999, "X", "Aisle", SeatClass.Economy, 0, 1, 1, true);
             _service.Setup(s => s.UpdateAircraftSeatAsync(request)).ReturnsAsync(false);
 
             var result = await _controller.UpdateAircraftSeat(request.AircraftSeatId, request);
@@ -105,7 +105,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         [Test]
         public async Task Update_Found_Returns204()
         {
-            var request = new UpdateAircraftSeatRequest(5, "5D", "Window", 10, 5, 4, false);
+            var request = new UpdateAircraftSeatRequest(5, "5D", "Window", SeatClass.Economy, 10, 5, 4, false);
             _service.Setup(s => s.UpdateAircraftSeatAsync(request)).ReturnsAsync(true);
 
             var result = await _controller.UpdateAircraftSeat(request.AircraftSeatId, request);

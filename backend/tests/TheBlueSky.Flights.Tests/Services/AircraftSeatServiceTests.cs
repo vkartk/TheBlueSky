@@ -74,7 +74,7 @@ namespace TheBlueSky.Flights.Tests.Services
         [Test]
         public async Task Update_NotFound_ReturnsFalse()
         {
-            var request = new UpdateAircraftSeatRequest(999, "X", "Aisle", 0, 1, 1, true);
+            var request = new UpdateAircraftSeatRequest(999, "X", "Aisle", SeatClass.Economy, 0, 1, 1, true);
             _repo.Setup(r => r.GetAircraftSeatByIdAsync(999)).ReturnsAsync((AircraftSeat?)null);
 
             var ok = await _service.UpdateAircraftSeatAsync(request);
@@ -86,7 +86,7 @@ namespace TheBlueSky.Flights.Tests.Services
         public async Task Update_ValidRequest_ReturnsTrue()
         {
             var existing = new AircraftSeat {AircraftSeatId = 5, AircraftId = 10, SeatPosition = "Aisle", AdditionalFare = 10, SeatRow = 5, SeatColumn = 3, IsActive = true };
-            var request = new UpdateAircraftSeatRequest(5, "5D", "Window", 20, 5, 4, false);
+            var request = new UpdateAircraftSeatRequest(5, "5D", "Window", SeatClass.Economy, 20, 5, 4, false);
 
             _repo.Setup(r => r.GetAircraftSeatByIdAsync(5)).ReturnsAsync(existing);
             _repo.Setup(r => r.UpdateAircraftSeatAsync(It.IsAny<AircraftSeat>())).ReturnsAsync(true);
