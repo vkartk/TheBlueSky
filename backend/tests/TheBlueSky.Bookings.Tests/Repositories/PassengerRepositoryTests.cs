@@ -42,13 +42,13 @@ namespace TheBlueSky.Bookings.Tests.Repositories
             {
                 new Passenger
                 {
-                    PassengerId = 1, ManagedByUserId = 10, FirstName = "A", LastName = "Z",
+                    PassengerId = 1, ManagedByUserId = "10", FirstName = "A", LastName = "Z",
                     DateOfBirth = new DateTime(1990, 1, 1), Gender = "M",
                     CreatedDate = new DateTime(2023, 1, 1), IsActive = true
                 },
                 new Passenger
                 {
-                    PassengerId = 2, ManagedByUserId = 11, FirstName = "B", LastName = "Y",
+                    PassengerId = 2, ManagedByUserId = "11", FirstName = "B", LastName = "Y",
                     DateOfBirth = new DateTime(1991, 1, 1), Gender = "F",
                     CreatedDate = new DateTime(2024, 1, 1), IsActive = true
                 }

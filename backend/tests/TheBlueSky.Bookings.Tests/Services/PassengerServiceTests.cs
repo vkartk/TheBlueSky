@@ -37,13 +37,13 @@ namespace TheBlueSky.Bookings.Tests.Services
             // Arrange
             var entities = new List<Passenger>
             {
-                new() { PassengerId = 1, ManagedByUserId = 10, FirstName = "A", LastName = "L", DateOfBirth = new DateTime(2000,1,1), CreatedDate = new DateTime(2023,1,1) },
-                new() { PassengerId = 2, ManagedByUserId = 11, FirstName = "B", LastName = "M", DateOfBirth = new DateTime(1999,1,1), CreatedDate = new DateTime(2024,1,1) }
+                new() { PassengerId = 1, ManagedByUserId = "10", FirstName = "A", LastName = "L", DateOfBirth = new DateTime(2000,1,1), CreatedDate = new DateTime(2023,1,1) },
+                new() { PassengerId = 2, ManagedByUserId = "11", FirstName = "B", LastName = "M", DateOfBirth = new DateTime(1999,1,1), CreatedDate = new DateTime(2024,1,1) }
             };
 
             var dto1 = new PassengerResponse(
                 PassengerId: 1,
-                ManagedByUserId: 10,
+                ManagedByUserId: "10",
                 FirstName: "A",
                 LastName: "L",
                 DateOfBirth: new DateTime(2000, 1, 1),
@@ -57,7 +57,7 @@ namespace TheBlueSky.Bookings.Tests.Services
 
             var dto2 = new PassengerResponse(
                 PassengerId: 2,
-                ManagedByUserId: 11,
+                ManagedByUserId: "11",
                 FirstName: "B",
                 LastName: "M",
                 DateOfBirth: new DateTime(1999, 1, 1),
@@ -100,7 +100,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         {
             // Arrange
             var req = new CreatePassengerRequest(
-                ManagedByUserId: 7,
+                ManagedByUserId: "7",
                 FirstName: "John",
                 LastName: "Doe",
                 DateOfBirth: new DateTime(1990, 5, 1),
@@ -112,7 +112,7 @@ namespace TheBlueSky.Bookings.Tests.Services
 
             var toAdd = new Passenger
             {
-                ManagedByUserId = 7,
+                ManagedByUserId = "7",
                 FirstName = "John",
                 LastName = "Doe",
                 DateOfBirth = new DateTime(1990, 5, 1),
@@ -127,7 +127,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             var added = new Passenger
             {
                 PassengerId = 42,
-                ManagedByUserId = 7,
+                ManagedByUserId = "7",
                 FirstName = "John",
                 LastName = "Doe",
                 DateOfBirth = new DateTime(1990, 5, 1),
@@ -141,7 +141,7 @@ namespace TheBlueSky.Bookings.Tests.Services
 
             var dto = new PassengerResponse(
                 PassengerId: 42,
-                ManagedByUserId: 7,
+                ManagedByUserId: "7",
                 FirstName: "John",
                 LastName: "Doe",
                 DateOfBirth: new DateTime(1990, 5, 1),
@@ -172,7 +172,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             // Arrange
             var req = new UpdatePassengerRequest(
                 PassengerId: 5,
-                ManagedByUserId: 7,
+                ManagedByUserId: "7",
                 FirstName: "J",
                 LastName: "D",
                 DateOfBirth: new DateTime(1991, 1, 1),
@@ -200,7 +200,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             // Arrange
             var req = new UpdatePassengerRequest(
                 PassengerId: 999,
-                ManagedByUserId: 7,
+                ManagedByUserId: "7",
                 FirstName: "X",
                 LastName: "Y",
                 DateOfBirth: new DateTime(1991, 1, 1),
@@ -240,7 +240,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         {
             // Arrange
             var req = new CreatePassengerRequest(
-                ManagedByUserId: 7,
+                ManagedByUserId: "7",
                 FirstName: "John",
                 LastName: "Doe",
                 DateOfBirth: new DateTime(1990, 5, 1),

@@ -58,11 +58,11 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Create_Returns201_WithRouteValues()
         {
             // Arrange
-            var req = new CreatePassengerRequest(1, "John", "Doe", System.DateTime.UtcNow.Date, null, null, null, null);
+            var req = new CreatePassengerRequest("1", "John", "Doe", System.DateTime.UtcNow.Date, null, null, null, null);
         
             var created = new PassengerResponse(
                 PassengerId: 55,
-                ManagedByUserId: 1,
+                ManagedByUserId: "1",
                 FirstName: "John",
                 LastName: "Doe",
                 DateOfBirth: System.DateTime.UtcNow.Date,
@@ -91,7 +91,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_Found_Returns204()
         {
             // Arrange
-            var req = new UpdatePassengerRequest(5, 1, "J", "D", System.DateTime.UtcNow.Date, null, null, null, null, true);
+            var req = new UpdatePassengerRequest(5, "1", "J", "D", System.DateTime.UtcNow.Date, null, null, null, null, true);
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(true);
 
             // Act
@@ -105,7 +105,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_NotFound_Returns404()
         {
             // Arrange
-            var req = new UpdatePassengerRequest(999, 1, "J", "D", System.DateTime.UtcNow.Date, null, null, null, null, true);
+            var req = new UpdatePassengerRequest(999, "1", "J", "D", System.DateTime.UtcNow.Date, null, null, null, null, true);
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(false);
 
             // Act
@@ -148,7 +148,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
             _sut.ModelState.AddModelError("FirstName", "Required");
 
             // Act
-            var result = await _sut.Create(new CreatePassengerRequest(1, "", "Doe", System.DateTime.UtcNow.Date, null, null, null, null));
+            var result = await _sut.Create(new CreatePassengerRequest("1", "", "Doe", System.DateTime.UtcNow.Date, null, null, null, null));
 
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
