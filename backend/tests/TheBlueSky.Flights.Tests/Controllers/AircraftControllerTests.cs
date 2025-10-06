@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using System.Security.Claims;
 using TheBlueSky.Flights.Controllers;
 using TheBlueSky.Flights.DTOs.Requests.Aircraft;
 using TheBlueSky.Flights.DTOs.Responses.Aircraft;
@@ -96,6 +98,18 @@ namespace TheBlueSky.Flights.Tests.Controllers
             );
 
             _serviceMock.Setup(s => s.CreateAircraftAsync(request, "1")).ReturnsAsync(created);
+
+            var user = new ClaimsPrincipal(
+            new ClaimsIdentity(
+                new[] { new Claim(ClaimTypes.NameIdentifier, "1") },
+                authenticationType: "TestAuth"
+                )
+            );
+
+            _sut.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = user }
+            };
 
             // Act
             var result = await _sut.CreateAircraft(request);
