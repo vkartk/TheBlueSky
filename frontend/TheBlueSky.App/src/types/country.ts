@@ -1,5 +1,5 @@
 export type Country = {
-  countryId: string;
+  countryID: string;
   countryName: string;
   currencyCode: string;
   isActive: boolean;

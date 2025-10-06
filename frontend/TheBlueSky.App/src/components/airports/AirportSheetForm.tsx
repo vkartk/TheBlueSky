@@ -2,10 +2,19 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { selectAllCountries } from '@/features/countries/countriesSlice';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   SheetContent,
   SheetHeader,
@@ -24,6 +33,7 @@ import {
 } from '@/components/ui/form';
 
 import type { Airport, NewAirport } from '@/types/airports';
+import { fetchCountries } from '@/features/countries/countriesThunks';
 
 const airportSchema = z.object({
     airportCode: z.string()
@@ -53,6 +63,9 @@ interface AirportSheetFormProps {
 export const AirportSheetForm = ({ initialData, onSave, onClose, isLoading }: AirportSheetFormProps) => {
   const isEditMode = !!initialData;
 
+  const dispatch = useAppDispatch()
+  const countries = useAppSelector(selectAllCountries);
+
   const form = useForm<AirportFormValues>({
     resolver: zodResolver(airportSchema),
     defaultValues: initialData || {
@@ -64,7 +77,10 @@ export const AirportSheetForm = ({ initialData, onSave, onClose, isLoading }: Ai
     },
   });
 
+  console.log(countries)
   useEffect(() => {
+    dispatch(fetchCountries())
+    
     form.reset(
       initialData || {
         airportCode: '',
@@ -136,10 +152,34 @@ export const AirportSheetForm = ({ initialData, onSave, onClose, isLoading }: Ai
               name="countryId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country ID</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., IN" {...field} />
-                  </FormControl>
+                  <FormLabel>Country</FormLabel>
+                  <Select 
+                    onValueChange={field.onChange} 
+                    defaultValue={field.value}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent key="country-select-content">
+                      {countries && countries.length > 0 ? (
+                        countries.map((country) => (
+                          <SelectItem 
+                            key={`country-${country.countryID}`}
+                            value={country.countryID}
+                          >
+                            {country.countryName} ({country.countryID})
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="no-countries" disabled>
+                          No countries available
+                        </SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
