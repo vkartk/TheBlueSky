@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TheBlueSky.Flights.Enums;
 
 namespace TheBlueSky.Flights.Models
 {
@@ -10,7 +11,6 @@ namespace TheBlueSky.Flights.Models
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
-        public DbSet<SeatClass> SeatClasses { get; set; }
         public DbSet<AircraftSeat> AircraftSeats { get; set; }
         public DbSet<FlightSchedule> FlightSchedules { get; set; }
         public DbSet<ScheduleDay> ScheduleDays { get; set; }
@@ -48,6 +48,49 @@ namespace TheBlueSky.Flights.Models
                  .OnDelete(DeleteBehavior.Restrict);
             });
         }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            await UpdateAircraftSeatCounts();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+
+        private async Task UpdateAircraftSeatCounts()
+        {
+            var changedSeatEntries = ChangeTracker.Entries<AircraftSeat>()
+                .Where(e => e.State == EntityState.Added ||
+                            e.State == EntityState.Deleted ||
+                            e.State == EntityState.Modified);
+
+            var affectedAircraftIds = changedSeatEntries
+                .Select(e => e.Entity.AircraftId)
+                .Distinct()
+                .ToList();
+
+            if (!affectedAircraftIds.Any())
+            {
+                return;
+            }
+
+            foreach (var aircraftId in affectedAircraftIds)
+            {
+                var aircraft = await Aircrafts.FindAsync(aircraftId);
+                if (aircraft == null) continue;
+
+                await Entry(aircraft).Collection(a => a.Seats).LoadAsync();
+
+                var localSeatsForAircraft = AircraftSeats.Local
+                    .Where(s => s.AircraftId == aircraftId);
+
+                aircraft.EconomySeats = localSeatsForAircraft.Count(s => s.SeatClass == SeatClass.Economy);
+                aircraft.BusinessSeats = localSeatsForAircraft.Count(s => s.SeatClass == SeatClass.Business);
+                aircraft.FirstClassSeats = localSeatsForAircraft.Count(s => s.SeatClass == SeatClass.FirstClass);
+
+                Entry(aircraft).State = EntityState.Modified;
+            }
+        }
+
 
 
     }
