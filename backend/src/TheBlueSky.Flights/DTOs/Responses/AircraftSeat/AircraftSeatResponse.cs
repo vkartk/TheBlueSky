@@ -1,4 +1,6 @@
-﻿namespace TheBlueSky.Flights.DTOs.Responses.AircraftSeat
+﻿using TheBlueSky.Flights.Enums;
+
+namespace TheBlueSky.Flights.DTOs.Responses.AircraftSeat
 {
     public record AircraftSeatResponse(
 
@@ -6,7 +8,7 @@
 
         int AircraftId,
 
-        int SeatClassId,
+        SeatClass SeatClass,
 
         string SeatNumber,
 

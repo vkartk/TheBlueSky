@@ -28,7 +28,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         [Test]
         public async Task GetAll_ReturnsOk()
         {
-            var list = new List<AircraftSeatResponse> { new(1, 10, 2, "1A", "Window", 100, 1, 1, true) };
+            var list = new List<AircraftSeatResponse> { new(1, 10, SeatClass.Economy, "1A", "Window", 100, 1, 1, true) };
             _service.Setup(s => s.GetAllAircraftSeatsAsync()).ReturnsAsync(list);
 
             var result = await _controller.GetAllAircraftSeats();
@@ -49,7 +49,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         [Test]
         public async Task GetById_Found_ReturnsOk()
         {
-            var dto = new AircraftSeatResponse(5, 10, 1, "5C", "Aisle", 25, 5, 3, true);
+            var dto = new AircraftSeatResponse(5, 10, SeatClass.Economy, "5C", "Aisle", 25, 5, 3, true);
             _service.Setup(s => s.GetAircraftSeatByIdAsync(5)).ReturnsAsync(dto);
 
             var result = await _controller.GetAircraftSeatById(5);
@@ -71,7 +71,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         public async Task Create_ValidRequest_Returns201()
         {
             var request = new CreateAircraftSeatRequest(10, SeatClass.Economy, "2A", "Window", 50, 2, 1);
-            var created = new AircraftSeatResponse(123, 10, 1, "2A", "Window", 50, 2, 1, true);
+            var created = new AircraftSeatResponse(123, 10, SeatClass.Economy, "2A", "Window", 50, 2, 1, true);
 
             _service.Setup(s => s.CreateAircraftSeatAsync(request)).ReturnsAsync(created);
 
