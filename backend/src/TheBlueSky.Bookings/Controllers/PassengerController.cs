@@ -59,7 +59,7 @@ namespace TheBlueSky.Bookings.Controllers
             }
         }
 
-        [HttpGet("managed-by/{userId:string}")]
+        [HttpGet("managed-by/{userId}")]
         public async Task<ActionResult<IEnumerable<PassengerResponse>>> GetByUserId(string userId)
         {
             try

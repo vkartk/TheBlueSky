@@ -8,9 +8,9 @@ const getAll = async (): Promise<Passenger[]> => {
   return res.data;
 };
 
-const getByUserId = async (userId: string): Promise<Passenger | null> => {
-  const res = await bookingsApiClient.get<Passenger>(`${API_PATH}/managed-by/${userId}`);
-  return res.data ?? null;
+const getByUserId = async (userId: string): Promise<Passenger[]> => {
+  const res = await bookingsApiClient.get<Passenger[]>(`${API_PATH}/managed-by/${userId}`);
+  return res.data;
 };
 
 const create = async (data: NewPassenger): Promise<Passenger> => {

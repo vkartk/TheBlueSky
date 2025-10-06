@@ -43,9 +43,9 @@ const passengersSlice = createSlice({
       .addCase(fetchPassengerByUser.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchPassengerByUser.fulfilled, (state, action: PayloadAction<Passenger | null>) => {
+      .addCase(fetchPassengerByUser.fulfilled, (state, action: PayloadAction<Passenger[]>) => {
         state.loading = 'succeeded';
-        state.items = action.payload ? [action.payload] : [];
+        state.items = action.payload;
       })
       .addCase(fetchPassengerByUser.rejected, (state, action) => {
         state.loading = 'failed';
