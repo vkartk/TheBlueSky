@@ -3,6 +3,11 @@ import type { Passenger, NewPassenger } from '@/types/passenger';
 
 const API_PATH = '/Passengers';
 
+const getAll = async (): Promise<Passenger[]> => {
+  const res = await bookingsApiClient.get<Passenger[]>('/Passengers');
+  return res.data;
+};
+
 const getByUserId = async (userId: string): Promise<Passenger | null> => {
   const res = await bookingsApiClient.get<Passenger>(`${API_PATH}/by-user/${userId}`);
   return res.data ?? null;
@@ -18,4 +23,9 @@ const update = async (id: number, data: Passenger): Promise<Passenger> => {
   return res.data;
 };
 
-export const passengerService = { getByUserId, create, update };
+export const passengerService = {
+  getAll,
+  getByUserId,
+  create,
+  update
+};
