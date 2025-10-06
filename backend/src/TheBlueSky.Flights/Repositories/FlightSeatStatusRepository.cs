@@ -30,6 +30,13 @@ namespace TheBlueSky.Flights.Repositories
             return flightSeatStatus;
         }
 
+        public async Task AddFlightSeatStatusesAsync(IEnumerable<FlightSeatStatus> seatStatuses)
+        {
+            await _context.FlightSeatStatuses.AddRangeAsync(seatStatuses);
+            await _context.SaveChangesAsync();
+        }
+
+
         public async Task<bool> UpdateFlightSeatStatusAsync(FlightSeatStatus flightSeatStatus)
         {
             _context.Entry(flightSeatStatus).State = EntityState.Modified;

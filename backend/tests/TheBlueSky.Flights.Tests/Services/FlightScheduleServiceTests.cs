@@ -16,6 +16,8 @@ namespace TheBlueSky.Flights.Tests.Services
         private Mock<IFlightScheduleRepository> _repo = null!;
         private Mock<IFlightRepository> _flightRepo = null!;
         private Mock<IScheduleDayRepository> _scheduleDayRepo = null!;
+        private Mock<IAircraftSeatRepository> _aircraftSeatRepo = null!;
+        private Mock<IFlightSeatStatusRepository> _seatStatusRepo = null!;
         private IMapper _mapper = null!;
         private FlightScheduleService _service = null!;
 
@@ -33,8 +35,10 @@ namespace TheBlueSky.Flights.Tests.Services
             _repo = new Mock<IFlightScheduleRepository>();
             _flightRepo = new Mock<IFlightRepository>();
             _scheduleDayRepo = new Mock<IScheduleDayRepository>();
+            _aircraftSeatRepo = new Mock<IAircraftSeatRepository>();
+            _seatStatusRepo = new Mock<IFlightSeatStatusRepository>();
 
-            _service = new FlightScheduleService(_repo.Object, _flightRepo.Object, _scheduleDayRepo.Object, _mapper);
+            _service = new FlightScheduleService(_repo.Object, _flightRepo.Object, _scheduleDayRepo.Object, _aircraftSeatRepo.Object, _seatStatusRepo.Object, _mapper);
         }
 
         [Test]

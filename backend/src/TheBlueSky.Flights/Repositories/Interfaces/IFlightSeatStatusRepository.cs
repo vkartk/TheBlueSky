@@ -6,6 +6,7 @@ namespace TheBlueSky.Flights.Repositories.Interfaces
     {
         Task<IEnumerable<FlightSeatStatus>> GetAllFlightSeatStatusesAsync();
         Task<FlightSeatStatus?> GetFlightSeatStatusByIdAsync(int id);
+        Task AddFlightSeatStatusesAsync(IEnumerable<FlightSeatStatus> seatStatuses);
         Task<FlightSeatStatus> AddFlightSeatStatusAsync(FlightSeatStatus flightSeatStatus);
         Task<bool> UpdateFlightSeatStatusAsync(FlightSeatStatus flightSeatStatus);
         Task<bool> DeleteFlightSeatStatusAsync(int id);

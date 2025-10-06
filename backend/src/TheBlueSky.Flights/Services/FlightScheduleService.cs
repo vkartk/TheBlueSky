@@ -15,13 +15,24 @@ namespace TheBlueSky.Flights.Services
         private readonly IFlightScheduleRepository _flightScheduleRepository;
         private readonly IFlightRepository _flightRepository;
         private readonly IScheduleDayRepository _scheduleDayRepository;
+        private readonly IAircraftSeatRepository _aircraftSeatRepository;
+        private readonly IFlightSeatStatusRepository _flightSeatStatusRepository;
         private readonly IMapper _mapper;
 
-        public FlightScheduleService(IFlightScheduleRepository flightScheduleRepository,IFlightRepository flightRepository, IScheduleDayRepository scheduleDayRepository, IMapper mapper)
+        public FlightScheduleService(
+            IFlightScheduleRepository flightScheduleRepository,
+            IFlightRepository flightRepository, 
+            IScheduleDayRepository scheduleDayRepository,
+            IAircraftSeatRepository aircraftSeatRepository,
+            IFlightSeatStatusRepository flightSeatStatusRepository,
+            IMapper mapper
+        )
         {
             _flightScheduleRepository = flightScheduleRepository;
             _flightRepository = flightRepository;
             _scheduleDayRepository = scheduleDayRepository;
+            _aircraftSeatRepository = aircraftSeatRepository;
+            _flightSeatStatusRepository = flightSeatStatusRepository;
             _mapper = mapper;
         }
 
@@ -96,12 +107,11 @@ namespace TheBlueSky.Flights.Services
         {
             var schedule = await _flightScheduleRepository.GetFlightScheduleByIdAsync(flightScheduleId);
 
-            if (schedule?.ScheduleDays == null || !schedule.ScheduleDays.Any(d => d.IsActive))
+            if (schedule?.Aircraft == null || schedule?.ScheduleDays == null || !schedule.ScheduleDays.Any(d => d.IsActive))
             {
-                return 0; // No active schedule days to generate flights for
+                return 0;
             }
 
-            // Find all flights that already exist in the requested date range
             var existingFlights = await _flightRepository.GetFlightsByScheduleIdAndDateRangeAsync(flightScheduleId, startDate, endDate);
             var existingFlightDates = existingFlights.Select(f => f.FlightDate).ToHashSet();
 
@@ -143,12 +153,43 @@ namespace TheBlueSky.Flights.Services
             if (newFlights.Any())
             {
                 await _flightRepository.AddFlightsAsync(newFlights);
+                await GenerateSeatStatusesForNewFlightsAsync(newFlights, schedule.Aircraft.AircraftId);
             }
 
             return newFlights.Count;
         }
 
+        private async Task GenerateSeatStatusesForNewFlightsAsync(IEnumerable<Flight> newFlights, int aircraftId)
+        {
+            var baseAircraftSeats = await _aircraftSeatRepository.GetSeatsByAircraftIdAsync(aircraftId);
+
+            if (!baseAircraftSeats.Any())
+            {
+                return;
+            }
+
+            var allSeatStatuses = new List<FlightSeatStatus>();
+
+            foreach (var flight in newFlights)
+            {
+                foreach (var seat in baseAircraftSeats)
+                {
+                    allSeatStatuses.Add(new FlightSeatStatus
+                    {
+                        FlightId = flight.FlightId,
+                        AircraftSeatId = seat.AircraftSeatId,
+                        SeatStatus = SeatStatus.Available,
+                    });
+                }
+            }
+
+            if (allSeatStatuses.Any())
+            {
+                await _flightSeatStatusRepository.AddFlightSeatStatusesAsync(allSeatStatuses);
+            }
+        }
+    
 
 
-    }
+}
 }
