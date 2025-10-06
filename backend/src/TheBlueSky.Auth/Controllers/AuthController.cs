@@ -77,7 +77,7 @@ namespace TheBlueSky.Auth.Controllers
 
                 tokenResponse.User = new UserDto
                 {
-                    Id = user.Id,
+                    userId = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
