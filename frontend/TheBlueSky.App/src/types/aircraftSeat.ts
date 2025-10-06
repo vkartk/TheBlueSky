@@ -1,7 +1,15 @@
+export const SeatClasses = [
+  'Economy',
+  'Business',
+  'FirstClass'
+] as const;
+
+export type SeatClass = (typeof SeatClasses)[number];
+
 export type AircraftSeat = {
   aircraftSeatId: number;
   aircraftId: number;
-  seatClassId: number;
+  seatClass: SeatClass;
   seatNumber: string;
   seatPosition: string;
   additionalFare: number;
