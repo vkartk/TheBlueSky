@@ -67,9 +67,6 @@ builder.Services.AddScoped<IAirportService, AirportService>();
 builder.Services.AddScoped<IRouteRepository, RouteRepository>();
 builder.Services.AddScoped<IRouteService, RouteService>();
 
-builder.Services.AddScoped<ISeatClassRepository, SeatClassRepository>();
-builder.Services.AddScoped<ISeatClassService, SeatClassService>();
-
 builder.Services.AddScoped<IAircraftRepository, AircraftRepository>();
 builder.Services.AddScoped<IAircraftService, AircraftService>();
 

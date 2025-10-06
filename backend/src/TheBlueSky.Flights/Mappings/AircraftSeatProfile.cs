@@ -20,7 +20,6 @@ namespace TheBlueSky.Flights.Mappings
             
             CreateMap<UpdateAircraftSeatRequest, AircraftSeat>()
                 .ForMember(d => d.AircraftId, opt => opt.Ignore())
-                .ForMember(d => d.SeatClassId, opt => opt.Ignore())
                 .ForMember(d => d.Aircraft, opt => opt.Ignore())
                 .ForMember(d => d.SeatClass, opt => opt.Ignore())
                 .ForMember(d => d.FlightSeatStatuses, opt => opt.Ignore());

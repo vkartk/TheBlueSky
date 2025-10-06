@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TheBlueSky.Flights.Enums;
 
 namespace TheBlueSky.Flights.Models
 {
@@ -10,10 +11,6 @@ namespace TheBlueSky.Flights.Models
         [Required]
         [ForeignKey("Aircraft")]
         public int AircraftId { get; set; }
-
-        [Required]
-        [ForeignKey("SeatClass")]
-        public int SeatClassId { get; set; }
 
         [Required]
         [StringLength(10)]
@@ -36,7 +33,7 @@ namespace TheBlueSky.Flights.Models
         public bool IsActive { get; set; } = true;
 
         public Aircraft Aircraft { get; set; } = null!;
-        public SeatClass SeatClass { get; set; } = null!;
+        public SeatClass SeatClass { get; set; }
         public ICollection<FlightSeatStatus> FlightSeatStatuses { get; set; } = new List<FlightSeatStatus>();
 
     }

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using TheBlueSky.Flights.Controllers;
 using TheBlueSky.Flights.DTOs.Requests.AircraftSeat;
 using TheBlueSky.Flights.DTOs.Responses.AircraftSeat;
+using TheBlueSky.Flights.Enums;
 using TheBlueSky.Flights.Services;
 
 namespace TheBlueSky.Flights.Tests.Controllers
@@ -61,7 +62,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         {
             _controller.ModelState.AddModelError("SeatNumber", "Required");
 
-            var result = await _controller.CreateAircraftSeat(new CreateAircraftSeatRequest(10, 1, "", "Window", 0, 1, 1));
+            var result = await _controller.CreateAircraftSeat(new CreateAircraftSeatRequest(10, SeatClass.Economy, "", "Window", 0, 1, 1));
 
             Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
         }
@@ -69,7 +70,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         [Test]
         public async Task Create_ValidRequest_Returns201()
         {
-            var request = new CreateAircraftSeatRequest(10, 1, "2A", "Window", 50, 2, 1);
+            var request = new CreateAircraftSeatRequest(10, SeatClass.Economy, "2A", "Window", 50, 2, 1);
             var created = new AircraftSeatResponse(123, 10, 1, "2A", "Window", 50, 2, 1, true);
 
             _service.Setup(s => s.CreateAircraftSeatAsync(request)).ReturnsAsync(created);
