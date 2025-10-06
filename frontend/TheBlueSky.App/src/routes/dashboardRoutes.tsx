@@ -2,7 +2,6 @@ import DashboardLayout from "@/components/layouts/dashboard";
 import DashboardHome from "@/pages/dashboard";
 import { AirportsPage } from "@/pages/dashboard/Airports";
 import RoutePage from "@/pages/dashboard/Route";
-import SeatClassesPage from "@/pages/dashboard/seatClass";
 import AircraftsPage from "@/pages/dashboard/Aircrafts";
 import AircraftEditPage from "@/pages/dashboard/Aircrafts/edit";
 import FlightSchedulesPage from "@/pages/dashboard/flightSchedule";
@@ -38,11 +37,6 @@ export const dashboardRoutes = {
       path: "aircrafts/edit/:aircraftId",
       element: <AircraftEditPage />,
       handle: { crumb: "Edit Aircraft" },
-    },
-    {
-      path: "seat-classes",
-      element: <SeatClassesPage />,
-      handle: { crumb: "Seat Classes" },
     },
     {
       path: "flight-schedules",

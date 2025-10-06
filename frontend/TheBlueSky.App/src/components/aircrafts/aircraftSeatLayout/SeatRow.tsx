@@ -1,5 +1,4 @@
 import type { AircraftSeat } from '@/types/aircraftSeat';
-import type { SeatClass } from '@/types/seatClass';
 import { Seat } from './Seat';
 
 type SeatDetails = {
@@ -8,7 +7,6 @@ type SeatDetails = {
   column: number;
   letter: string;
   seatData?: AircraftSeat;
-  seatClass?: SeatClass;
 };
 
 interface SeatRowProps {
@@ -23,6 +21,7 @@ export function SeatRow({ rowNumber, sections, onSeatSelect }: SeatRowProps) {
       <div className="flex h-10 w-8 items-center justify-center font-mono text-xs text-muted-foreground">
         {rowNumber}
       </div>
+
       <div className="flex grow items-center">
         {sections.map((sectionSeats, sectionIndex) => (
           <div key={sectionIndex} className="flex items-center gap-x-2">
@@ -31,7 +30,6 @@ export function SeatRow({ rowNumber, sections, onSeatSelect }: SeatRowProps) {
               <Seat
                 key={details.key}
                 seatData={details.seatData}
-                seatClass={details.seatClass}
                 onClick={() => onSeatSelect(details)}
               />
             ))}

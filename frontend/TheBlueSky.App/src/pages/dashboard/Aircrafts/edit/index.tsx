@@ -8,14 +8,14 @@ import {
   selectEditAircraftSeats,
   selectEditAircraftLoading,
 } from '@/features/aircrafts/edit/editAircraftSlice';
-import { selectAllSeatClasses } from '@/features/seatClass/seatClassSlice';
-import { fetchSeatClasses } from '@/features/seatClass/seatClassThunks';
 
 import { AircraftDetailsForm } from '@/components/aircrafts/edit/AircraftDetailsForm';
 import { AircraftSeatLayout } from '@/components/aircrafts/aircraftSeatLayout';
 import { AircraftSeatForm } from '@/components/aircrafts/edit/AircraftSeatForm';
+
 import type { Aircraft } from '@/types/aircraft';
 import type { AircraftSeat, NewAircraftSeat } from '@/types/aircraftSeat';
+
 import { Loader2 } from 'lucide-react';
 
 export default function AircraftEditPage() {
@@ -25,13 +25,11 @@ export default function AircraftEditPage() {
   const loading = useAppSelector(selectEditAircraftLoading);
   const aircraft = useAppSelector(selectEditAircraft);
   const seats = useAppSelector(selectEditAircraftSeats);
-  const seatClasses = useAppSelector(selectAllSeatClasses);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedSeat, setSelectedSeat] = useState<Partial<AircraftSeat & { isNew: boolean }>>({});
 
   useEffect(() => {
-    dispatch(fetchSeatClasses());
     if (aircraftId) {
       dispatch(fetchAircraftWithSeats(Number(aircraftId)));
     }
@@ -39,10 +37,7 @@ export default function AircraftEditPage() {
 
   const handleDetailsSave = (data: Pick<Aircraft, 'aircraftName' | 'isActive'>) => {
     if (aircraft) {
-      const updatedAircraftData: Aircraft = {
-        ...aircraft,
-        ...data,
-      };
+      const updatedAircraftData: Aircraft = { ...aircraft, ...data };
       dispatch(updateAircraft(updatedAircraftData));
     }
   };
@@ -54,7 +49,17 @@ export default function AircraftEditPage() {
 
   const handleSeatFormSave = (data: Partial<AircraftSeat>) => {
     if ('isNew' in selectedSeat && selectedSeat.isNew) {
-      dispatch(createAircraftSeat(data as NewAircraftSeat)).then(() => setIsFormOpen(false));
+      const newData: NewAircraftSeat = {
+        aircraftId: aircraft!.aircraftId,
+        seatRow: data.seatRow ?? selectedSeat.seatRow!,
+        seatColumn: data.seatColumn ?? selectedSeat.seatColumn!,
+        seatNumber: data.seatNumber ?? selectedSeat.seatNumber!,
+        seatClass: data.seatClass ?? 'Economy',
+        seatPosition: data.seatPosition ?? 'Window',
+        additionalFare: typeof data.additionalFare === 'number' ? data.additionalFare : 0,
+        isActive: data.isActive ?? true,
+      };
+      dispatch(createAircraftSeat(newData)).then(() => setIsFormOpen(false));
     } else {
       const updatedSeatData: AircraftSeat = {
         ...(selectedSeat as AircraftSeat),
@@ -86,17 +91,16 @@ export default function AircraftEditPage() {
           <AircraftSeatLayout
             aircraft={aircraft}
             seats={seats}
-            seatClasses={seatClasses}
             onSelectSeat={handleSeatSelect}
           />
         </div>
       </div>
+
       <AircraftSeatForm
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
         onSave={handleSeatFormSave}
         seatData={selectedSeat}
-        seatClasses={seatClasses}
         isSaving={false}
       />
     </div>

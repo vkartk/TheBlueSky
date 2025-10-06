@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TheBlueSky.Flights.Enums;
 
 namespace TheBlueSky.Flights.DTOs.Requests.AircraftSeat
 {
@@ -8,7 +9,7 @@ namespace TheBlueSky.Flights.DTOs.Requests.AircraftSeat
         int AircraftId,
 
         [Required]
-        int SeatClassId,
+        SeatClass SeatClass,
 
         [Required]
         [StringLength(10)] 

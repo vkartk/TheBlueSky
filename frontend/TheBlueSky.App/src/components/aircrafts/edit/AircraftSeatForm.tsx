@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import type { AircraftSeat } from '@/types/aircraftSeat';
-import type { SeatClass } from '@/types/seatClass';
+
+import type { AircraftSeat, SeatClass } from '@/types/aircraftSeat';
+import { SeatClasses } from '@/types/aircraftSeat';
+
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -37,18 +39,15 @@ interface AircraftSeatFormProps {
     onClose: () => void;
     onSave: (data: Partial<AircraftSeat>) => void;
     seatData: Partial<AircraftSeat>;
-    seatClasses: SeatClass[];
     isSaving: boolean;
 }
 
-const SEAT_POSITIONS = ['Window', 'Aisle', 'Middle'];
+const SEAT_POSITIONS = ['Window', 'Aisle', 'Middle'] as const;
 
 const formSchema = z.object({
     seatNumber: z.string().min(2, 'Required').max(4, 'Too long'),
-    seatClassId: z.number().min(1, 'Please select a class'),
-    seatPosition: z.string().refine((val) => SEAT_POSITIONS.includes(val), {
-        message: 'Please select a valid position',
-    }),
+    seatClass: z.enum(SeatClasses),
+    seatPosition: z.enum(SEAT_POSITIONS),
     additionalFare: z.number().min(0, 'Fare must be a positive number'),
     isActive: z.boolean(),
 });
@@ -60,24 +59,29 @@ export function AircraftSeatForm({
     onClose,
     onSave,
     seatData,
-    seatClasses,
     isSaving,
 }: AircraftSeatFormProps) {
-
     const isEditing = !!seatData.aircraftSeatId;
 
     const form = useForm<SeatFormValues>({
         resolver: zodResolver(formSchema),
+        defaultValues: {
+            seatNumber: '',
+            seatClass: 'Economy',
+            seatPosition: undefined as unknown as SeatFormValues['seatPosition'],
+            additionalFare: 0,
+            isActive: true,
+        },
     });
 
     useEffect(() => {
         if (isOpen) {
             form.reset({
-                seatNumber: seatData.seatNumber || '',
-                seatClassId: seatData.seatClassId || 0,
-                seatPosition: seatData.seatPosition || '',
-                additionalFare: seatData.additionalFare || 0,
-                isActive: seatData.isActive === undefined ? true : seatData.isActive,
+                seatNumber: seatData.seatNumber ?? '',
+                seatClass: (seatData.seatClass as SeatClass) ?? 'Economy',
+                seatPosition: (seatData.seatPosition as SeatFormValues['seatPosition']) ?? SEAT_POSITIONS[0],
+                additionalFare: seatData.additionalFare ?? 0,
+                isActive: seatData.isActive ?? true,
             });
         }
     }, [isOpen, seatData, form]);
@@ -96,16 +100,17 @@ export function AircraftSeatForm({
                     <DialogTitle>{isEditing ? 'Edit Seat' : 'Add New Seat'}</DialogTitle>
                     <DialogDescription>Configure all details for this seat.</DialogDescription>
                 </DialogHeader>
+
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 py-4">
                         <div className="grid grid-cols-2 gap-4">
                             <FormItem>
                                 <FormLabel>Row</FormLabel>
-                                <Input value={seatData.seatRow || ''} disabled />
+                                <Input value={seatData.seatRow ?? ''} disabled />
                             </FormItem>
                             <FormItem>
                                 <FormLabel>Column</FormLabel>
-                                <Input value={seatData.seatColumn || ''} disabled />
+                                <Input value={seatData.seatColumn ?? ''} disabled />
                             </FormItem>
                         </div>
 
@@ -125,23 +130,20 @@ export function AircraftSeatForm({
 
                         <FormField
                             control={form.control}
-                            name="seatClassId"
+                            name="seatClass"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Seat Class</FormLabel>
-                                    <Select
-                                        onValueChange={(value) => field.onChange(Number(value))}
-                                        defaultValue={field.value?.toString()}
-                                    >
+                                    <Select value={field.value} onValueChange={field.onChange}>
                                         <FormControl>
                                             <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select a class" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {seatClasses.map((sc) => (
-                                                <SelectItem key={sc.seatClassId} value={sc.seatClassId.toString()}>
-                                                    {sc.className}
+                                            {SeatClasses.map((sc) => (
+                                                <SelectItem key={sc} value={sc}>
+                                                    {sc}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -157,10 +159,7 @@ export function AircraftSeatForm({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Position</FormLabel>
-                                    <Select
-                                        value={field.value ?? undefined}
-                                        onValueChange={field.onChange}
-                                    >
+                                    <Select value={field.value} onValueChange={field.onChange}>
                                         <FormControl>
                                             <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select position" />
@@ -188,10 +187,13 @@ export function AircraftSeatForm({
                                     <FormControl>
                                         <Input
                                             type="number"
-                                            value={field.value || ''}
+                                            min={0}
+                                            step="0.01"
+                                            inputMode="decimal"
+                                            value={Number.isFinite(field.value as number) ? field.value : ''}
                                             onChange={(e) => {
-                                                const value = e.target.value;
-                                                field.onChange(value === '' ? 0 : parseFloat(value) || 0);
+                                                const v = e.target.value;
+                                                field.onChange(v === '' ? '' : Number(v));
                                             }}
                                         />
                                     </FormControl>
@@ -207,9 +209,7 @@ export function AircraftSeatForm({
                                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
                                     <div className="space-y-0.5">
                                         <FormLabel>Active</FormLabel>
-                                        <FormDescription>
-                                            Inactive seats are not available for booking.
-                                        </FormDescription>
+                                        <FormDescription>Inactive seats are not available for booking.</FormDescription>
                                     </div>
                                     <FormControl>
                                         <Switch checked={field.value} onCheckedChange={field.onChange} />

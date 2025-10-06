@@ -1,18 +1,18 @@
 import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { AircraftSeat } from '@/types/aircraftSeat';
-import type { SeatClass } from '@/types/seatClass';
 import { SEAT_CLASS_COLORS } from './constants';
 
 interface SeatProps {
     seatData?: AircraftSeat;
-    seatClass?: SeatClass;
     onClick: () => void;
 }
 
-export function Seat({ seatData, seatClass, onClick }: SeatProps) {
+export function Seat({ seatData, onClick }: SeatProps) {
     if (seatData) {
-        const colorClass = seatClass ? SEAT_CLASS_COLORS[seatClass.className] : SEAT_CLASS_COLORS.default;
+        const colorClass =
+            seatData.seatClass ? SEAT_CLASS_COLORS[seatData.seatClass] : SEAT_CLASS_COLORS.default;
+
         return (
             <div
                 className={cn(

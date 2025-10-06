@@ -5,7 +5,7 @@ import { generateSeatGrid } from '@/utils/generateSeatGrid';
 
 import type { Aircraft, AircraftModel } from '@/types/aircraft';
 import type { AircraftSeat } from '@/types/aircraftSeat';
-import type { SeatClass } from '@/types/seatClass';
+import { SeatClasses, type SeatClass } from '@/types/aircraftSeat';
 
 import { SeatRow } from './SeatRow';
 import { DEFAULT_ROWS, SEAT_CLASS_COLORS } from './constants';
@@ -13,7 +13,6 @@ import { DEFAULT_ROWS, SEAT_CLASS_COLORS } from './constants';
 interface AircraftSeatLayoutProps {
   aircraft: Aircraft;
   seats: AircraftSeat[];
-  seatClasses: SeatClass[];
   onSelectSeat: (seatData: Partial<AircraftSeat & { isNew: boolean }>) => void;
 }
 
@@ -27,32 +26,41 @@ type SeatSelectionDetails = {
 export function AircraftSeatLayout({
   aircraft,
   seats,
-  seatClasses,
   onSelectSeat,
 }: AircraftSeatLayoutProps) {
-  const seatsMap = useMemo(() => new Map(seats.map((s) => [`${s.seatRow}-${s.seatColumn}`, s])), [seats]);
-  const seatClassMap = useMemo(() => new Map(seatClasses.map((sc) => [sc.seatClassId, sc])), [seatClasses]);
 
-  const seatGrid = useMemo(() => generateSeatGrid({
-      seatsMap,
-      seatClassMap,
-      aircraftModel: aircraft.aircraftModel as AircraftModel,
-      rows: DEFAULT_ROWS,
-    }), [seatsMap, seatClassMap, aircraft.aircraftModel]);
+  const seatsMap = useMemo(
+    () => new Map(seats.map((s) => [`${s.seatRow}-${s.seatColumn}`, s] as const)),
+    [seats]
+  );
 
-  const handleSeatSelect = useCallback((details: SeatSelectionDetails) => {
-    if (details.seatData) {
-      onSelectSeat(details.seatData);
-    } else {
-      onSelectSeat({
-        isNew: true,
-        seatRow: details.row,
-        seatColumn: details.column,
-        seatNumber: `${details.row}${details.letter}`,
-        aircraftId: aircraft.aircraftId,
-      });
-    }
-  }, [aircraft.aircraftId, onSelectSeat]);
+  const seatGrid = useMemo(
+    () =>
+      generateSeatGrid({
+        seatsMap,
+        aircraftModel: aircraft.aircraftModel as AircraftModel,
+        rows: DEFAULT_ROWS,
+      }),
+    [seatsMap, aircraft.aircraftModel]
+  );
+
+  const handleSeatSelect = useCallback(
+    (details: SeatSelectionDetails) => {
+      if (details.seatData) {
+        onSelectSeat(details.seatData);
+      } else {
+        onSelectSeat({
+          isNew: true,
+          seatRow: details.row,
+          seatColumn: details.column,
+          seatNumber: `${details.row}${details.letter}`,
+          aircraftId: aircraft.aircraftId,
+          seatClass: 'Economy',
+        });
+      }
+    },
+    [aircraft.aircraftId, onSelectSeat]
+  );
 
   return (
     <Card className="flex-1">
@@ -62,18 +70,22 @@ export function AircraftSeatLayout({
             <CardTitle>Seat Layout</CardTitle>
             <CardDescription>Click a seat to add or edit its details.</CardDescription>
           </div>
+
           <div className="flex items-center gap-4">
-            {Object.entries(SEAT_CLASS_COLORS).map(([name, className]) =>
-              name !== 'default' && (
+            {SeatClasses.map((name) => {
+              const colorClass = SEAT_CLASS_COLORS[name as SeatClass] ?? SEAT_CLASS_COLORS.default;
+              const firstClass = colorClass.split(' ')[0];
+              return (
                 <div key={name} className="flex items-center gap-2">
-                  <div className={cn('h-4 w-4 rounded-full border', className.split(' ')[0])} />
+                  <div className={cn('h-4 w-4 rounded-full border', firstClass)} />
                   <span className="text-sm font-medium">{name}</span>
                 </div>
-              )
-            )}
+              );
+            })}
           </div>
         </div>
       </CardHeader>
+
       <CardContent className="overflow-x-auto">
         <div className="flex flex-col gap-y-2">
           {seatGrid.map(({ rowNumber, sections }) => (
