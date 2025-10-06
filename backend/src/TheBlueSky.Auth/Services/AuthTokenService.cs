@@ -32,6 +32,9 @@ namespace TheBlueSky.Auth.Services
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, tokenId),
+
+                new Claim(ClaimTypes.GivenName,user.FirstName),
+                new Claim(ClaimTypes.Surname, user.LastName),
             };
 
             var userRoles = await _userManager.GetRolesAsync(user);

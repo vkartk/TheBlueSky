@@ -162,12 +162,17 @@ namespace TheBlueSky.Auth.Controllers
         {
             try
             {
+                var firstName = User.FindFirstValue(ClaimTypes.GivenName);
+                var lastName = User.FindFirstValue(ClaimTypes.Surname);
+
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var email = User.FindFirstValue(ClaimTypes.Email);
                 var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
 
                 return Ok(new
                 {
+                    firstName,
+                    lastName,
                     userId,
                     email,
                     roles
