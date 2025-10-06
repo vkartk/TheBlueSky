@@ -3,6 +3,7 @@ import { ProtectedRoute } from "@/components/common/ProtectedRoute";
 
 import { publicRoutes } from "./publicRoutes";
 import { dashboardRoutes } from "./dashboardRoutes";
+import { accountRoutes } from "./accountRoutes";
 
 const router = createBrowserRouter([
   // Public Routes
@@ -15,6 +16,12 @@ const router = createBrowserRouter([
       dashboardRoutes,
     ],
   },
+  {
+    element: <ProtectedRoute allowedRoles={['User','Admin']} />,
+    children: [
+      accountRoutes,
+    ],
+  }
 ]);
 
 export default router;

@@ -39,7 +39,7 @@ export const RegisterForm = ({ className, ...props }: React.ComponentProps<'div'
     const { confirmPassword, ...registerData } = data;
     const resultAction = await dispatch(registerUser(registerData));
     if (registerUser.fulfilled.match(resultAction)) {
-      navigate('/');
+      navigate('/account/onboarding');
     }
   };
 
