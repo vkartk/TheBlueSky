@@ -9,6 +9,7 @@ import flightSchedulesReducer from '@/features/flightSchedule/flightScheduleSlic
 import flightScheduleManageReducer from '@/features/flightSchedule/Manage/flightScheduleManageSlice';
 import flightsReducer from '@/features/flight/flightSlice';
 import authReducer from '@/features/auth/authSlice';
+import countriesReducer from "@/features/countries/countriesSlice"
 
 
 export const store = configureStore({
@@ -21,6 +22,7 @@ export const store = configureStore({
     flightScheduleManage: flightScheduleManageReducer,
     flights: flightsReducer,
     auth: authReducer,
+    countries: countriesReducer,
   },
 });
 
