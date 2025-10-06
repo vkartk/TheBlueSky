@@ -24,7 +24,7 @@ export type RegisterResponse = {
 }
 
 export type User = {
-    id: string;
+    userId: string;
     firstName: string,
     lastName: string,
     email: string;

@@ -14,6 +14,6 @@ export const getNameInitials = (name: string | null | undefined): string => {
 
 export const getUserAvatar = (user:User) => {
     const text = getNameInitials(user.firstName+ ' '+ user.lastName);
-    return `https://avatar.vercel.sh/${encodeURIComponent(user.id)}.svg?text=${encodeURIComponent(text)}`;
+    return `https://avatar.vercel.sh/${encodeURIComponent(user.userId)}.svg?text=${encodeURIComponent(text)}`;
 
 }
