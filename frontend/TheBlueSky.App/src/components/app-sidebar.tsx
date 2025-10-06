@@ -110,10 +110,6 @@ const data = {
           title: "Aircrafts",
           url: "/dashboard/aircrafts",
         },
-        {
-          title: "Seat Classes",
-          url: "/dashboard/seat-classes",
-        }
       ],
     },
     {
