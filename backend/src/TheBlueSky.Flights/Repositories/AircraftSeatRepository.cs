@@ -23,6 +23,14 @@ namespace TheBlueSky.Flights.Repositories
             return await _context.AircraftSeats.FindAsync(id);
         }
 
+        public async Task<IEnumerable<AircraftSeat>> GetSeatsByAircraftIdAsync(int aircraftId)
+        {
+            return await _context.AircraftSeats
+                .Where(s => s.AircraftId == aircraftId)
+                .ToListAsync();
+        }
+
+
         public async Task<AircraftSeat> AddAircraftSeatAsync(AircraftSeat aircraftSeat)
         {
             _context.AircraftSeats.Add(aircraftSeat);
