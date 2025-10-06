@@ -1,10 +1,10 @@
 import { bookingsApiClient } from './bookingsApiClient';
 import type { Passenger, NewPassenger } from '@/types/passenger';
 
-const API_PATH = '/Passengers';
+const API_PATH = '/Passenger';
 
 const getAll = async (): Promise<Passenger[]> => {
-  const res = await bookingsApiClient.get<Passenger[]>('/Passengers');
+  const res = await bookingsApiClient.get<Passenger[]>(API_PATH);
   return res.data;
 };
 
