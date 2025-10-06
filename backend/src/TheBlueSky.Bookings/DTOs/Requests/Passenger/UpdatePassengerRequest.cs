@@ -8,7 +8,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.Passenger
         int PassengerId,
 
         [Required]
-        int ManagedByUserId,
+        string ManagedByUserId,
 
         [Required]
         [MaxLength(100)]

@@ -4,7 +4,7 @@
 
         int PassengerId,
 
-        int ManagedByUserId,
+        string ManagedByUserId,
 
         string FirstName,
 

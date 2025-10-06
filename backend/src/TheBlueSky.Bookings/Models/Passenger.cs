@@ -6,7 +6,7 @@ namespace TheBlueSky.Bookings.Models
     {
         public int PassengerId { get; set; }
 
-        public int ManagedByUserId { get; set; }
+        public string ManagedByUserId { get; set; } = default!;
 
         [Required, MaxLength(100)]
         public string FirstName { get; set; } = default!;

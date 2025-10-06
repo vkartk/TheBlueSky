@@ -5,7 +5,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.Passenger
     public record CreatePassengerRequest(
 
         [Required]
-        int ManagedByUserId,
+        string ManagedByUserId,
 
         [Required]
         [MaxLength(100)]
