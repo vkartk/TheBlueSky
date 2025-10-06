@@ -30,6 +30,13 @@ namespace TheBlueSky.Bookings.Services
             return passenger is null ? null : _mapper.Map<PassengerResponse>(passenger);
         }
 
+        public async Task<IEnumerable<PassengerResponse>> GetByUserIdAsync(string userId)
+        {
+            var passengers = await _repository.GetByUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<PassengerResponse>>(passengers);
+        }
+
+
         public async Task<PassengerResponse> CreateAsync(CreatePassengerRequest request)
         {
             var passenger = _mapper.Map<Passenger>(request);

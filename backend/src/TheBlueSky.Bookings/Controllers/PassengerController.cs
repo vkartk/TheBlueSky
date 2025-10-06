@@ -59,6 +59,22 @@ namespace TheBlueSky.Bookings.Controllers
             }
         }
 
+        [HttpGet("managed-by/{userId:string}")]
+        public async Task<ActionResult<IEnumerable<PassengerResponse>>> GetByUserId(string userId)
+        {
+            try
+            {
+                _logger.LogInformation("Fetching passengers for user {UserId}", userId);
+                var items = await _service.GetByUserIdAsync(userId);
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while fetching passengers for user {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<PassengerResponse>> Create([FromBody] CreatePassengerRequest request)
         {
