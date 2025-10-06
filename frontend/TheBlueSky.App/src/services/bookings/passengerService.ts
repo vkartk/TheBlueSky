@@ -9,7 +9,7 @@ const getAll = async (): Promise<Passenger[]> => {
 };
 
 const getByUserId = async (userId: string): Promise<Passenger | null> => {
-  const res = await bookingsApiClient.get<Passenger>(`${API_PATH}/by-user/${userId}`);
+  const res = await bookingsApiClient.get<Passenger>(`${API_PATH}/managed-by/${userId}`);
   return res.data ?? null;
 };
 
