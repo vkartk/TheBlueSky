@@ -34,7 +34,7 @@ const create = async (data: CreateBookingRequest): Promise<Booking> => {
 };
 
 const update = async (id: number, data: Booking): Promise<Booking> => {
-  const res = await bookingsApiClient.put<Booking>(`${API_PATH}`, data);
+  const res = await bookingsApiClient.put<Booking>(`${API_PATH}/${id}`, data);
   return res.data;
 };
 
