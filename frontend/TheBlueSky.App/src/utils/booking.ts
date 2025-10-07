@@ -1,4 +1,5 @@
 import type { BookingData } from "@/pages/public/BookingPage";
+import type { BookingStatus, PaymentStatus } from "@/types/booking";
 
 export const prepareBookingData = (bookingData: BookingData, userId: string) => {
 
@@ -30,3 +31,32 @@ export const prepareBookingData = (bookingData: BookingData, userId: string) => 
         userId,
     };
 }
+
+
+export const getBookingStatusVariant = (status: BookingStatus) => {
+  switch (status) {
+    case 'Confirmed':
+      return 'default';
+    case 'Pending':
+      return 'secondary';
+    case 'Cancelled':
+      return 'destructive';
+    default:
+      return 'default';
+  }
+};
+
+export const getPaymentStatusVariant = (status: PaymentStatus) => {
+    switch (status) {
+      case 'Paid':
+        return 'default';
+      case 'Pending':
+        return 'secondary';
+      case 'Failed':
+        return 'destructive';
+      case 'Refunded':
+        return 'outline';
+      default:
+        return 'default';
+    }
+  };
