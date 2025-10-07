@@ -10,6 +10,7 @@ namespace TheBlueSky.Flights.Mappings
         public RouteProfile()
         {
             CreateMap<Route, RouteResponse>();
+            CreateMap<Route, RouteWithAirportsResponse>();
             CreateMap<CreateRouteRequest, Route>();
             CreateMap<UpdateRouteRequest, Route>();
         }
