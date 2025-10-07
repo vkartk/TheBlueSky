@@ -6,6 +6,7 @@ namespace TheBlueSky.Bookings.Repositories.Interfaces
     {
         Task<IEnumerable<Booking>> GetAllAsync();
         Task<Booking?> GetByIdAsync(int id);
+        Task<IEnumerable<Booking>> GetByUserIdAsync(string userId);
         Task<Booking> AddAsync(Booking booking);
         Task<bool> UpdateAsync(Booking booking);
         Task<bool> DeleteAsync(int id);

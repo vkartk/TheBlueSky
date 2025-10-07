@@ -61,6 +61,22 @@ namespace TheBlueSky.Bookings.Controllers
             }
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<BookingResponse>>> GetByUserId(string userId)
+        {
+            try
+            {
+                _logger.LogInformation("Fetching bookings for user {UserId}", userId);
+                var bookings = await _service.GetByUserIdAsync(userId);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching bookings for user {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<BookingResponse>> Create([FromBody] CreateBookingRequest request)
         {
@@ -87,9 +103,14 @@ namespace TheBlueSky.Bookings.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateBookingRequest request)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateBookingRequest request)
         {
+            if (id != request.BookingId)
+            {
+                return BadRequest("Booking ID mismatch in route and body.");
+            }
+
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid update booking request: {@ModelState}", ModelState);
@@ -99,7 +120,7 @@ namespace TheBlueSky.Bookings.Controllers
             try
             {
                 _logger.LogInformation("Updating booking {Id}", request.BookingId);
-                var updated = await _service.UpdateAsync(request);
+                var updated = await _service.UpdateAsync(id, request);
 
                 if (updated)
                 {

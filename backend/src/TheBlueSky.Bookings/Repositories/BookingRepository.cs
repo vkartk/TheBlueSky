@@ -25,6 +25,16 @@ namespace TheBlueSky.Bookings.Repositories
             return await _context.Bookings.FirstOrDefaultAsync(b => b.BookingId == id);
         }
 
+        public async Task<IEnumerable<Booking>> GetByUserIdAsync(string userId)
+        {
+            return await _context.Bookings
+                .Where(b => b.UserId == userId)
+                .AsNoTracking()
+                .OrderByDescending(b => b.BookingDate)
+                .ToListAsync();
+        }
+
+
         // service saves this
         public async Task<Booking> AddAsync(Booking booking)
         {

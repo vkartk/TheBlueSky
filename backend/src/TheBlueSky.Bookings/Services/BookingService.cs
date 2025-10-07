@@ -43,6 +43,13 @@ namespace TheBlueSky.Bookings.Services
             return _mapper.Map<BookingResponse>(booking);
         }
 
+        public async Task<IEnumerable<BookingResponse>> GetByUserIdAsync(string userId)
+        {
+            var bookings = await _repository.GetByUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<BookingResponse>>(bookings);
+        }
+
+
         public async Task<BookingResponse> CreateAsync(CreateBookingRequest request)
         { 
 
@@ -93,9 +100,9 @@ namespace TheBlueSky.Bookings.Services
 
         }
 
-        public async Task<bool> UpdateAsync(UpdateBookingRequest request)
+        public async Task<bool> UpdateAsync(int id,UpdateBookingRequest request)
         {
-            var booking = await _repository.GetByIdAsync(request.BookingId);
+            var booking = await _repository.GetByIdAsync(id);
 
             if (booking is null) return false;
 

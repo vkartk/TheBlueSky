@@ -7,8 +7,9 @@ namespace TheBlueSky.Bookings.Services.Interfaces
     {
         Task<IEnumerable<BookingResponse>> GetAllAsync();
         Task<BookingResponse?> GetByIdAsync(int id);
+        Task<IEnumerable<BookingResponse>> GetByUserIdAsync(string userId);
         Task<BookingResponse> CreateAsync(CreateBookingRequest request);
-        Task<bool> UpdateAsync(UpdateBookingRequest request);
+        Task<bool> UpdateAsync(int id, UpdateBookingRequest request);
         Task<bool> DeleteAsync(int id);
 
     }
