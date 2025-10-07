@@ -4,6 +4,7 @@ import { ProtectedRoute } from "@/components/common/ProtectedRoute";
 import { publicRoutes } from "./publicRoutes";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { accountRoutes } from "./accountRoutes";
+import { MainLayout } from "@/components/layouts/MainLayout";
 
 const router = createBrowserRouter([
   // Public Routes
@@ -17,9 +18,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <ProtectedRoute allowedRoles={['User','Admin']} />,
+    element: <ProtectedRoute allowedRoles={['User', 'Admin']} />,
     children: [
-      accountRoutes,
+      {
+        element: < MainLayout />,
+        children: [accountRoutes],
+      }
     ],
   }
 ]);
