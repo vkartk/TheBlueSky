@@ -94,7 +94,7 @@ export const BookingsTable = ({
 
                                             <DropdownMenuContent align="end">
 
-                                                {bookingStatuses.map((status: BookingStatus) => (
+                                                {bookingStatuses.filter(bs => bs != "Cancelled").map((status: BookingStatus) => (
                                                     <DropdownMenuItem key={status} onClick={() => onUpdate({ ...booking, bookingStatus: status })}>
                                                         {status}
                                                     </DropdownMenuItem>
