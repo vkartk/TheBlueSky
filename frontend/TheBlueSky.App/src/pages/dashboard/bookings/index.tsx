@@ -28,17 +28,17 @@ export function BookingsPage() {
 
 
     const handleUpdateBooking = async(bookingToUpdate: Booking) => {
-        toast.loading('Updating booking...');
+        const toastId = toast.loading('Updating booking...');
 
         try {
             await dispatch(updateBooking(bookingToUpdate)).unwrap();
-            toast.success('Booking updated ✅');
+            toast.success('Booking updated', {id: toastId});
 
             setTimeout(() => {
                 dispatch(fetchBookings());
             }, 1000);
         } catch {
-            toast.error('Failed to update booking');
+            toast.error('Failed to update booking', { id: toastId });
         }
 
     };
