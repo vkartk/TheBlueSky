@@ -7,6 +7,9 @@ import type { Passenger } from "@/types/passenger";
 import { Badge } from "@/components/ui/badge";
 import { BookingSeatLayout } from "./BookingSeatLayout";
 import { Button } from "@/components/ui/button";
+import type { PassengerSeatSelection } from "@/pages/public/BookingPage";
+
+
 
 export default function SeatSelectionStep({
     passengers,
@@ -16,7 +19,7 @@ export default function SeatSelectionStep({
 }: {
     passengers: Passenger[];
     flightData: GetFlight;
-    onNext: (selections: Map<number, number>) => void;
+    onNext: (selections: PassengerSeatSelection[]) => void;
     onBack: () => void;
 }) {
     const [seatSelections, setSeatSelections] = useState<Map<number, number>>(new Map());
@@ -75,13 +78,18 @@ export default function SeatSelectionStep({
     };
 
     const handleContinue = () => {
-        const finalSelections = new Map<number, number>();
-        seatSelections.forEach((passengerIndex, seatStatusId) => {
+        const finalSelections: PassengerSeatSelection[] = [];
+        
+        seatSelections.forEach((passengerIndex, flightSeatStatusId) => {
             const passenger = passengers[passengerIndex];
             if (passenger) {
-                finalSelections.set(passenger.passengerId, seatStatusId);
+                finalSelections.push({
+                    passengerId: passenger.passengerId,
+                    flightSeatStatusId: flightSeatStatusId
+                });
             }
         });
+        
         onNext(finalSelections);
     };
 
