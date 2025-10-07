@@ -1,3 +1,8 @@
+import type { Aircraft } from "./aircraft";
+import type { AircraftSeat } from "./aircraftSeat";
+import type { FlightSchedule } from "./flightSchedule";
+import type { flightSeatStatus } from "./flightSeatStatus";
+
 export const flightStatuses = [
   'Scheduled',
   'Boarding',
@@ -20,3 +25,12 @@ export type Flight = {
   baseFare: number,
   availableSeats: number;
 };
+
+export type GetFlight = Flight &{
+  schedule: FlightSchedule & {
+    aircraft: Aircraft
+  },
+  seatStatuses: flightSeatStatus & {
+    aircraftSeat: AircraftSeat
+  }
+}
