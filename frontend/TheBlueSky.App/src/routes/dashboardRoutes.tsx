@@ -9,6 +9,7 @@ import { ManageFlightSchedulePage } from "@/pages/dashboard/flightSchedule/manag
 import FlightsPage from "@/pages/dashboard/flight";
 import PassengersPage from "@/pages/dashboard/Passengers";
 import { BookingsPage } from "@/pages/dashboard/bookings";
+import BookingCancellationsPage from "@/pages/dashboard/BookingCancellations";
 
 export const dashboardRoutes = {
   path: "dashboard",
@@ -63,7 +64,12 @@ export const dashboardRoutes = {
     {
       path: "bookings",
       element: <BookingsPage />,
-      handle: { crumb: "Bookings"}
+      handle: { crumb: "Bookings" }
+    },
+    {
+      path: "bookings/cancellations",
+      element: <BookingCancellationsPage />,
+      handle: { crumb: "BookingCancellations" }
     }
   ],
 };
