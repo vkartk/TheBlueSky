@@ -11,7 +11,7 @@ namespace TheBlueSky.Bookings.Models
         public Booking Booking { get; set; } = null!;
 
         public DateTime CancellationDate { get; set; } = DateTime.UtcNow;
-        public int CancelledByUserId { get; set; }
+        public string CancelledByUserId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal RefundAmount { get; set; }
