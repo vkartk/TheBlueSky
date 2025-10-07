@@ -27,9 +27,20 @@ export function BookingsPage() {
     }, [dispatch]);
 
 
-    const handleUpdateBooking = (bookingToUpdate: Booking) => {
-        dispatch(updateBooking(bookingToUpdate));
-        dispatch(fetchBookings());
+    const handleUpdateBooking = async(bookingToUpdate: Booking) => {
+        toast.loading('Updating booking...');
+
+        try {
+            await dispatch(updateBooking(bookingToUpdate)).unwrap();
+            toast.success('Booking updated ✅');
+
+            setTimeout(() => {
+                dispatch(fetchBookings());
+            }, 1000);
+        } catch {
+            toast.error('Failed to update booking');
+        }
+
     };
 
     const handleCancelBooking = (bookingId: number, formData: BookingCancellationFormData) => {
