@@ -13,7 +13,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.BookingCancellation
         int BookingId,
 
         [Required]
-        int CancelledByUserId,
+        string CancelledByUserId,
 
         [Required]
         DateTime CancellationDate,

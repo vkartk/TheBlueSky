@@ -44,8 +44,8 @@ namespace TheBlueSky.Bookings.Tests.Services
 
             var dtos = new List<BookingCancellationResponse>
             {
-                new(1, 10, new DateTime(2025,1,1), 99, 100m, RefundStatus.Pending, null, "reason1", null),
-                new(2, 11, new DateTime(2025,1,2), 98,  50m, RefundStatus.Processed, new DateTime(2025,1,3), "reason2", "note")
+                new(1, 10, new DateTime(2025,1,1), "99", 100m, RefundStatus.Pending, null, "reason1", null),
+                new(2, 11, new DateTime(2025,1,2), "98",  50m, RefundStatus.Processed, new DateTime(2025,1,3), "reason2", "note")
             };
 
             _repo.Setup(r => r.GetAllAsync()).ReturnsAsync(entities);
@@ -109,7 +109,7 @@ namespace TheBlueSky.Bookings.Tests.Services
                 BookingCancellationId: 42,
                 BookingId: 10,
                 CancellationDate: new DateTime(2025, 1, 1),
-                CancelledByUserId: 77,
+                CancelledByUserId: "77",
                 RefundAmount: 120m,
                 RefundStatus: RefundStatus.Pending,
                 RefundDate: null,

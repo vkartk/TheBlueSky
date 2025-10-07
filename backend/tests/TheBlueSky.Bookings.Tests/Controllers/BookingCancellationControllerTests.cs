@@ -59,7 +59,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         {
             // Arrange
             var req = new CreateBookingCancellationRequest(10, 77, 120m, RefundStatus.Pending, null, "reason", null);
-            var created = new BookingCancellationResponse(55, 10, System.DateTime.UtcNow, 77, 120m, RefundStatus.Pending, null, "reason", null);
+            var created = new BookingCancellationResponse(55, 10, System.DateTime.UtcNow, "77", 120m, RefundStatus.Pending, null, "reason", null);
 
             _service.Setup(s => s.CreateAsync(req)).ReturnsAsync(created);
 

@@ -10,7 +10,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.BookingCancellation
         int BookingId,
 
         [Required]
-        int CancelledByUserId,
+        string CancelledByUserId,
 
         [Range(0, double.MaxValue)]
         decimal RefundAmount,

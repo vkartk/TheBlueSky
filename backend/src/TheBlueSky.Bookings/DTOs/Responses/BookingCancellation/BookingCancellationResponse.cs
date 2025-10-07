@@ -8,7 +8,7 @@ namespace TheBlueSky.Bookings.DTOs.Responses.BookingCancellation
         int BookingId,
 
         DateTime CancellationDate,
-        int CancelledByUserId,
+        string CancelledByUserId,
 
         decimal RefundAmount,
         RefundStatus RefundStatus,
