@@ -56,33 +56,7 @@ const data = {
           url: "#",
         }
       ],
-    },
-    {
-      title: "Meals",
-      url: "#",
-      icon: AudioWaveform,
-      items: [
-        {
-          title: "All Meals",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Payments",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "All Payments",
-          url: "#",
-        },
-        {
-          title: "Refunds",
-          url: "#",
-        }
-      ],
-    },
+    }
   ],
   flightNavMain: [
     {
