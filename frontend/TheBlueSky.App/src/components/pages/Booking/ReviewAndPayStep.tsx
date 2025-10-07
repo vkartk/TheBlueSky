@@ -25,7 +25,7 @@ export function ReviewAndPayStep({
     onBack
 }: {
     bookingData: BookingData;
-    onConfirm: () => void;
+    onConfirm: (subTotal: number, tax: number) => void;
     onBack: () => void;
 }) {
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
@@ -51,15 +51,15 @@ export function ReviewAndPayStep({
         setIsProcessing(true);
         await new Promise(resolve => setTimeout(resolve, 2000));
         setIsProcessing(false);
-        onConfirm();
+        onConfirm(subtotal,taxAmount);
     };
 
     return (
         <div className="mx-auto max-w-6xl space-y-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
-                
+
                 <div className="space-y-6">
-                    
+
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -140,7 +140,7 @@ export function ReviewAndPayStep({
                         </CardContent>
                     </Card>
 
-                    
+
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -192,7 +192,7 @@ export function ReviewAndPayStep({
                         </CardContent>
                     </Card>
 
-                    
+
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -250,7 +250,7 @@ export function ReviewAndPayStep({
                     </Card>
                 </div>
 
-                
+
                 <div className="space-y-6">
                     <Card className="sticky top-4">
                         <CardHeader>
