@@ -65,12 +65,12 @@ namespace TheBlueSky.Bookings.Tests.Repositories
                 new BookingCancellation
                 {
                     BookingCancellationId = 1, BookingId = 10, CancellationDate = DateTime.UtcNow.AddDays(-1),
-                    CancelledByUserId = 77, RefundAmount = 100m, RefundStatus = RefundStatus.Pending
+                    CancelledByUserId = "77", RefundAmount = 100m, RefundStatus = RefundStatus.Pending
                 },
                 new BookingCancellation
                 {
                     BookingCancellationId = 2, BookingId = 11, CancellationDate = DateTime.UtcNow,
-                    CancelledByUserId = 78, RefundAmount = 50m, RefundStatus = RefundStatus.Processed, RefundDate = DateTime.UtcNow
+                    CancelledByUserId = "78", RefundAmount = 50m, RefundStatus = RefundStatus.Processed, RefundDate = DateTime.UtcNow
                 }
             });
 

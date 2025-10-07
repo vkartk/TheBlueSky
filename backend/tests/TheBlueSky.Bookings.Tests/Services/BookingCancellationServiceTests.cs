@@ -89,7 +89,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             var toAdd = new BookingCancellation
             {
                 BookingId = 10,
-                CancelledByUserId = 77,
+                CancelledByUserId = "77",
                 RefundAmount = 120m,
                 RefundStatus = RefundStatus.Pending,
                 CancellationDate = new DateTime(2025, 1, 1)
@@ -99,7 +99,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             {
                 BookingCancellationId = 42,
                 BookingId = 10,
-                CancelledByUserId = 77,
+                CancelledByUserId = "77",
                 RefundAmount = 120m,
                 RefundStatus = RefundStatus.Pending,
                 CancellationDate = new DateTime(2025, 1, 1)
