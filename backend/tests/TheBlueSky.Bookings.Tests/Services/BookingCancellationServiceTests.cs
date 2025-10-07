@@ -78,7 +78,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             // Arrange
             var req = new CreateBookingCancellationRequest(
                 BookingId: 10,
-                CancelledByUserId: 77,
+                CancelledByUserId: "77",
                 RefundAmount: 120m,
                 RefundStatus: RefundStatus.Pending,
                 RefundDate: null,
@@ -136,7 +136,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             var req = new UpdateBookingCancellationRequest(
                 BookingCancellationId: 5,
                 BookingId: 10,
-                CancelledByUserId: 77,
+                CancelledByUserId: "77",
                 CancellationDate: new DateTime(2025, 1, 1),
                 RefundAmount: 100m,
                 RefundStatus: RefundStatus.Processed,
@@ -163,7 +163,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             var req = new UpdateBookingCancellationRequest(
                 BookingCancellationId: 999,
                 BookingId: 10,
-                CancelledByUserId: 77,
+                CancelledByUserId: "77",
                 CancellationDate: new DateTime(2025, 1, 1),
                 RefundAmount: 100m,
                 RefundStatus: RefundStatus.Processed,
@@ -202,7 +202,7 @@ namespace TheBlueSky.Bookings.Tests.Services
             // Arrange
             var req = new CreateBookingCancellationRequest(
                 BookingId: 10,
-                CancelledByUserId: 77,
+                CancelledByUserId: "77",
                 RefundAmount: 50m,
                 RefundStatus: RefundStatus.Pending,
                 RefundDate: null,

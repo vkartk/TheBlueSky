@@ -58,7 +58,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Create_Returns201_WithRouteValues()
         {
             // Arrange
-            var req = new CreateBookingCancellationRequest(10, 77, 120m, RefundStatus.Pending, null, "reason", null);
+            var req = new CreateBookingCancellationRequest(10, "77", 120m, RefundStatus.Pending, null, "reason", null);
             var created = new BookingCancellationResponse(55, 10, System.DateTime.UtcNow, "77", 120m, RefundStatus.Pending, null, "reason", null);
 
             _service.Setup(s => s.CreateAsync(req)).ReturnsAsync(created);
@@ -78,7 +78,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_Found_Returns204()
         {
             // Arrange
-            var req = new UpdateBookingCancellationRequest(5, 10, 77, System.DateTime.UtcNow, 100m, RefundStatus.Processed, System.DateTime.UtcNow, "r", "n");
+            var req = new UpdateBookingCancellationRequest(5, 10, "77", System.DateTime.UtcNow, 100m, RefundStatus.Processed, System.DateTime.UtcNow, "r", "n");
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(true);
 
             // Act
@@ -92,7 +92,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_NotFound_Returns404()
         {
             // Arrange
-            var req = new UpdateBookingCancellationRequest(999, 10, 77, System.DateTime.UtcNow, 100m, RefundStatus.Processed, null, null, null);
+            var req = new UpdateBookingCancellationRequest(999, 10, "77", System.DateTime.UtcNow, 100m, RefundStatus.Processed, null, null, null);
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(false);
 
             // Act
@@ -135,7 +135,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
             _sut.ModelState.AddModelError("BookingId", "Required");
 
             // Act
-            var result = await _sut.Create(new CreateBookingCancellationRequest(0, 77, 100m, RefundStatus.Pending, null, null, null));
+            var result = await _sut.Create(new CreateBookingCancellationRequest(0, "77", 100m, RefundStatus.Pending, null, null, null));
 
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
