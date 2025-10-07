@@ -1,3 +1,5 @@
+import type { AircraftSeat } from "./aircraftSeat";
+
 export const SeatStatuses = [
   'Available',
   'Hold',
@@ -10,8 +12,9 @@ export const SeatStatuses = [
 
 export type SeatStatus = (typeof SeatStatuses)[number];
 
-export type flightSeatStatus = {
+export type FlightSeatStatus = {
     flightSeatStatusId: number;
     flightId: number;
-    seatStatus: SeatStatus
+    seatStatus: SeatStatus;
+    aircraftSeat: AircraftSeat;
 }

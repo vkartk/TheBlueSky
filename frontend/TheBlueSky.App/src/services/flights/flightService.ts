@@ -1,4 +1,4 @@
-import type { Flight } from '@/types/flight';
+import type { Flight, GetFlight } from '@/types/flight';
 import { flightsApiClient } from './flightsApiClient';
 
 const API_ENDPOINT = '/flight';
@@ -8,8 +8,8 @@ const getAll = async (): Promise<Flight[]> => {
     return response.data;
 };
 
-const getById = async (flightId: number): Promise<Flight> => {
-    const response = await flightsApiClient.get<Flight>(`${API_ENDPOINT}/${flightId}`);
+const getById = async (flightId: number): Promise<GetFlight> => {
+    const response = await flightsApiClient.get<GetFlight>(`${API_ENDPOINT}/${flightId}`);
     return response.data;
 };
 
