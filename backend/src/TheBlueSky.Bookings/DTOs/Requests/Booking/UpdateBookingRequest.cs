@@ -6,7 +6,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.Booking
     public record UpdateBookingRequest
     {
         public required int BookingId { get; init; }
-        public required int UserId { get; init; }
+        public required string UserId { get; init; }
         public required int FlightId { get; init; }
 
         [Range(1, 50)]
