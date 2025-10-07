@@ -19,7 +19,7 @@ const create = async (data: NewPassenger): Promise<Passenger> => {
 };
 
 const update = async (id: number, data: Passenger): Promise<Passenger> => {
-  const res = await bookingsApiClient.put<Passenger>(`${API_PATH}/${id}`, data);
+  const res = await bookingsApiClient.put<Passenger>(`${API_PATH}`, data);
   return res.data;
 };
 
