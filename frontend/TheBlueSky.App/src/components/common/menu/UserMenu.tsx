@@ -4,9 +4,11 @@ import {
     User,
     LayoutDashboard,
     Settings,
-    LogOut
+    LogOut,
+    Users,
+    Ticket
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +29,9 @@ export const UserMenu = () => {
 
     const { isAuthenticated, user } = useAppSelector((state) => state.auth);
     const { handleLogout } = useAuthActions();
+
+    const navigate = useNavigate();
+
 
     if (!isAuthenticated || !user) {
         return (
@@ -73,17 +78,17 @@ export const UserMenu = () => {
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={ () => navigate("/account")}>
                         <User className="mr-2 h-4 w-4" />
                         Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        Dashboard
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Settings className="mr-2 h-4 w-4" />
-                        Settings
+                    <DropdownMenuItem onClick={ () => navigate("/account/passengers")}>
+                        <Users className="mr-2 h-4 w-4" />
+                        Passengers
+                    </DropdownMenuItem >
+                    <DropdownMenuItem onClick={ () => navigate("/account/bookings")}>
+                        <Ticket className="mr-2 h-4 w-4" />
+                        Bookings
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="text-red-600" onClick={handleLogout}>

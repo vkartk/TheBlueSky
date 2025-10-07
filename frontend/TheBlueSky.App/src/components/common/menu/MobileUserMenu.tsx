@@ -1,4 +1,4 @@
-import { User, Bell, Badge, LayoutDashboard, Settings, LogOut } from "lucide-react";
+import { User, Badge, LogOut, Users, Ticket } from "lucide-react";
 import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
@@ -42,23 +42,26 @@ export const MobileUserMenu = () => {
                     <p className="text-xs text-slate-500">{user.email}</p>
                 </div>
             </div>
-            <Button variant="ghost" className="w-full justify-start">
-                <Bell className="mr-2 h-4 w-4" />
-                Notifications
-                <Badge className="ml-auto bg-red-500 text-xs">3</Badge>
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-                <User className="mr-2 h-4 w-4" />
-                Profile
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-                <LayoutDashboard className="mr-2 h-4 w-4" />
-                Dashboard
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-            </Button>
+
+            <Link to="/account">
+                <Button variant="ghost" className="w-full justify-start">
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                </Button>
+            </Link>
+            <Link to="/account/passengers">
+                <Button variant="ghost" className="w-full justify-start">
+                    <Users className="mr-2 h-4 w-4" />
+                    Passengers
+                </Button>
+            </Link>
+            <Link to="/account/bookings">
+                <Button variant="ghost" className="w-full justify-start">
+                    <Ticket className="mr-2 h-4 w-4" />
+                    Bookings
+                    <Badge className="ml-auto bg-red-500 text-xs">3</Badge>
+                </Button>
+            </Link>
             <Button variant="ghost" className="w-full justify-start text-red-600" onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
