@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using TheBlueSky.Bookings.Handlers;
 using TheBlueSky.Bookings.Models;
 using TheBlueSky.Bookings.Repositories;
 using TheBlueSky.Bookings.Repositories.Interfaces;
@@ -69,7 +70,18 @@ builder.Services.AddScoped<IBookingPassengerService,BookingPassengerService>();
 builder.Services.AddScoped<IMealPreferenceService,MealPreferenceService>();
 builder.Services.AddScoped<IBookingCancellationService,BookingCancellationService>();
 builder.Services.AddScoped<IPaymentService,PaymentService>();
+builder.Services.AddScoped<IFlightSeatStatusService, FlightSeatStatusService>();
 
+builder.Services.AddTransient<TokenForwardingHandler>();
+builder.Services.AddHttpClient("FlightsService", client =>
+{
+    string? flightsApiUrl = builder.Configuration["ServiceUrls:FlightsApi"];
+
+    client.BaseAddress = new Uri(flightsApiUrl);
+
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+})
+    .AddHttpMessageHandler<TokenForwardingHandler>(); ;
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

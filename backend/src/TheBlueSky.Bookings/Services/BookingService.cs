@@ -15,14 +15,14 @@ namespace TheBlueSky.Bookings.Services
     {
         private readonly IBookingRepository _repository;
         private readonly IBookingPassengerRepository _passengerRepository;
-        IHttpContextAccessor _httpContextAccessor;
+        private readonly IFlightSeatStatusService _flightSeatStatusService;
         private readonly BookingsDbContext _context;
         private readonly IMapper _mapper;
 
-        public BookingService(IBookingRepository repository, IBookingPassengerRepository passengerRepository, IHttpContextAccessor httpContextAccessor, BookingsDbContext context, IMapper mapper)
+        public BookingService(IBookingRepository repository, IBookingPassengerRepository passengerRepository, IFlightSeatStatusService flightSeatStatusService, BookingsDbContext context, IMapper mapper)
         {
             _repository = repository;
-            _httpContextAccessor = httpContextAccessor;
+            _flightSeatStatusService = flightSeatStatusService;
             _passengerRepository = passengerRepository;
             _context = context;
             _mapper = mapper;
@@ -71,8 +71,11 @@ namespace TheBlueSky.Bookings.Services
                 }).ToList();
 
                 await _passengerRepository.AddRangeAsync(bookingPassengers);
-
                 await _context.SaveChangesAsync();
+
+                var seatStatusIds = request.PassengerSeatSelections.Select(p => p.FlightSeatStatusId);
+                await _flightSeatStatusService.UpdateSeatStatusAsync(seatStatusIds, "Reserved");
+
                 await transaction.CommitAsync();
 
 
