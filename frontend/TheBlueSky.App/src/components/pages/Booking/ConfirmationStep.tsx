@@ -8,6 +8,7 @@ import type { GetFlight } from '@/types/flight';
 import type { Passenger } from '@/types/passenger';
 import type { PassengerSeats } from '@/pages/public/BookingPage';
 import { formatDate, formatTime } from '@/utils/datetime';
+import type { Booking } from '@/types/booking';
 
 type BookingData = {
     flight: GetFlight | null;
@@ -15,7 +16,7 @@ type BookingData = {
     seats: PassengerSeats[];
 };
 
-export function ConfirmationStep({ bookingData }: { bookingData: BookingData }) {
+export function ConfirmationStep({ bookingData, booking }: { bookingData: BookingData, booking: Booking }) {
     const navigate = useNavigate();
 
     if (!bookingData.flight) {
@@ -24,16 +25,16 @@ export function ConfirmationStep({ bookingData }: { bookingData: BookingData }) 
 
     const { flight, passengers, seats } = bookingData;
 
-    const bookingReference = `BK${Date.now().toString().slice(-8)}`;
+    const bookingReference = `BK${booking.bookingId}`;
 
     // Calculate pricing
     const baseFareTotal = flight.baseFare * passengers.length;
     const seatCharges = seats.reduce((total, { seat }) => {
         return total + (seat.aircraftSeat.additionalFare || 0);
     }, 0);
-    const subtotal = baseFareTotal + seatCharges;
-    const taxAmount = subtotal * 0.18;
-    const totalAmount = subtotal + taxAmount;
+    const subtotal = booking.subtotalAmount;
+    const taxAmount = booking.taxAmount;
+    const totalAmount = booking.totalAmount;
 
     const handlePrint = () => {
         window.print();

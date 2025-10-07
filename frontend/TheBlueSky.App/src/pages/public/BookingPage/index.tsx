@@ -12,6 +12,11 @@ import SeatSelectionStep from '@/components/pages/Booking/SeatSelection/SeatSele
 import type { FlightSeatStatus } from '@/types/flightSeatStatus';
 import { ReviewAndPayStep } from '@/components/pages/Booking/ReviewAndPayStep';
 import { ConfirmationStep } from '@/components/pages/Booking/ConfirmationStep';
+import { prepareBookingData } from '@/utils/booking';
+import { useAppSelector } from '@/store';
+import { toast } from 'sonner';
+import { createBooking } from '@/services/bookings/bookingService';
+import type { Booking } from '@/types/booking';
 
 
 const steps = [
@@ -27,10 +32,12 @@ export type PassengerSeats = {
     seat: FlightSeatStatus
 }
 
-type BookingData = {
+export type BookingData = {
     flight: GetFlight | null;
     passengers: Passenger[];
     seats: PassengerSeats[];
+    subtotal: number;
+    tax: number;
 };
 
 
@@ -38,15 +45,18 @@ const BookingPage = () => {
     const [searchParams] = useSearchParams();
 
     const navigate = useNavigate();
+    const user = useAppSelector(state => state.auth.user);
+
     const [currentStep, setCurrentStep] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const [bookingData, setBookingData] = useState<BookingData>({
         flight: null,
         passengers: [],
         seats: [],
+        subtotal: 0,
+        tax: 0
     });
-
-    console.log(bookingData);
+    const [booking,setBooking] = useState<Booking>()
 
     useEffect(() => {
         const fetchFlights = async () => {
@@ -84,16 +94,38 @@ const BookingPage = () => {
         handleNextStep();
     };
 
-    console.log(bookingData)
 
+    const handleBookingComplete = async (subtotal: number, tax: number) => {
 
-    const handleBookingComplete = () => {
-        console.log("Booking Finalized:", bookingData);
-        handleNextStep();
+        const updatedBookingData = {
+            ...bookingData,
+            subtotal,
+            tax
+        };
+
+        if (!user) return;
+
+        setBookingData(updatedBookingData)
+        const data = prepareBookingData(updatedBookingData, user.userId);
+
+        try {
+            if(!data) return;
+
+            const result = await createBooking(data);
+            setBooking(result)
+            console.log('Booking created successfully:', result);
+
+            handleNextStep();
+
+        } catch (error) {
+            toast.error('An error occurred while confirming your booking. Please try again.');
+            console.error(error);
+        }
+
     };
 
     const renderStep = () => {
-        if (isLoading || !bookingData.flight) {
+        if (isLoading || !bookingData.flight || !user) {
             return <div>Loading flight details...</div>;
         }
 
@@ -107,7 +139,9 @@ const BookingPage = () => {
             case 4:
                 return <ReviewAndPayStep bookingData={bookingData} onConfirm={handleBookingComplete} onBack={handlePrevStep} />;
             case 5:
-                return <ConfirmationStep bookingData={bookingData} />;
+                return booking
+                    ? <ConfirmationStep bookingData={bookingData} booking={booking} />
+                    : <div>Loading confirmation...</div>;
             default:
                 return <div>Invalid Step</div>;
         }
