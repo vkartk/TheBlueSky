@@ -18,50 +18,60 @@ interface PassengerTableProps {
 
 export const PassengerTable = ({ passengers, onEdit }: PassengerTableProps) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Date of Birth</TableHead>
-          <TableHead>Passport Number</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {passengers.length > 0 ? (
-          passengers.map((passenger) => (
-            <TableRow key={passenger.passengerId}>
-              <TableCell className="font-medium">
-                {passenger.firstName} {passenger.lastName}
-              </TableCell>
-              <TableCell>{passenger.dateOfBirth}</TableCell>
-              <TableCell>{passenger.passportNumber || 'N/A'}</TableCell>
-              <TableCell>
-                <Badge variant={passenger.isActive ? 'default' : 'destructive'}>
-                  {passenger.isActive ? 'Active' : 'Inactive'}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-right">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onEdit(passenger)}
-                >
-                  <Pencil className="h-4 w-4" />
-                  <span className="sr-only">Edit</span>
-                </Button>
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Date of Birth</TableHead>
+            <TableHead>Gender</TableHead>
+            <TableHead>Passport Number</TableHead>
+            <TableHead>Date Created</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {passengers.length > 0 ? (
+            passengers.map((passenger) => (
+              <TableRow key={passenger.passengerId}>
+                <TableCell className="font-medium">
+                  {passenger.firstName} {passenger.lastName}
+                </TableCell>
+                <TableCell>
+                    {new Date(passenger.dateOfBirth).toLocaleDateString()}
+                </TableCell>
+                <TableCell>{passenger.gender}</TableCell>
+                <TableCell>{passenger.passportNumber || 'N/A'}</TableCell>
+                <TableCell>
+                  {new Date(passenger.createdDate).toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  <Badge variant={passenger.isActive ? 'default' : 'destructive'}>
+                    {passenger.isActive ? 'Active' : 'Inactive'}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-right">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onEdit(passenger)}
+                  >
+                    <Pencil className="h-4 w-4" />
+                    <span className="sr-only">Edit</span>
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} className="h-24 text-center">
+                No passengers found.
               </TableCell>
             </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell colSpan={5} className="h-24 text-center">
-              No passengers found.
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
