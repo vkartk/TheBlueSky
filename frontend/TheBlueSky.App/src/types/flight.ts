@@ -1,6 +1,8 @@
 import type { Aircraft } from "./aircraft";
+import type { Airport } from "./airports";
 import type { FlightSchedule } from "./flightSchedule";
 import type { FlightSeatStatus } from "./flightSeatStatus";
+import type { Route } from "./route";
 
 export const flightStatuses = [
   'Scheduled',
@@ -27,7 +29,11 @@ export type Flight = {
 
 export type GetFlight = Flight &{
   schedule: FlightSchedule & {
-    aircraft: Aircraft
+    aircraft: Aircraft,
+    route: Route & {
+      originAirport: Airport,
+      destinationAirport: Airport
+    }
   },
   seatStatuses: FlightSeatStatus[]
 }
