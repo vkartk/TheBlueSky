@@ -10,7 +10,7 @@ namespace TheBlueSky.Flights.Mappings
         public FlightScheduleProfile()
         {
             CreateMap<FlightSchedule, FlightScheduleResponse>();
-            CreateMap<FlightSchedule, FlightScheduleWithAircraftResponse>();
+            CreateMap<FlightSchedule, FlightScheduleWithAircraftRouteResponse>();
 
             CreateMap<CreateFlightScheduleRequest, FlightSchedule>()
                 .ForMember(d => d.FlightScheduleId, opt => opt.Ignore())

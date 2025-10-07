@@ -16,7 +16,7 @@ namespace TheBlueSky.Flights.DTOs.Responses.Flight
             public decimal BaseFare { get; set; }
             public DateTime LastUpdated { get; set; }
 
-            public FlightScheduleWithAircraftResponse? Schedule { get; set; }
+            public FlightScheduleWithAircraftRouteResponse? Schedule { get; set; }
             public List<FlightSeatStatusWithAircraftSeatResponse> SeatStatuses { get; set; } = new();
     }
 }

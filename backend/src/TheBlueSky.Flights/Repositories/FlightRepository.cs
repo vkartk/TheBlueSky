@@ -112,6 +112,12 @@ namespace TheBlueSky.Flights.Repositories
             return await _context.Flights
                 .Include(f => f.Schedule)
                     .ThenInclude(fs => fs.Aircraft)
+                .Include(f => f.Schedule)
+                    .ThenInclude(fs => fs.Route)
+                        .ThenInclude(r => r.OriginAirport)
+                .Include(f => f.Schedule)
+                    .ThenInclude(fs => fs.Route)
+                        .ThenInclude(r => r.DestinationAirport)
                 .Include(f => f.SeatStatuses)
                     .ThenInclude(fss => fss.AircraftSeat)
                 .FirstOrDefaultAsync(f => f.FlightId == id);

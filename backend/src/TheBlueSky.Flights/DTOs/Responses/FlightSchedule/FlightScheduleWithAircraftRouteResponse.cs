@@ -1,9 +1,10 @@
 ﻿using TheBlueSky.Flights.DTOs.Responses.Aircraft;
+using TheBlueSky.Flights.DTOs.Responses.Route;
 using TheBlueSky.Flights.DTOs.Responses.ScheduleDay;
 
 namespace TheBlueSky.Flights.DTOs.Responses.FlightSchedule
 {
-    public class FlightScheduleWithAircraftResponse
+    public class FlightScheduleWithAircraftRouteResponse
     {
         public int FlightScheduleId { get; set; }
         public int AircraftId { get; set; }
@@ -28,5 +29,7 @@ namespace TheBlueSky.Flights.DTOs.Responses.FlightSchedule
         public List<ScheduleDayResponse> ScheduleDays { get; set; } = new();
 
         public AircraftResponse? Aircraft { get; set; }
+
+        public RouteWithAirportsResponse? Route { get; set; }
     }
 }
