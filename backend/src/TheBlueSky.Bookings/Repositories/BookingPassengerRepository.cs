@@ -81,5 +81,10 @@ namespace TheBlueSky.Bookings.Repositories
             return _context.BookingPassengers.AnyAsync(bp => bp.BookingPassengerId == bookingPassengerId);
         }
 
+        public async Task AddRangeAsync(IEnumerable<BookingPassenger> bookingPassengers)
+        {
+            await _context.BookingPassengers.AddRangeAsync(bookingPassengers);
+        }
+
     }
 }

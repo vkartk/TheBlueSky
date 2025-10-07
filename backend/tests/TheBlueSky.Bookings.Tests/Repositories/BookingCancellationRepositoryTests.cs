@@ -43,7 +43,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
             {
                 new Booking
                 {
-                    BookingId = 10, UserId = 100, FlightId = 200,
+                    BookingId = 10, UserId = "100", FlightId = 200,
                     BookingDate = DateTime.UtcNow.AddDays(-2),
                     NumberOfPassengers = 2, SubtotalAmount = 1000m, TaxAmount = 100m,
                     BookingStatus = BookingStatus.Pending, PaymentStatus = PaymentStatus.Pending,
@@ -51,7 +51,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
                 },
                 new Booking
                 {
-                    BookingId = 11, UserId = 101, FlightId = 201,
+                    BookingId = 11, UserId = "101", FlightId = 201,
                     BookingDate = DateTime.UtcNow.AddDays(-1),
                     NumberOfPassengers = 1, SubtotalAmount = 800m, TaxAmount = 80m,
                     BookingStatus = BookingStatus.Confirmed, PaymentStatus = PaymentStatus.Pending,

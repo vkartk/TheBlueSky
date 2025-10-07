@@ -14,7 +14,11 @@ namespace TheBlueSky.Bookings.Mappings
 
             CreateMap<CreateBookingRequest, Booking>()
                 .ForMember(d => d.BookingDate, cfg => cfg.MapFrom(_ => DateTime.UtcNow))
-                .ForMember(d => d.LastUpdated, cfg => cfg.MapFrom(_ => DateTime.UtcNow));
+                .ForMember(d => d.LastUpdated, cfg => cfg.MapFrom(_ => DateTime.UtcNow))
+                .ForMember(dest => dest.SubtotalAmount, opt => opt.MapFrom(src => src.Subtotal))
+                .ForMember(dest => dest.TaxAmount, opt => opt.MapFrom(src => src.Tax))
+                .ForMember(dest => dest.NumberOfPassengers, opt => opt.MapFrom(src => src.PassengerSeatSelections.Count));
+
 
             CreateMap<UpdateBookingRequest, Booking>()
                 .ForMember(d => d.LastUpdated, cfg => cfg.MapFrom(_ => DateTime.UtcNow));

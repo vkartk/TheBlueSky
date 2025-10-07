@@ -5,19 +5,21 @@ namespace TheBlueSky.Bookings.DTOs.Requests.Booking
 {
     public record CreateBookingRequest
     {
-        public required int UserId { get; init; }
-        public required int FlightId { get; init; }
+        [Required]
+        public int FlightId { get; set; }
 
-        [Range(1, 50)]
-        public required int NumberOfPassengers { get; init; }
+        public string? UserId { get; set; }
 
+        [Required]
+        [Range(0.01, double.MaxValue)]
+        public decimal Subtotal { get; set; }
+
+        [Required]
         [Range(0, double.MaxValue)]
-        public required decimal SubtotalAmount { get; init; }
+        public decimal Tax { get; set; }
 
-        [Range(0, double.MaxValue)]
-        public required decimal TaxAmount { get; init; }
-
-        public BookingStatus BookingStatus { get; init; } = BookingStatus.Pending;
-        public PaymentStatus PaymentStatus { get; init; } = PaymentStatus.Pending;
+        [Required]
+        [MinLength(1)]
+        public List<PassengerSeatSelectionRequest> PassengerSeatSelections { get; set; } = [];
     }
 }

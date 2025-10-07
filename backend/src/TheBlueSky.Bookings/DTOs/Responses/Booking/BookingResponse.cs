@@ -6,7 +6,7 @@ namespace TheBlueSky.Bookings.DTOs.Responses.Booking
 
         int BookingId,
 
-        int UserId,
+        string UserId,
 
         int FlightId,
 

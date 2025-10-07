@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using TheBlueSky.Bookings.DTOs.Requests.Booking;
 using TheBlueSky.Bookings.DTOs.Responses.Booking;
+using TheBlueSky.Bookings.Enums;
 using TheBlueSky.Bookings.Models;
+using TheBlueSky.Bookings.Repositories;
 using TheBlueSky.Bookings.Repositories.Interfaces;
 using TheBlueSky.Bookings.Services.Interfaces;
 
@@ -10,11 +14,17 @@ namespace TheBlueSky.Bookings.Services
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _repository;
+        private readonly IBookingPassengerRepository _passengerRepository;
+        IHttpContextAccessor _httpContextAccessor;
+        private readonly BookingsDbContext _context;
         private readonly IMapper _mapper;
 
-        public BookingService(IBookingRepository repository, IMapper mapper)
+        public BookingService(IBookingRepository repository, IBookingPassengerRepository passengerRepository, IHttpContextAccessor httpContextAccessor, BookingsDbContext context, IMapper mapper)
         {
             _repository = repository;
+            _httpContextAccessor = httpContextAccessor;
+            _passengerRepository = passengerRepository;
+            _context = context;
             _mapper = mapper;
         }
 
@@ -34,11 +44,50 @@ namespace TheBlueSky.Bookings.Services
         }
 
         public async Task<BookingResponse> CreateAsync(CreateBookingRequest request)
-        {
-            var booking = _mapper.Map<Booking>(request);
-            booking = await _repository.AddAsync(booking);
+        { 
 
-            return _mapper.Map<BookingResponse>(booking);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var booking = _mapper.Map<Booking>(request);
+
+                booking.UserId = request.UserId;
+                booking.BookingDate = DateTime.UtcNow;
+                booking.NumberOfPassengers = request.PassengerSeatSelections.Count;
+                booking.BookingStatus = BookingStatus.Confirmed;
+                booking.PaymentStatus = PaymentStatus.Paid;
+
+                var createdBooking = await _repository.AddAsync(booking);
+                await _context.SaveChangesAsync();
+
+                var bookingPassengers = request.PassengerSeatSelections.Select(p => new BookingPassenger
+                {
+                    BookingId = createdBooking.BookingId,
+                    PassengerId = p.PassengerId,
+                    TicketNumber = p.TicketNumber,
+                    TicketPrice = p.TicketPrice,
+                    FlightSeatStatusId = p.FlightSeatStatusId,
+                }).ToList();
+
+                await _passengerRepository.AddRangeAsync(bookingPassengers);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+
+
+                return _mapper.Map<BookingResponse>(createdBooking);
+
+
+
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+
         }
 
         public async Task<bool> UpdateAsync(UpdateBookingRequest request)

@@ -11,5 +11,7 @@ namespace TheBlueSky.Bookings.Repositories.Interfaces
         Task<bool> DeleteAsync(int bookingPassengerId);
         Task<bool> ExistsAsync(int bookingPassengerId);
 
+        Task AddRangeAsync(IEnumerable<BookingPassenger> bookingPassengers);
+
     }
 }

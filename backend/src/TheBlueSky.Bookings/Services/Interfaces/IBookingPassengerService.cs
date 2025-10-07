@@ -1,5 +1,6 @@
 ﻿using TheBlueSky.Bookings.DTOs.Requests.BookingPassenger;
 using TheBlueSky.Bookings.DTOs.Responses.BookingPassenger;
+using TheBlueSky.Bookings.Models;
 
 namespace TheBlueSky.Bookings.Services.Interfaces
 {

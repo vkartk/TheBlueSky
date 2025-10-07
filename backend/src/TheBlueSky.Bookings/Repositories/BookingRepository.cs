@@ -24,10 +24,11 @@ namespace TheBlueSky.Bookings.Repositories
         {
             return await _context.Bookings.FirstOrDefaultAsync(b => b.BookingId == id);
         }
+
+        // service saves this
         public async Task<Booking> AddAsync(Booking booking)
         {
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
+            await _context.Bookings.AddAsync(booking);
             return booking;
         }
 
