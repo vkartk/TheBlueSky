@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { fetchPassengerByUser } from '@/features/passenger/passengerThunks';
@@ -72,12 +73,14 @@ export const PassengerSelectStep = ({ onNext, onBack }: PassengerSelectStepProps
                         id={`passenger-${passenger.passengerId}`}
                         checked={selected.includes(passenger.passengerId)}
                         onCheckedChange={() => handleSelect(passenger.passengerId)}
+                        disabled={!passenger.isActive}
                     />
                     <label
                         htmlFor={`passenger-${passenger.passengerId}`}
                         className="flex-1 cursor-pointer"
                     >
-                        <p className="font-semibold">{`${passenger.firstName} ${passenger.lastName}`}</p>
+                       
+                        <p className="font-semibold">{`${passenger.firstName} ${passenger.lastName}`}  { !passenger.isActive && <Badge variant="destructive">Disabled</Badge> }</p>
                         <p className="text-sm text-muted-foreground">{passenger.relationshipToManager || 'Passenger'}</p>
                     </label>
                 </div>
