@@ -7,6 +7,7 @@ import AircraftEditPage from "@/pages/dashboard/Aircrafts/edit";
 import FlightSchedulesPage from "@/pages/dashboard/flightSchedule";
 import { ManageFlightSchedulePage } from "@/pages/dashboard/flightSchedule/manage";
 import FlightsPage from "@/pages/dashboard/flight";
+import PassengersPage from "@/pages/dashboard/Passengers";
 
 export const dashboardRoutes = {
   path: "dashboard",
@@ -53,5 +54,10 @@ export const dashboardRoutes = {
       element: <FlightsPage />,
       handle: { crumb: "Flights" },
     },
+    {
+      path: "passengers",
+      element: <PassengersPage />,
+      handle: { crumb: "Passengers" },
+    }
   ],
 };
