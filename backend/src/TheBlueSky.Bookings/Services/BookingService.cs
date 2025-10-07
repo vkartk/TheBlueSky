@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TheBlueSky.Bookings.DTOs.Requests.Booking;
 using TheBlueSky.Bookings.DTOs.Responses.Booking;
@@ -102,12 +103,44 @@ namespace TheBlueSky.Bookings.Services
 
         public async Task<bool> UpdateAsync(int id,UpdateBookingRequest request)
         {
-            var booking = await _repository.GetByIdAsync(id);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            if (booking is null) return false;
+            try
+            {
 
-            _mapper.Map(request, booking);
-            return await _repository.UpdateAsync(booking);
+                var booking = await _repository.GetByIdAsync(id);
+
+                if (booking is null) return false;
+
+                if (request.BookingStatus == BookingStatus.Cancelled && booking.BookingStatus != BookingStatus.Cancelled)
+                {
+                    var bookingPassengers = await _context.BookingPassengers
+                                                          .Where(p => p.BookingId == id)
+                                                          .ToListAsync();
+
+                    if (bookingPassengers.Any())
+                    {
+                        var seatStatusIds = bookingPassengers.Select(p => p.FlightSeatStatusId);
+                        await _flightSeatStatusService.UpdateSeatStatusAsync(seatStatusIds, "Available");
+                    }
+                }
+
+
+                _mapper.Map(request, booking);
+
+                var success = await _repository.UpdateAsync(booking);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                return success;
+
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public Task<bool> DeleteAsync(int id)
