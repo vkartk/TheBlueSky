@@ -56,14 +56,19 @@ const MyBookingsPage = () => {
             cancelledByUserId: user.userId
         };
 
+        const toastId = toast.loading('Updating booking...');
         try {
             const updatedBookingData = { ...selectedBooking, bookingStatus: 'Cancelled' as const };
+
             await dispatch(updateBooking(updatedBookingData)).unwrap();
 
             await dispatch(createBookingCancellation(cancellationRequest)).unwrap();
+            toast.success('Booking Cancelled Successfully.', { id: toastId });
+
+            dispatch(fetchBookingsByUser(user.userId));
         } catch (err) {
             console.error('Failed to cancel booking:', err);
-            toast.error("Failed to cancel booking, Please try again latr.")
+            toast.error("Failed to cancel booking, Please try again latr.", { id: toastId })
         } finally {
             handleCloseCancelDialog();
         }
