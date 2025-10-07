@@ -27,10 +27,10 @@ namespace TheBlueSky.Flights.Services
             return _mapper.Map<IEnumerable<FlightResponse>>(flights);
         }
 
-        public async Task<FlightResponse?> GetFlightByIdAsync(int id)
+        public async Task<FlightDetailsResponse?> GetFlightByIdAsync(int id)
         {
-            var flight = await _flightRepository.GetFlightByIdAsync(id);
-            return _mapper.Map<FlightResponse>(flight);
+            var flight = await _flightRepository.GetFlightWithDetailsAsync(id);
+            return _mapper.Map<FlightDetailsResponse>(flight);
         }
 
         public async Task<FlightResponse> CreateFlightAsync(CreateFlightRequest request)

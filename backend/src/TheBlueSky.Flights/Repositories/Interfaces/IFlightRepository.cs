@@ -18,5 +18,8 @@ namespace TheBlueSky.Flights.Repositories.Interfaces
 
         Task<IEnumerable<Flight>> SearchFlightsAsync(int routeId, DateOnly flightDate, int requiredSeats);
 
+        Task<Flight?> GetFlightWithDetailsAsync(int id);
+
+
     }
 }

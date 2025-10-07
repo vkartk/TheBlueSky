@@ -107,5 +107,16 @@ namespace TheBlueSky.Flights.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Flight?> GetFlightWithDetailsAsync(int id)
+        {
+            return await _context.Flights
+                .Include(f => f.Schedule)
+                    .ThenInclude(fs => fs.Aircraft)
+                .Include(f => f.SeatStatuses)
+                    .ThenInclude(fss => fss.AircraftSeat)
+                .FirstOrDefaultAsync(f => f.FlightId == id);
+        }
+
+
     }
 }

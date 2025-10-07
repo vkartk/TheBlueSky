@@ -1,4 +1,5 @@
-﻿using TheBlueSky.Flights.DTOs.Responses.ScheduleDay;
+﻿using TheBlueSky.Flights.DTOs.Responses.Aircraft;
+using TheBlueSky.Flights.DTOs.Responses.ScheduleDay;
 
 namespace TheBlueSky.Flights.DTOs.Responses.FlightSchedule
 {

@@ -31,6 +31,8 @@ namespace TheBlueSky.Flights.Mappings
                 .ForMember(dest => dest.DepartureDateTime, opt => opt.MapFrom(src => src.DepartureDateTime.UtcDateTime))
                 .ForMember(dest => dest.ArrivalDateTime, opt => opt.MapFrom(src => src.ArrivalDateTime.UtcDateTime));
 
+            CreateMap<Flight, FlightDetailsResponse>();
+
         }
     }
 }

@@ -42,7 +42,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         [Test]
         public async Task GetById_NotFound_Returns404()
         {
-            _service.Setup(s => s.GetFlightByIdAsync(99)).ReturnsAsync((FlightResponse?)null);
+            _service.Setup(s => s.GetFlightByIdAsync(99)).ReturnsAsync((FlightDetailsResponse?)null);
 
             var result = await _controller.GetFlightById(99);
 

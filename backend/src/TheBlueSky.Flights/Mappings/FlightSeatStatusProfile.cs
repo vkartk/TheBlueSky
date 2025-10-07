@@ -10,6 +10,7 @@ namespace TheBlueSky.Flights.Mappings
         public FlightSeatStatusProfile()
         {
             CreateMap<FlightSeatStatus, FlightSeatStatusResponse>();
+            CreateMap<FlightSeatStatus, FlightSeatStatusWithAircraftSeatResponse>();
             CreateMap<CreateFlightSeatStatusRequest, FlightSeatStatus>();
             CreateMap<UpdateFlightSeatStatusRequest, FlightSeatStatus>();
         }

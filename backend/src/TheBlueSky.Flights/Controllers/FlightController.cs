@@ -39,7 +39,7 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<FlightResponse>> GetFlightById(int id)
+        public async Task<ActionResult<FlightDetailsResponse>> GetFlightById(int id)
         {
             try
             {
