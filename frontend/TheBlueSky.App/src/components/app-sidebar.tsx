@@ -34,11 +34,11 @@ const data = {
       items: [
         {
           title: "Bookings",
-          url: "#",
+          url: "/dashboard/bookings",
         },
         {
           title: "Cancellations",
-          url: "#",
+          url: "/dashboard/bookings/cancellations",
         }
       ],
     },
@@ -49,11 +49,11 @@ const data = {
       items: [
         {
           title: "All Customers",
-          url: "#",
+          url: "/dashboard/customers",
         },
         {
           title: "Passengers",
-          url: "#",
+          url: "/dashboard/passengers",
         }
       ],
     }
