@@ -11,6 +11,7 @@ import flightsReducer from '@/features/flight/flightSlice';
 import authReducer from '@/features/auth/authSlice';
 import countriesReducer from "@/features/countries/countriesSlice"
 import passengersReducer from "@/features/passenger/passengerSlice"
+import bookingsReducer from "@/features/bookings/bookingSlice"
 
 
 export const store = configureStore({
@@ -24,7 +25,8 @@ export const store = configureStore({
     flights: flightsReducer,
     auth: authReducer,
     countries: countriesReducer,
-    passengers: passengersReducer
+    passengers: passengersReducer,
+    bookings: bookingsReducer
   },
 });
 
