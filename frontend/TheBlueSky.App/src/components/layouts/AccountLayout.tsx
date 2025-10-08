@@ -22,7 +22,7 @@ const sidebarNavItems = [
     }
 ]
 
-export const AccountLayout = () => {
+const AccountLayout = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:p-8" >
             <div className='space-y-0.5'>
@@ -43,3 +43,5 @@ export const AccountLayout = () => {
         </div>
     );
 }
+
+export default AccountLayout;

@@ -13,7 +13,7 @@ import { flightService } from '@/services/flights/flightService';
 import { passengerService } from '@/services/bookings/passengerService';
 import { useAppSelector } from '@/store';
 
-export function ViewTicketPage() {
+function ViewTicketPage() {
 
     const { bookingId, flightId } = useParams<{ bookingId: string; flightId: string }>();
     const user = useAppSelector(state => state.auth.user);
@@ -93,3 +93,5 @@ export function ViewTicketPage() {
         </div>
     );
 }
+
+export default ViewTicketPage;

@@ -1,24 +1,25 @@
-import { AccountLayout } from "@/components/layouts/AccountLayout";
+import AccountLayout from "@/components/layouts/AccountLayout";
 import { UserProfileForm } from "@/components/pages/account/UserProfileForm";
+
 import MyBookingsPage from "@/pages/account/MyBookings";
-import { ViewTicketPage } from "@/pages/account/MyBookings/ViewTicketPage";
+import ViewTicketPage from "@/pages/account/MyBookings/ViewTicketPage";
 import OnboardingPage from "@/pages/account/Onboarding";
 import PassengersPage from "@/pages/account/passengers";
 
 
 export const accountRoutes = {
   path: "account",
-  element: <AccountLayout/>,
+  element: <AccountLayout />,
   handle: { crumb: "Dashboard" },
   children: [
     {
       index: true,
-      element: <UserProfileForm/>,
+      element: <UserProfileForm />,
       handle: { crumb: "Home" },
     },
     {
       path: "passengers",
-      element: <PassengersPage/>,
+      element: <PassengersPage />,
       handle: { crumb: "Passengers" },
     },
     {
@@ -32,8 +33,8 @@ export const accountRoutes = {
       handle: { crumb: "View Ticket" },
     },
     {
-        path: "onboarding",
-        element: <OnboardingPage/>
+      path: "onboarding",
+      element: <OnboardingPage />
     }
   ],
 };
