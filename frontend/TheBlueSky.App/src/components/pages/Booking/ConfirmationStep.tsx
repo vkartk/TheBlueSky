@@ -123,7 +123,7 @@ export function ConfirmationStep({ bookingData, booking }: { bookingData: Bookin
                             <div className="grid gap-4 text-sm">
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">Booking Date</span>
-                                    <span className="font-medium">{formatDate(new Date())}</span>
+                                    <span className="font-medium">{formatDate(new Date(booking.bookingDate) || new Date())}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">Status</span>
