@@ -5,6 +5,7 @@ import { publicRoutes } from "./publicRoutes";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { accountRoutes } from "./accountRoutes";
 import { MainLayout } from "@/components/layouts/MainLayout";
+import { USER_ROLES } from "@/types/auth";
 
 const router = createBrowserRouter([
   // Public Routes
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <ProtectedRoute allowedRoles={['User', 'Admin']} />,
+    element: <ProtectedRoute allowedRoles={USER_ROLES} />,
     children: [
       {
         element: < MainLayout />,
