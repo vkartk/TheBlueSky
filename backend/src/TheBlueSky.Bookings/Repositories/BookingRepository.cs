@@ -22,7 +22,10 @@ namespace TheBlueSky.Bookings.Repositories
 
         public async Task<Booking?> GetByIdAsync(int id)
         {
-            return await _context.Bookings.FirstOrDefaultAsync(b => b.BookingId == id);
+            return await _context.Bookings
+                .Include(b => b.Passengers)
+                    .ThenInclude(bp => bp.Passenger)
+                .FirstOrDefaultAsync(b => b.BookingId == id);
         }
 
         public async Task<IEnumerable<Booking>> GetByUserIdAsync(string userId)

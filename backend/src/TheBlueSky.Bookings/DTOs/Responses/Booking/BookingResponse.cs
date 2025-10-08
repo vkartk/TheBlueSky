@@ -1,4 +1,5 @@
-﻿using TheBlueSky.Bookings.Enums;
+﻿using TheBlueSky.Bookings.DTOs.Responses.BookingPassenger;
+using TheBlueSky.Bookings.Enums;
 
 namespace TheBlueSky.Bookings.DTOs.Responses.Booking
 {
@@ -24,7 +25,9 @@ namespace TheBlueSky.Bookings.DTOs.Responses.Booking
 
         PaymentStatus PaymentStatus,
 
-        DateTime LastUpdated
+        DateTime LastUpdated,
+
+        ICollection<BookingPassengerResponse> Passengers
 
     );
    
