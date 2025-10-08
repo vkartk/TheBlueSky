@@ -59,7 +59,18 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Create_Returns201_WithRouteValues()
         {
             // Arrange
-            var req = new CreatePaymentRequest(7, PaymentMethod.Card, 1200m, null, PaymentStatus.Paid, "TXN123", null, null);
+            var req = new CreatePaymentRequest
+            {
+                BookingId = 7,
+                PaymentMethod = PaymentMethod.Card,
+                PaymentAmount = 1200m,
+                PaymentDate = null,
+                PaymentStatus = PaymentStatus.Paid,
+                GatewayTransactionId = "TXN123",
+                RefundDate = null,
+                RefundAmount = null
+            };
+
             var created = new PaymentResponse(55, 7, PaymentMethod.Card, 1200m, null, PaymentStatus.Paid, "TXN123", null, null);
             _service.Setup(s => s.CreateAsync(req)).ReturnsAsync(created);
 
@@ -78,7 +89,19 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_Found_Returns204()
         {
             // Arrange
-            var req = new UpdatePaymentRequest(5, 7, PaymentMethod.Upi, 999m, null, PaymentStatus.Paid, "UPI1", null, null);
+            var req = new UpdatePaymentRequest
+            {
+                PaymentId = 5,
+                BookingId = 7,
+                PaymentMethod = PaymentMethod.Upi,
+                PaymentAmount = 999m,
+                PaymentDate = null,
+                PaymentStatus = PaymentStatus.Paid,
+                GatewayTransactionId = "UPI1",
+                RefundDate = null,
+                RefundAmount = null
+            };
+
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(true);
 
             // Act
@@ -92,7 +115,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public async Task Update_NotFound_Returns404()
         {
             // Arrange
-            var req = new UpdatePaymentRequest(999, 7, PaymentMethod.Upi, 999m, null, PaymentStatus.Paid, "UPI1", null, null);
+            var req = new UpdatePaymentRequest{ PaymentId = 999, BookingId = 7, PaymentMethod = PaymentMethod.Upi, PaymentAmount = 999m, PaymentDate = null, PaymentStatus = PaymentStatus.Paid, GatewayTransactionId = "UPI1", RefundDate = null, RefundAmount = null };
             _service.Setup(s => s.UpdateAsync(req)).ReturnsAsync(false);
 
             // Act
@@ -135,7 +158,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
             _sut.ModelState.AddModelError("BookingId", "Required");
 
             // Act
-            var result = await _sut.Create(new CreatePaymentRequest(0, PaymentMethod.Card, 1200m, null, PaymentStatus.Paid, "TXN", null, null));
+            var result = await _sut.Create(new CreatePaymentRequest{ BookingId = 0, PaymentMethod = PaymentMethod.Card, PaymentAmount = 1200m, PaymentDate = null, PaymentStatus = PaymentStatus.Paid, GatewayTransactionId = "TXN", RefundDate = null, RefundAmount = null });
 
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());

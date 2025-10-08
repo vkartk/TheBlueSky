@@ -2,19 +2,19 @@
 
 namespace TheBlueSky.Bookings.DTOs.Requests.MealPreference
 {
-    public record UpdateMealPreferenceRequest(
-
+    public class UpdateMealPreferenceRequest
+    {
         [Required]
-        int MealPreferenceId,
+        public required int MealPreferenceId { get; set; }
 
         [Required]
         [MaxLength(64)]
-        string PreferenceName,
+        public string PreferenceName { get; set; } = string.Empty;
 
-        string? PreferenceDescription,
+        public string? PreferenceDescription { get; set; }
 
         [Required]
-        bool IsActive
-    );
+        public required bool IsActive { get; set; }
+    }
 
 }

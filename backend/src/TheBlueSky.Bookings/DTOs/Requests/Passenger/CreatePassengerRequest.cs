@@ -2,33 +2,34 @@
 
 namespace TheBlueSky.Bookings.DTOs.Requests.Passenger
 {
-    public record CreatePassengerRequest(
-
+    public class CreatePassengerRequest
+    {
         [Required]
-        string ManagedByUserId,
-
-        [Required]
-        [MaxLength(100)]
-        string FirstName,
+        public string ManagedByUserId { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(100)]
-        string LastName,
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(100)]
+        public string LastName { get; set; } = string.Empty;
 
         [Required]
         [DataType(DataType.Date)]
-        DateTime DateOfBirth,
+        public required DateTime DateOfBirth { get; set; }
 
         [MaxLength(16)]
-        string? Gender,
+        public string? Gender { get; set; }
 
         [MaxLength(32)]
-        string? PassportNumber,
+        public string? PassportNumber { get; set; }
 
         [MaxLength(2)]
-        string? NationalityCountryId,
+        public string? NationalityCountryId { get; set; }
 
         [MaxLength(64)]
-        string? RelationshipToManager
-    );
+        public string? RelationshipToManager { get; set; }
+    }
+
 }

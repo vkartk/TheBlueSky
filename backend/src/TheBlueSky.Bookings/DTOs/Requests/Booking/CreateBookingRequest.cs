@@ -3,10 +3,10 @@ using TheBlueSky.Bookings.Enums;
 
 namespace TheBlueSky.Bookings.DTOs.Requests.Booking
 {
-    public record CreateBookingRequest
+    public class CreateBookingRequest
     {
         [Required]
-        public int FlightId { get; set; }
+        public required int FlightId { get; set; }
 
         public string? UserId { get; set; }
 

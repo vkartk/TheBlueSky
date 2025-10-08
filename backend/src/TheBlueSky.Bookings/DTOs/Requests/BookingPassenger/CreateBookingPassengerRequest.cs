@@ -2,25 +2,26 @@
 
 namespace TheBlueSky.Bookings.DTOs.Requests.BookingPassenger
 {
-    public record CreateBookingPassengerRequest(
+    public class CreateBookingPassengerRequest
+    {
+        [Required]
+        public required int BookingId { get; set; }
 
         [Required]
-        int BookingId,
+        public required int PassengerId { get; set; }
 
         [Required]
-        int PassengerId,
-
-        [Required]
-        int FlightSeatStatusId,
+        public required int FlightSeatStatusId { get; set; }
 
         [Required]
         [MaxLength(32)]
-        string TicketNumber,
+        public string TicketNumber { get; set; } = string.Empty;
 
         [Range(0, double.MaxValue)]
-        decimal TicketPrice,
+        public decimal TicketPrice { get; set; }
 
-        int? MealPreferenceId
-    );
+        public int? MealPreferenceId { get; set; }
+    }
+
 
 }

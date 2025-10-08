@@ -99,16 +99,17 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Create_ReturnsCreatedItem()
         {
             // Arrange
-            var req = new CreatePassengerRequest(
-                ManagedByUserId: "7",
-                FirstName: "John",
-                LastName: "Doe",
-                DateOfBirth: new DateTime(1990, 5, 1),
-                Gender: "M",
-                PassportNumber: "P123",
-                NationalityCountryId: "IN",
-                RelationshipToManager: "Self"
-            );
+            var req = new CreatePassengerRequest
+            {
+                ManagedByUserId = "7",
+                FirstName = "John",
+                LastName = "Doe",
+                DateOfBirth = new DateTime(1990, 5, 1),
+                Gender = "M",
+                PassportNumber = "P123",
+                NationalityCountryId = "IN",
+                RelationshipToManager = "Self"
+            };
 
             var toAdd = new Passenger
             {
@@ -170,18 +171,20 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_Found_ReturnsTrue()
         {
             // Arrange
-            var req = new UpdatePassengerRequest(
-                PassengerId: 5,
-                ManagedByUserId: "7",
-                FirstName: "J",
-                LastName: "D",
-                DateOfBirth: new DateTime(1991, 1, 1),
-                Gender: null,
-                PassportNumber: null,
-                NationalityCountryId: null,
-                RelationshipToManager: null,
-                IsActive: true
-            );
+            var req = new UpdatePassengerRequest
+            {
+                PassengerId = 5,
+                ManagedByUserId = "7",
+                FirstName = "J",
+                LastName = "D",
+                DateOfBirth = new DateTime(1991, 1, 1),
+                Gender = null,
+                PassportNumber = null,
+                NationalityCountryId = null,
+                RelationshipToManager = null,
+                IsActive = true
+            };
+
             var entity = new Passenger { PassengerId = 5 };
 
             _mapper.Setup(m => m.Map<Passenger>(req)).Returns(entity);
@@ -198,18 +201,20 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_NotFound_ReturnsFalse()
         {
             // Arrange
-            var req = new UpdatePassengerRequest(
-                PassengerId: 999,
-                ManagedByUserId: "7",
-                FirstName: "X",
-                LastName: "Y",
-                DateOfBirth: new DateTime(1991, 1, 1),
-                Gender: null,
-                PassportNumber: null,
-                NationalityCountryId: null,
-                RelationshipToManager: null,
-                IsActive: true
-            );
+            var req = new UpdatePassengerRequest
+            {
+                PassengerId = 999,
+                ManagedByUserId = "7",
+                FirstName = "X",
+                LastName = "Y",
+                DateOfBirth = new DateTime(1991, 1, 1),
+                Gender = null,
+                PassportNumber = null,
+                NationalityCountryId = null,
+                RelationshipToManager = null,
+                IsActive = true
+            };
+
             var entity = new Passenger { PassengerId = 999 };
 
             _mapper.Setup(m => m.Map<Passenger>(req)).Returns(entity);
@@ -239,16 +244,18 @@ namespace TheBlueSky.Bookings.Tests.Services
         public void Create_WhenRepositoryFails_ThrowsException()
         {
             // Arrange
-            var req = new CreatePassengerRequest(
-                ManagedByUserId: "7",
-                FirstName: "John",
-                LastName: "Doe",
-                DateOfBirth: new DateTime(1990, 5, 1),
-                Gender: null,
-                PassportNumber: null,
-                NationalityCountryId: null,
-                RelationshipToManager: null
-            );
+            var req = new CreatePassengerRequest
+            {
+                ManagedByUserId = "7",
+                FirstName = "John",
+                LastName = "Doe",
+                DateOfBirth = new DateTime(1990, 5, 1),
+                Gender = null,
+                PassportNumber = null,
+                NationalityCountryId = null,
+                RelationshipToManager = null
+            };
+
 
             var mapped = new Passenger();
             _mapper.Setup(m => m.Map<Passenger>(req)).Returns(mapped);

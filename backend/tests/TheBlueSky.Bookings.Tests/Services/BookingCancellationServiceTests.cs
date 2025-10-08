@@ -76,15 +76,16 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Create_ReturnsCreatedItem()
         {
             // Arrange
-            var req = new CreateBookingCancellationRequest(
-                BookingId: 10,
-                CancelledByUserId: "77",
-                RefundAmount: 120m,
-                RefundStatus: RefundStatus.Pending,
-                RefundDate: null,
-                CancellationReason: "Change of plans",
-                AdminNotes: null
-            );
+            var req = new CreateBookingCancellationRequest
+            {
+                BookingId = 10,
+                CancelledByUserId = "77",
+                RefundAmount = 120m,
+                RefundStatus = RefundStatus.Pending,
+                RefundDate = null,
+                CancellationReason = "Change of plans",
+                AdminNotes = null
+            };
 
             var toAdd = new BookingCancellation
             {
@@ -133,17 +134,19 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_Found_ReturnsTrue()
         {
             // Arrange
-            var req = new UpdateBookingCancellationRequest(
-                BookingCancellationId: 5,
-                BookingId: 10,
-                CancelledByUserId: "77",
-                CancellationDate: new DateTime(2025, 1, 1),
-                RefundAmount: 100m,
-                RefundStatus: RefundStatus.Processed,
-                RefundDate: new DateTime(2025, 1, 2),
-                CancellationReason: "reason",
-                AdminNotes: "note"
-            );
+            var req = new UpdateBookingCancellationRequest
+            {
+                BookingCancellationId = 5,
+                BookingId = 10,
+                CancelledByUserId = "77",
+                CancellationDate = new DateTime(2025, 1, 1),
+                RefundAmount = 100m,
+                RefundStatus = RefundStatus.Processed,
+                RefundDate = new DateTime(2025, 1, 2),
+                CancellationReason = "reason",
+                AdminNotes = "note"
+            };
+
             var entity = new BookingCancellation { BookingCancellationId = 5 };
 
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(entity);
@@ -160,17 +163,19 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_NotFound_ReturnsFalse()
         {
             // Arrange
-            var req = new UpdateBookingCancellationRequest(
-                BookingCancellationId: 999,
-                BookingId: 10,
-                CancelledByUserId: "77",
-                CancellationDate: new DateTime(2025, 1, 1),
-                RefundAmount: 100m,
-                RefundStatus: RefundStatus.Processed,
-                RefundDate: null,
-                CancellationReason: null,
-                AdminNotes: null
-            );
+            var req = new UpdateBookingCancellationRequest
+            {
+                BookingCancellationId = 999,
+                BookingId = 10,
+                CancelledByUserId = "77",
+                CancellationDate = new DateTime(2025, 1, 1),
+                RefundAmount = 100m,
+                RefundStatus = RefundStatus.Processed,
+                RefundDate = null,
+                CancellationReason = null,
+                AdminNotes = null
+            };
+
             var entity = new BookingCancellation { BookingCancellationId = 999 };
 
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(entity);
@@ -200,15 +205,16 @@ namespace TheBlueSky.Bookings.Tests.Services
         public void Create_WhenRepositoryFails_ThrowsException()
         {
             // Arrange
-            var req = new CreateBookingCancellationRequest(
-                BookingId: 10,
-                CancelledByUserId: "77",
-                RefundAmount: 50m,
-                RefundStatus: RefundStatus.Pending,
-                RefundDate: null,
-                CancellationReason: "reason",
-                AdminNotes: null
-            );
+            var req = new CreateBookingCancellationRequest
+            {
+                BookingId = 10,
+                CancelledByUserId = "77",
+                RefundAmount = 50m,
+                RefundStatus = RefundStatus.Pending,
+                RefundDate = null,
+                CancellationReason = "reason",
+                AdminNotes = null
+            };
 
             var mapped = new BookingCancellation();
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(mapped);

@@ -3,28 +3,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheBlueSky.Bookings.DTOs.Requests.BookingPassenger
 {
-    public record UpdateBookingPassengerRequest(
+    public class UpdateBookingPassengerRequest
+    {
+        [Required]
+        public required int BookingPassengerId { get; set; }
 
         [Required]
-        int BookingPassengerId,
+        public required int BookingId { get; set; }
 
         [Required]
-        int BookingId,
+        public required int PassengerId { get; set; }
 
         [Required]
-        int PassengerId,
-
-        [Required]
-        int FlightSeatStatusId,
+        public required int FlightSeatStatusId { get; set; }
 
         [Required]
         [MaxLength(32)]
-        string TicketNumber,
+        public string TicketNumber { get; set; } = string.Empty;
 
         [Range(0, double.MaxValue)]
-        decimal TicketPrice,
+        public decimal TicketPrice { get; set; }
 
-        int? MealPreferenceId
-    );
+        public int? MealPreferenceId { get; set; }
+    }
 
 }

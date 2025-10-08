@@ -76,16 +76,18 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Create_ReturnsCreatedItem()
         {
             // Arrange
-            var req = new CreatePaymentRequest(
-                BookingId: 7,
-                PaymentMethod: PaymentMethod.Card,
-                PaymentAmount: 1200m,
-                PaymentDate: new DateTime(2025, 1, 1),
-                PaymentStatus: PaymentStatus.Paid,
-                GatewayTransactionId: "TXN123",
-                RefundDate: null,
-                RefundAmount: null
-            );
+            var req = new CreatePaymentRequest
+            {
+                BookingId = 7,
+                PaymentMethod = PaymentMethod.Card,
+                PaymentAmount = 1200m,
+                PaymentDate = new DateTime(2025, 1, 1),
+                PaymentStatus = PaymentStatus.Paid,
+                GatewayTransactionId = "TXN123",
+                RefundDate = null,
+                RefundAmount = null
+            };
+
 
             var toAdd = new Payment
             {
@@ -136,17 +138,19 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_Found_ReturnsTrue()
         {
             // Arrange
-            var req = new UpdatePaymentRequest(
-                PaymentId: 5,
-                BookingId: 7,
-                PaymentMethod: PaymentMethod.Upi,
-                PaymentAmount: 999m,
-                PaymentDate: null,
-                PaymentStatus: PaymentStatus.Paid,
-                GatewayTransactionId: "UPI-1",
-                RefundDate: null,
-                RefundAmount: null
-            );
+            var req = new UpdatePaymentRequest
+            {
+                PaymentId = 5,
+                BookingId = 7,
+                PaymentMethod = PaymentMethod.Upi,
+                PaymentAmount = 999m,
+                PaymentDate = null,
+                PaymentStatus = PaymentStatus.Paid,
+                GatewayTransactionId = "UPI-1",
+                RefundDate = null,
+                RefundAmount = null
+            };
+
             var entity = new Payment { PaymentId = 5 };
 
             _mapper.Setup(m => m.Map<Payment>(req)).Returns(entity);
@@ -163,17 +167,19 @@ namespace TheBlueSky.Bookings.Tests.Services
         public async Task Update_NotFound_ReturnsFalse()
         {
             // Arrange
-            var req = new UpdatePaymentRequest(
-                PaymentId: 999,
-                BookingId: 7,
-                PaymentMethod: PaymentMethod.Card,
-                PaymentAmount: 100m,
-                PaymentDate: null,
-                PaymentStatus: PaymentStatus.Pending,
-                GatewayTransactionId: null,
-                RefundDate: null,
-                RefundAmount: null
-            );
+            var req = new UpdatePaymentRequest
+            {
+                PaymentId = 999,
+                BookingId = 7,
+                PaymentMethod = PaymentMethod.Card,
+                PaymentAmount = 100m,
+                PaymentDate = null,
+                PaymentStatus = PaymentStatus.Pending,
+                GatewayTransactionId = null,
+                RefundDate = null,
+                RefundAmount = null
+            };
+
             var entity = new Payment { PaymentId = 999 };
 
             _mapper.Setup(m => m.Map<Payment>(req)).Returns(entity);
@@ -203,16 +209,18 @@ namespace TheBlueSky.Bookings.Tests.Services
         public void Create_WhenRepositoryFails_ThrowsException()
         {
             // Arrange
-            var req = new CreatePaymentRequest(
-                BookingId: 7,
-                PaymentMethod: PaymentMethod.Card,
-                PaymentAmount: 1200m,
-                PaymentDate: null,
-                PaymentStatus: PaymentStatus.Paid,
-                GatewayTransactionId: "TXN123",
-                RefundDate: null,
-                RefundAmount: null
-            );
+            var req = new CreatePaymentRequest
+            {
+                BookingId = 7,
+                PaymentMethod = PaymentMethod.Card,
+                PaymentAmount = 1200m,
+                PaymentDate = null,
+                PaymentStatus = PaymentStatus.Paid,
+                GatewayTransactionId = "TXN123",
+                RefundDate = null,
+                RefundAmount = null
+            };
+
 
             var mapped = new Payment();
             _mapper.Setup(m => m.Map<Payment>(req)).Returns(mapped);

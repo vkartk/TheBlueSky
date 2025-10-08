@@ -4,30 +4,30 @@ using TheBlueSky.Bookings.Enums;
 
 namespace TheBlueSky.Bookings.DTOs.Requests.BookingCancellation
 {
-    public record UpdateBookingCancellationRequest(
+    public class UpdateBookingCancellationRequest
+    {
+        [Required]
+        public required int BookingCancellationId { get; set; }
 
         [Required]
-        int BookingCancellationId,
+        public required int BookingId { get; set; }
 
         [Required]
-        int BookingId,
+        public string CancelledByUserId { get; set; } = string.Empty;
 
         [Required]
-        string CancelledByUserId,
-
-        [Required]
-        DateTime CancellationDate,
+        public required DateTime CancellationDate { get; set; }
 
         [Range(0, double.MaxValue)]
-        decimal RefundAmount,
+        public decimal RefundAmount { get; set; }
 
         [Required]
-        RefundStatus RefundStatus,
+        public required RefundStatus RefundStatus { get; set; }
 
-        DateTime? RefundDate,
+        public DateTime? RefundDate { get; set; }
 
-        string? CancellationReason,
+        public string? CancellationReason { get; set; }
 
-        string? AdminNotes
-    );
+        public string? AdminNotes { get; set; }
+    }
 }

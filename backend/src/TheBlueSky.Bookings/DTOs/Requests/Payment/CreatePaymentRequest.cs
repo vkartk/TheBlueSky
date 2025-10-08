@@ -4,28 +4,28 @@ using TheBlueSky.Bookings.Enums;
 
 namespace TheBlueSky.Bookings.DTOs.Requests.Payment
 {
-    public record CreatePaymentRequest(
+    public class CreatePaymentRequest
+    {
+        [Required]
+        public required int BookingId { get; set; }
 
         [Required]
-        int BookingId,
-
-        [Required]
-        PaymentMethod PaymentMethod,
+        public required PaymentMethod PaymentMethod { get; set; }
 
         [Range(0, double.MaxValue)]
-        decimal PaymentAmount,
+        public required decimal PaymentAmount { get; set; }
 
-        DateTime? PaymentDate,
+        public DateTime? PaymentDate { get; set; }
 
         [Required]
-        PaymentStatus PaymentStatus,
+        public required PaymentStatus PaymentStatus { get; set; }
 
         [MaxLength(128)]
-        string? GatewayTransactionId,
+        public string? GatewayTransactionId { get; set; }
 
-        DateTime? RefundDate,
+        public DateTime? RefundDate { get; set; }
 
         [Range(0, double.MaxValue)]
-        decimal? RefundAmount
-    );
+        public decimal? RefundAmount { get; set; }
+    }
 }
