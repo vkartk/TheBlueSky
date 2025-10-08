@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 
 import type { FlightDetailResponse } from '@/types/search';
 import { getFlightStatusVariant } from '@/utils/flight';
+import { useNavigate } from 'react-router';
 
 
 interface FlightListProps {
@@ -13,6 +14,8 @@ interface FlightListProps {
 }
 
 export const FlightList = ({ flights }: FlightListProps) => {
+
+    const navigate = useNavigate();
 
     if (!flights || flights.length === 0) {
         return (
@@ -24,6 +27,7 @@ export const FlightList = ({ flights }: FlightListProps) => {
 
     const handleSelectFlight = (flightId: number) => {
         console.log(`Selected Flight ID: ${flightId}`);
+        navigate(`/booking?flightId=${flightId}`);
     };
 
     return (
@@ -61,7 +65,6 @@ export const FlightList = ({ flights }: FlightListProps) => {
                                 </div>
                             </div>
 
-                            {/* Vertical Separator for Desktop */}
                             <div className="hidden md:block h-16 w-px bg-border" />
                             <div className="block md:hidden h-px w-full bg-border" />
 
@@ -69,7 +72,7 @@ export const FlightList = ({ flights }: FlightListProps) => {
 
                                 <div className="text-right">
                                     <p className="text-sm text-muted-foreground">starts at</p>
-                                    <span className="text-2xl font-bold">${flight.baseFare.toLocaleString()}</span>
+                                    <span className="text-2xl font-bold">₹ {flight.baseFare.toLocaleString()}</span>
                                 </div>
 
                                 <div className="flex items-center gap-4 mt-2">
