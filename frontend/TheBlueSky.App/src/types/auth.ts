@@ -30,3 +30,6 @@ export type User = {
     email: string;
     roles: string[];
 }
+
+
+export const USER_ROLES = ['Admin', 'FlightsOwner', 'User'];

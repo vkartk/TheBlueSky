@@ -10,6 +10,7 @@ import FlightsPage from "@/pages/dashboard/flight";
 import PassengersPage from "@/pages/dashboard/Passengers";
 import { BookingsPage } from "@/pages/dashboard/bookings";
 import BookingCancellationsPage from "@/pages/dashboard/BookingCancellations";
+import  CustomersPage  from "@/pages/dashboard/Customers";
 
 export const dashboardRoutes = {
   path: "dashboard",
@@ -55,6 +56,11 @@ export const dashboardRoutes = {
       path: "flights",
       element: <FlightsPage />,
       handle: { crumb: "Flights" },
+    },
+    {
+      path: "customers",
+      element: <CustomersPage/>,
+      handle: { crumb: "Customers" },
     },
     {
       path: "passengers",

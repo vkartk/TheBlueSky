@@ -13,6 +13,7 @@ import countriesReducer from "@/features/countries/countriesSlice"
 import passengersReducer from "@/features/passenger/passengerSlice"
 import bookingsReducer from "@/features/bookings/bookingSlice"
 import bookingCancellationsReducer from "@/features/bookingCancellation/bookingCancellationSlice"
+import usersReducer from "@/features/users/usersSlice"
 
 
 export const store = configureStore({
@@ -28,7 +29,8 @@ export const store = configureStore({
     countries: countriesReducer,
     passengers: passengersReducer,
     bookings: bookingsReducer,
-    bookingCancellations: bookingCancellationsReducer
+    bookingCancellations: bookingCancellationsReducer,
+    users: usersReducer
   },
 });
 
