@@ -72,6 +72,7 @@ export const RouteSheetForm = ({ initialData, onSave,onClose, isLoading, airport
     const handleSubmit = async (data: RouteFormValues) => {
         const updateData = isEditMode && initialData ? { ...initialData, ...data } : data;
         await onSave(updateData);
+        form.reset()
         onClose()
     };
 
