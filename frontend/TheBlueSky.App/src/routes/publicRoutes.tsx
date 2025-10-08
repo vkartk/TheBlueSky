@@ -5,6 +5,7 @@ import LoginPage from '@/pages/auth/login';
 import RegisterPage from '@/pages/auth/register';
 
 import NotFoundPage from '@/components/pages/errors/not-found';
+import UnauthorisedPage from '@/components/pages/errors/unauthorized';
 
 import HomePage from '@/pages/public/HomePage';
 import BookingPage from '@/pages/public/BookingPage';
@@ -41,6 +42,10 @@ export const publicRoutes: RouteObject[] = [
   {
     path: 'register',
     element: <RegisterPage />,
+  },
+  {
+    path: 'unauthorized',
+    element: <UnauthorisedPage />
   },
   {
     path: '*',
