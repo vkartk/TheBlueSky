@@ -1,16 +1,22 @@
 import DashboardLayout from "@/components/layouts/dashboard";
+
 import DashboardHome from "@/pages/dashboard";
-import { AirportsPage } from "@/pages/dashboard/Airports";
-import RoutePage from "@/pages/dashboard/Route";
+
+import  AirportsPage from "@/pages/dashboard/Airports";
 import AircraftsPage from "@/pages/dashboard/Aircrafts";
 import AircraftEditPage from "@/pages/dashboard/Aircrafts/edit";
-import FlightSchedulesPage from "@/pages/dashboard/flightSchedule";
-import { ManageFlightSchedulePage } from "@/pages/dashboard/flightSchedule/manage";
-import FlightsPage from "@/pages/dashboard/flight";
-import PassengersPage from "@/pages/dashboard/Passengers";
-import { BookingsPage } from "@/pages/dashboard/bookings";
-import BookingCancellationsPage from "@/pages/dashboard/BookingCancellations";
+
+import FlightsPage from "@/pages/dashboard/Flight";
+import RoutePage from "@/pages/dashboard/Route";
+
+import FlightSchedulesPage from "@/pages/dashboard/FlightSchedule";
+import ManageFlightSchedulePage  from "@/pages/dashboard/FlightSchedule/Manage";
+
 import  CustomersPage  from "@/pages/dashboard/Customers";
+import PassengersPage from "@/pages/dashboard/Passengers";
+
+import  BookingsPage  from "@/pages/dashboard/Bookings";
+import BookingCancellationsPage from "@/pages/dashboard/BookingCancellations";
 
 export const dashboardRoutes = {
   path: "dashboard",

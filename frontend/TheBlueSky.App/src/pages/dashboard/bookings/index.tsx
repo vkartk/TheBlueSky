@@ -14,7 +14,7 @@ import type { NewBookingCancellation } from '@/types/bookingCancellation';
 
 export type BookingCancellationFormData = Omit<NewBookingCancellation, 'bookingId' | 'cancelledByUserId' | 'cancellationDate' | 'refundStatus' | 'refundDate'>;
 
-export function BookingsPage() {
+function BookingsPage() {
     const dispatch = useAppDispatch();
 
     const user = useAppSelector(state => state.auth.user);
@@ -107,3 +107,5 @@ export function BookingsPage() {
     );
 
 }
+
+export default BookingsPage;

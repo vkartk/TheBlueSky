@@ -25,7 +25,7 @@ import type { DayOfWeek } from '@/types/scheduleDay';
 import { ScheduleDetailsCard } from '@/components/flightSchedule/Manage/ScheduleDetailsCard';
 
 
-export const ManageFlightSchedulePage = () => {
+const ManageFlightSchedulePage = () => {
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const dispatch = useAppDispatch();
 
@@ -98,3 +98,5 @@ export const ManageFlightSchedulePage = () => {
     </div>
   );
 };
+
+export default ManageFlightSchedulePage;

@@ -24,7 +24,7 @@ import { AirportSheetForm } from '@/components/airports/AirportSheetForm';
 
 import type { Airport, NewAirport } from '@/types/airports';
 
-export const AirportsPage = () => {
+const AirportsPage = () => {
   const dispatch = useAppDispatch();
   const airports = useAppSelector(selectAllAirports);
   const loading = useAppSelector(selectAirportsLoading);
@@ -111,3 +111,5 @@ export const AirportsPage = () => {
     </div>
   );
 };
+
+export default AirportsPage;

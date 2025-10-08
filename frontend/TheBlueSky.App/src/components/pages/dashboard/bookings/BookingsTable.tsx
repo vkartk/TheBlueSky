@@ -23,7 +23,7 @@ import type { Booking, BookingStatus, PaymentStatus } from '@/types/booking';
 import { bookingStatuses, paymentStatuses } from '@/types/booking';
 import { getBookingStatusVariant, getPaymentStatusVariant } from '@/utils/booking';
 import { BookingCancellationForm } from './BookingCancellationForm';
-import type { BookingCancellationFormData } from '@/pages/dashboard/bookings';
+import type { BookingCancellationFormData } from '@/pages/dashboard/Bookings';
 
 interface BookingsTableProps {
     bookings: Booking[];
