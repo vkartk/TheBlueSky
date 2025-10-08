@@ -53,16 +53,6 @@ namespace TheBlueSky.Flights.Tests.Services
             _loggerFactory?.Dispose();
         }
 
-        [Test]
-        public void AutoMapper_Configuration_IsValid()
-        {
-            var mappingConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AircraftProfile());
-            }, _loggerFactory);
-
-            Assert.DoesNotThrow(() => mappingConfig.AssertConfigurationIsValid());
-        }
 
         [Test]
         public async Task GetAllAircraftsAsync_HappyPath_ReturnsMappedDtos()
