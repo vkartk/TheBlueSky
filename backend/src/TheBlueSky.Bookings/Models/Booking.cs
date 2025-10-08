@@ -10,7 +10,7 @@ namespace TheBlueSky.Bookings.Models
         public int BookingId { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        public required string UserId { get; set; } = default!;
 
         [Required]
         public int FlightId { get; set; }

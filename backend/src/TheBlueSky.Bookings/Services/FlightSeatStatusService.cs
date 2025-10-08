@@ -36,7 +36,8 @@ namespace TheBlueSky.Bookings.Services
                         "Failed to update seat status for ID {SeatId}. Status: {StatusCode}. Response: {Error}",
                         seatId, response.StatusCode, errorContent);
 
-                    throw new ApplicationException($"Failed to update seat status for ID {seatId}.");
+                    throw new HttpRequestException( $"Failed to update seat status for ID {seatId}. " + $"Status: {(int)response.StatusCode} {response.ReasonPhrase}. " + $"Body: {errorContent}");
+
                 }
 
                 _logger.LogInformation("Successfully updated seat status for ID {SeatId} to {Status}", seatId, newStatus);

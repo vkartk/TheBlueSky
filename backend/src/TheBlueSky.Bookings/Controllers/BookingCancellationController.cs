@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TheBlueSky.Bookings.DTOs.Requests.BookingCancellation;
 using TheBlueSky.Bookings.DTOs.Responses.BookingCancellation;
 using TheBlueSky.Bookings.Services.Interfaces;
+using static TheBlueSky.Bookings.Constants.ApiMessages;
+
 
 namespace TheBlueSky.Bookings.Controllers
 {
@@ -33,7 +35,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching all booking cancellations");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -56,7 +58,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching booking cancellation {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -82,7 +84,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while creating booking cancellation for BookingId {BookingId}", request.BookingId);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -112,7 +114,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while updating booking cancellation {Id}", request.BookingCancellationId);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -136,7 +138,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while deleting booking cancellation {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
     }

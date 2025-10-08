@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using TheBlueSky.Bookings.DTOs.Requests.MealPreference;
 using TheBlueSky.Bookings.DTOs.Responses.MealPreference;
 using TheBlueSky.Bookings.Services.Interfaces;
+using static TheBlueSky.Bookings.Constants.ApiMessages;
+
 
 namespace TheBlueSky.Bookings.Controllers
 {
@@ -32,7 +34,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching all meal preferences");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -55,7 +57,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching meal preference {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -79,7 +81,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while creating meal preference");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -109,7 +111,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while updating meal preference {Id}", request.MealPreferenceId);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -133,7 +135,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while deleting meal preference {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
     }

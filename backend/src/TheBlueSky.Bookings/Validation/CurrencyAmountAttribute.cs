@@ -15,7 +15,7 @@ namespace TheBlueSky.Bookings.Validation
             ErrorMessage = $"Amount must be >= 0 with at most {scale} decimal place(s).";
         }
 
-        protected override ValidationResult? IsValid(object? value, ValidationContext _)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value is null) return ValidationResult.Success;
 

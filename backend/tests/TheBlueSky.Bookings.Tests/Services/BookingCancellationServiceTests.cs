@@ -38,8 +38,8 @@ namespace TheBlueSky.Bookings.Tests.Services
             // Arrange
             var entities = new List<BookingCancellation>
             {
-                new() { BookingCancellationId = 1, BookingId = 10, RefundAmount = 100m, RefundStatus = RefundStatus.Pending, CancellationDate = new DateTime(2025,1,1) },
-                new() { BookingCancellationId = 2, BookingId = 11, RefundAmount = 50m,  RefundStatus = RefundStatus.Processed, CancellationDate = new DateTime(2025,1,2) }
+                new() { BookingCancellationId = 1, BookingId = 10, RefundAmount = 100m, RefundStatus = RefundStatus.Pending, CancellationDate = new DateTime(2025,1,1), CancelledByUserId="1" },
+                new() { BookingCancellationId = 2, BookingId = 11, RefundAmount = 50m,  RefundStatus = RefundStatus.Processed, CancellationDate = new DateTime(2025,1,2), CancelledByUserId="1" }
             };
 
             var dtos = new List<BookingCancellationResponse>
@@ -147,7 +147,7 @@ namespace TheBlueSky.Bookings.Tests.Services
                 AdminNotes = "note"
             };
 
-            var entity = new BookingCancellation { BookingCancellationId = 5 };
+            var entity = new BookingCancellation { BookingCancellationId = 5, CancelledByUserId = "1" };
 
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(entity);
             _repo.Setup(r => r.UpdateAsync(entity)).ReturnsAsync(true);
@@ -176,7 +176,7 @@ namespace TheBlueSky.Bookings.Tests.Services
                 AdminNotes = null
             };
 
-            var entity = new BookingCancellation { BookingCancellationId = 999 };
+            var entity = new BookingCancellation { BookingCancellationId = 999, CancelledByUserId = "1" };
 
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(entity);
             _repo.Setup(r => r.UpdateAsync(entity)).ReturnsAsync(false);
@@ -216,7 +216,7 @@ namespace TheBlueSky.Bookings.Tests.Services
                 AdminNotes = null
             };
 
-            var mapped = new BookingCancellation();
+            var mapped = new BookingCancellation() { CancelledByUserId = "1" };
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(mapped);
             _repo.Setup(r => r.AddAsync(mapped)).ThrowsAsync(new InvalidOperationException("boom"));
 

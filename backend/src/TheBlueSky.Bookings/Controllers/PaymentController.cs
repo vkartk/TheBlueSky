@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using TheBlueSky.Bookings.DTOs.Requests.Payment;
 using TheBlueSky.Bookings.DTOs.Responses.Payment;
 using TheBlueSky.Bookings.Services.Interfaces;
+using static TheBlueSky.Bookings.Constants.ApiMessages;
 
 namespace TheBlueSky.Bookings.Controllers
 {
@@ -32,7 +33,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching all payments");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -55,7 +56,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching payment {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -79,7 +80,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while creating payment");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -109,7 +110,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while updating payment");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -133,7 +134,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while deleting payment {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
     }

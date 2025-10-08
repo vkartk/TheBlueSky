@@ -8,7 +8,7 @@ namespace TheBlueSky.Bookings.DTOs.Requests.Booking
         [Required]
         public required int FlightId { get; set; }
 
-        public string? UserId { get; set; }
+        public string UserId { get; set; } = default!;
 
         [Required]
         [Range(0.01, double.MaxValue)]

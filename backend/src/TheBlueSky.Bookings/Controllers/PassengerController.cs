@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using TheBlueSky.Bookings.DTOs.Requests.Passenger;
 using TheBlueSky.Bookings.DTOs.Responses.Passenger;
 using TheBlueSky.Bookings.Services.Interfaces;
+using static TheBlueSky.Bookings.Constants.ApiMessages;
 
 namespace TheBlueSky.Bookings.Controllers
 {
@@ -32,7 +33,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching all passengers");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -55,7 +56,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching passenger {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -71,7 +72,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while fetching passengers for user {UserId}", userId);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -95,7 +96,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while creating passenger");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -125,7 +126,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while updating passenger {Id}", request.PassengerId);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
 
@@ -149,7 +150,7 @@ namespace TheBlueSky.Bookings.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while deleting passenger {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected error");
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalServerErrorMessage);
             }
         }
     }

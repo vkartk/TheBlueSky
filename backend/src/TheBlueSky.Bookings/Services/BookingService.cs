@@ -118,7 +118,7 @@ namespace TheBlueSky.Bookings.Services
                                                           .Where(p => p.BookingId == id)
                                                           .ToListAsync();
 
-                    if (bookingPassengers.Any())
+                    if (bookingPassengers.Count > 0)
                     {
                         var seatStatusIds = bookingPassengers.Select(p => p.FlightSeatStatusId);
                         await _flightSeatStatusService.UpdateSeatStatusAsync(seatStatusIds, "Available");
