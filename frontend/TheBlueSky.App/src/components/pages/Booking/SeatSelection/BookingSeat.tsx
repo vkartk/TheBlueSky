@@ -2,7 +2,8 @@ import { cn } from "@/lib/utils";
 import type { AircraftSeat } from "@/types/aircraftSeat";
 import type { SeatStatus } from "@/types/flightSeatStatus";
 import { CheckCircle2 } from "lucide-react";
-import { SEAT_STATUS_COLORS } from "./Constants";
+import { SEAT_CLASS_COLORS, SEAT_STATUS_COLORS } from "./Constants";
+
 
 export function BookingSeat({ 
   seat, 
@@ -29,6 +30,7 @@ export function BookingSeat({
       className={cn(
         'relative flex h-10 w-10 cursor-pointer items-center justify-center rounded border-2 text-xs font-semibold transition-all',
         colorClass,
+        SEAT_CLASS_COLORS[seat.seatClass],
         isBooked && 'cursor-not-allowed opacity-60',
         isSelectedByCurrentPassenger && 'ring-2 ring-green-400 ring-offset-2'
       )}
