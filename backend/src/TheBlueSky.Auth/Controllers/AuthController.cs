@@ -183,5 +183,70 @@ namespace TheBlueSky.Auth.Controllers
                 return StatusCode(500, new AuthResponse { Status = "Error", Message = "An error occurred. Please try again." });
             }
         }
+
+
+        [HttpPut("users/{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> UpdateUser([FromRoute] string id, [FromBody] UpdateUserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new { Status = "Error", Message = "User not found." });
+            }
+
+            var requestedRoles = request.Roles ?? new List<string>();
+            var allDefinedRoles = new List<string> { UserRoles.Admin, UserRoles.FlightsOwner, UserRoles.User };
+
+            var invalidRoles = requestedRoles.Where(r => !allDefinedRoles.Contains(r)).ToList();
+
+            if (invalidRoles.Any())
+            {
+                return BadRequest(new { Status = "Error", Message = $"The following roles are invalid: {string.Join(", ", invalidRoles)}" });
+            }
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Email = request.Email;
+            user.UserName = request.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return BadRequest(new { Status = "Error", Message = $"User update failed: {errors}" });
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            var rolesToAdd = requestedRoles.Except(currentRoles);
+            var addRolesResult = await _userManager.AddToRolesAsync(user, rolesToAdd);
+
+            if (!addRolesResult.Succeeded)
+            {
+                var errors = string.Join(", ", addRolesResult.Errors.Select(e => e.Description));
+                return BadRequest(new { Status = "Error", Message = $"Failed to add roles: {errors}" });
+            }
+
+            var rolesToRemove = currentRoles.Except(requestedRoles);
+            var removeRolesResult = await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+
+            if (!removeRolesResult.Succeeded)
+            {
+                var errors = string.Join(", ", removeRolesResult.Errors.Select(e => e.Description));
+                return BadRequest(new { Status = "Error", Message = $"Failed to remove roles: {errors}" });
+            }
+
+            return Ok(new { Status = "Success", Message = "User and roles updated successfully." });
+        }
+
     }
+
 }
