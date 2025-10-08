@@ -184,6 +184,28 @@ namespace TheBlueSky.Auth.Controllers
             }
         }
 
+        [HttpGet("users")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userDtos = new List<UserDto>();
+
+            foreach (var user in users)
+            {
+                userDtos.Add(new UserDto
+                {
+                    userId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Roles = await _userManager.GetRolesAsync(user)
+                });
+            }
+
+            return Ok(userDtos);
+        }
+
 
         [HttpPut("users/{id}")]
         [Authorize(Roles = UserRoles.Admin)]
