@@ -51,24 +51,31 @@ export const BookingsTable = ({ bookings, onCancel }: BookingsTableProps) => {
                   ${booking.totalAmount.toFixed(2)}
                 </TableCell>
                 <TableCell>
-                    <Badge variant={getBookingStatusVariant(booking.bookingStatus)}>
-                        {booking.bookingStatus}
-                    </Badge>
+                  <Badge variant={getBookingStatusVariant(booking.bookingStatus)}>
+                    {booking.bookingStatus}
+                  </Badge>
                 </TableCell>
-                 <TableCell>
-                    <Badge variant={getPaymentStatusVariant(booking.paymentStatus)}>
-                        {booking.paymentStatus}
-                    </Badge>
+                <TableCell>
+                  <Badge variant={getPaymentStatusVariant(booking.paymentStatus)}>
+                    {booking.paymentStatus}
+                  </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => onCancel(booking)}
-                    disabled={booking.bookingStatus === 'Cancelled'}
-                  >
-                    Cancel
-                  </Button>
+                  <div className="flex items-center justify-end gap-2">
+                    <Link to={`/account/ticket/${booking.bookingId}/${booking.flightId}`}>
+                      <Button variant="outline" size="sm">
+                        View Ticket
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => onCancel(booking)}
+                      disabled={booking.bookingStatus === 'Cancelled'}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))

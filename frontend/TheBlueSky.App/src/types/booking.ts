@@ -1,3 +1,5 @@
+import type { BookingPassenger } from "./bookingPassenger";
+
 export const bookingStatuses = [
   'Confirmed',
   'Pending',
@@ -27,6 +29,7 @@ export type Booking = {
   bookingStatus: BookingStatus;
   paymentStatus: PaymentStatus;
   lastUpdated: string;
+  passengers?: BookingPassenger[];
 };
 
 export type PassengerSeatSelection = {

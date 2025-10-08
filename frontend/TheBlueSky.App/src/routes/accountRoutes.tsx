@@ -1,6 +1,7 @@
 import { AccountLayout } from "@/components/layouts/AccountLayout";
 import { UserProfileForm } from "@/components/pages/account/UserProfileForm";
 import MyBookingsPage from "@/pages/account/MyBookings";
+import { ViewTicketPage } from "@/pages/account/MyBookings/ViewTicketPage";
 import OnboardingPage from "@/pages/account/Onboarding";
 import PassengersPage from "@/pages/account/passengers";
 
@@ -24,6 +25,11 @@ export const accountRoutes = {
       path: "bookings",
       element: <MyBookingsPage />,
       handle: { crumb: "My Bookings" },
+    },
+    {
+      path: "ticket/:bookingId/:flightId",
+      element: <ViewTicketPage />,
+      handle: { crumb: "View Ticket" },
     },
     {
         path: "onboarding",
