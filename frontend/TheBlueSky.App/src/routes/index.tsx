@@ -4,7 +4,7 @@ import { ProtectedRoute } from "@/components/common/ProtectedRoute";
 import { publicRoutes } from "./publicRoutes";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { accountRoutes } from "./accountRoutes";
-import { MainLayout } from "@/components/layouts/MainLayout";
+import  MainLayout  from "@/components/layouts/MainLayout";
 import { USER_ROLES } from "@/types/auth";
 
 const router = createBrowserRouter([
