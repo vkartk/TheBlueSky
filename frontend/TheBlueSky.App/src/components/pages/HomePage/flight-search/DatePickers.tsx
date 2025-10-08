@@ -46,7 +46,7 @@ export const DatePickers = ({
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                    <Calendar mode="single" selected={departureDate} onSelect={handleDepartureSelect} initialFocus />
+                    <Calendar mode="single" selected={departureDate} onSelect={handleDepartureSelect} disabled={{ before: new Date()}} />
                 </PopoverContent>
             </Popover>
             <Popover>
