@@ -13,14 +13,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import type { Country } from '@/types/country';
+import type { User } from '@/types/auth';
 
-export type User = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  roles: string[];
-};
 
 const passengerFormSchema = z.object({
   relationshipToManager: z.string().min(1, 'Relationship is required.'),
