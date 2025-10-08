@@ -76,7 +76,7 @@ namespace TheBlueSky.Flights.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin,FlightsOwner")]
+        [Authorize]
         public async Task<ActionResult> UpdateFlightSeatStatus([FromBody] UpdateFlightSeatStatusRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
