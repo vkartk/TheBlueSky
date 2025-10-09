@@ -22,6 +22,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useAppSelector } from "@/store"
 
 const data = {
   bookingNavMain: [
@@ -103,7 +104,63 @@ const data = {
   ],
 }
 
+const FlightOwnerdata = {
+  bookingNavMain: [
+    {
+      title: "Booking",
+      url: "#",
+      icon: Bot,
+      isActive: true,
+      items: [
+        {
+          title: "Bookings",
+          url: "/dashboard/bookings",
+        },
+        {
+          title: "Cancellations",
+          url: "/dashboard/bookings/cancellations",
+        }
+      ],
+    }
+  ],
+  flightNavMain: [
+    {
+      title: "Fleet",
+      url: "#",
+      icon: GalleryVerticalEnd,
+      items: [
+        {
+          title: "Aircrafts",
+          url: "/dashboard/aircrafts",
+        },
+      ],
+    },
+    {
+      title: "Operations",
+      url: "#",
+      icon: AudioWaveform,
+      items: [
+        {
+          title: "Flight Scheduling",
+          url: "/dashboard/flight-schedules",
+        },
+        {
+          title: "Flights",
+          url: "/dashboard/flights",
+        }
+      ],
+    }
+  ],
+}
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const user = useAppSelector(state => state.auth.user);
+
+  if(!user) return;
+
+  const sidebarData = user.roles.includes("Admin") ? data : FlightOwnerdata;
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -126,8 +183,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain label="Flight" items={data.flightNavMain} />
-        <NavMain label="Booking" items={data.bookingNavMain} />
+        <NavMain label="Flight" items={sidebarData.flightNavMain} />
+        <NavMain label="Booking" items={sidebarData.bookingNavMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
