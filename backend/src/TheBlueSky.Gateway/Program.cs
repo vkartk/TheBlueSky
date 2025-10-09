@@ -4,7 +4,13 @@ using Ocelot.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Configuration.AddJsonFile("Ocelot.json", optional: false, reloadOnChange: true);
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+var ocelotFile = env.Equals("Production", StringComparison.OrdinalIgnoreCase)
+    ? "Ocelot.Production.json"
+    : "Ocelot.json";
+
+builder.Configuration.AddJsonFile(ocelotFile, optional: false, reloadOnChange: true);
+
 builder.Services.AddOcelot();
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
