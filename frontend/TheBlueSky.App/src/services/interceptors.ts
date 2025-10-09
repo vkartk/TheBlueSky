@@ -36,7 +36,7 @@ export const createHandleTokenRefreshInterceptor = (store: AppStore) => {
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
                 // If a refresh is already in progress, queue the original request
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve, _reject) => {
                     failedQueue.push((token) => {
                         if (originalRequest.headers) {
                             originalRequest.headers['Authorization'] = 'Bearer ' + token;

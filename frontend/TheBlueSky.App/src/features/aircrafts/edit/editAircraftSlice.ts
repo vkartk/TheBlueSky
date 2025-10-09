@@ -2,7 +2,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Aircraft, AircraftWithSeats } from '@/types/aircraft';
 import type { AircraftSeat } from '@/types/aircraftSeat';
 import type { RootState } from '@/store';
-import { updateAircraft } from '@/features/aircrafts/aircraftsThunks';
 import {
   fetchAircraftWithSeats,
   createAircraftSeat,

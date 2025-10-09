@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { bookingsApiClient } from './bookingsApiClient';
 import type { Passenger, NewPassenger } from '@/types/passenger';
 
@@ -19,6 +20,7 @@ const create = async (data: NewPassenger): Promise<Passenger> => {
 };
 
 const update = async (id: number, data: Passenger): Promise<Passenger> => {
+  toast.info("Updating Passenger #"+id);
   const res = await bookingsApiClient.put<Passenger>(`${API_PATH}`, data);
   return res.data;
 };

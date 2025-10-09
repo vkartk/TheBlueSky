@@ -150,7 +150,7 @@ export function ReviewAndPayStep({
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-3">
-                                {passengers.map((passenger, idx) => {
+                                {passengers.map((passenger, _idx) => {
                                     const seatInfo = seats.find(s => s.passengerId === passenger.passengerId);
                                     return (
                                         <div
