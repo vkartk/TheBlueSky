@@ -29,7 +29,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         public void TearDown() => _service.VerifyAll();
 
         [Test]
-        public async Task GetAll_ReturnsOk()
+        public async Task GetAll_WhenCalled_ShouldReturnOkResult()
         {
             // Arrange
             _service.Setup(s => s.GetAllAsync()).ReturnsAsync(new List<PassengerResponse>());
@@ -42,7 +42,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task GetById_NotFound_Returns404()
+        public async Task GetById_WhenEntityDoesNotExist_ShouldReturnNotFound()
         {
             // Arrange
             _service.Setup(s => s.GetByIdAsync(123)).ReturnsAsync((PassengerResponse?)null);
@@ -55,7 +55,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_Returns201_WithRouteValues()
+        public async Task Create_WhenModelIsValid_ShouldReturnCreatedAtActionWithPassengerId()
         {
             // Arrange
             var req = new CreatePassengerRequest
@@ -99,7 +99,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_Found_Returns204()
+        public async Task Update_WhenEntityExists_ShouldReturnNoContent()
         {
             // Arrange
             var req = new UpdatePassengerRequest
@@ -126,7 +126,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_NotFound_Returns404()
+        public async Task Update_WhenEntityDoesNotExist_ShouldReturnNotFound()
         {
             // Arrange
             var req = new UpdatePassengerRequest{ PassengerId = 999, ManagedByUserId = "1", FirstName = "J", LastName = "D", DateOfBirth = DateTime.UtcNow.Date, Gender = null, PassportNumber = null, NationalityCountryId = null, RelationshipToManager = null, IsActive = true };
@@ -140,7 +140,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_Found_Returns204()
+        public async Task Delete_WhenEntityExists_ShouldReturnNoContent()
         {
             // Arrange
             _service.Setup(s => s.DeleteAsync(10)).ReturnsAsync(true);
@@ -153,7 +153,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_NotFound_Returns404()
+        public async Task Delete_WhenEntityDoesNotExist_ShouldReturnNotFound()
         {
             // Arrange
             _service.Setup(s => s.DeleteAsync(10)).ReturnsAsync(false);
@@ -166,7 +166,7 @@ namespace TheBlueSky.Bookings.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_InvalidModel_Returns400()
+        public async Task Create_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             // Arrange
             _sut.ModelState.AddModelError("FirstName", "Required");

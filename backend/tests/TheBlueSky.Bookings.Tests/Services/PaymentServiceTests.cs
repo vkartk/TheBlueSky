@@ -33,7 +33,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task GetAll_ReturnsList()
+        public async Task GetAllAsync_WhenPaymentsExist_ShouldReturnList()
         {
             // Arrange
             var entities = new List<Payment>
@@ -60,7 +60,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task GetById_NotFound_ReturnsNull()
+        public async Task GetByIdAsync_WhenEntityNotFound_ShouldReturnNull()
         {
             // Arrange
             _repo.Setup(r => r.GetByIdAsync(123)).ReturnsAsync((Payment?)null);
@@ -73,7 +73,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Create_ReturnsCreatedItem()
+        public async Task CreateAsync_WhenRequestIsValid_ShouldReturnCreatedPayment()
         {
             // Arrange
             var req = new CreatePaymentRequest
@@ -135,7 +135,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Update_Found_ReturnsTrue()
+        public async Task UpdateAsync_WhenEntityFound_ShouldReturnTrue()
         {
             // Arrange
             var req = new UpdatePaymentRequest
@@ -164,7 +164,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Update_NotFound_ReturnsFalse()
+        public async Task UpdateAsync_WhenEntityNotFound_ShouldReturnFalse()
         {
             // Arrange
             var req = new UpdatePaymentRequest
@@ -193,7 +193,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Delete_Found_ReturnsTrue()
+        public async Task DeleteAsync_WhenEntityFound_ShouldReturnTrue()
         {
             // Arrange
             _repo.Setup(r => r.DeleteAsync(10)).ReturnsAsync(true);
@@ -206,7 +206,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public void Create_WhenRepositoryFails_ThrowsException()
+        public void CreateAsync_WhenRepositoryFails_ShouldThrowInvalidOperationException()
         {
             // Arrange
             var req = new CreatePaymentRequest

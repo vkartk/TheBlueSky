@@ -96,7 +96,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Create_ReturnsCreatedItem()
+        public async Task CreateAsync_WhenRequestIsValid_ShouldReturnCreatedPassenger()
         {
             // Arrange
             var req = new CreatePassengerRequest
@@ -168,7 +168,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Update_Found_ReturnsTrue()
+        public async Task UpdateAsync_WhenEntityFound_ShouldReturnTrue()
         {
             // Arrange
             var req = new UpdatePassengerRequest
@@ -198,7 +198,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Update_NotFound_ReturnsFalse()
+        public async Task UpdateAsync_WhenEntityNotFound_ShouldReturnFalse()
         {
             // Arrange
             var req = new UpdatePassengerRequest
@@ -228,7 +228,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Delete_Found_ReturnsTrue()
+        public async Task DeleteAsync_WhenEntityFound_ShouldReturnTrue()
         {
             // Arrange
             _repo.Setup(r => r.DeleteAsync(10)).ReturnsAsync(true);
@@ -241,7 +241,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public void Create_WhenRepositoryFails_ThrowsException()
+        public void CreateAsync_WhenRepositoryFails_ShouldThrowInvalidOperationException()
         {
             // Arrange
             var req = new CreatePassengerRequest

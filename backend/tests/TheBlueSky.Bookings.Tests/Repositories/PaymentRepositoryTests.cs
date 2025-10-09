@@ -86,7 +86,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
         }
 
         [Test]
-        public async Task GetAllAsync_ReturnsSeededRows()
+        public async Task GetAllAsync_WhenDatabaseIsSeeded_ShouldReturnSeededRows()
         {
             // Arrange
             await using var ctx = new BookingsDbContext(_options);
@@ -101,7 +101,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
         }
 
         [Test]
-        public async Task GetByIdAsync_NotFound_ReturnsNull()
+        public async Task GetByIdAsync_WhenEntityDoesNotExist_ShouldReturnNull()
         {
             // Arrange
             await using var ctx = new BookingsDbContext(_options);
@@ -115,7 +115,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
         }
 
         [Test]
-        public async Task ExistsAsync_TrueAndFalse_WorkAsExpected()
+        public async Task ExistsAsync_WhenIdExistsOrNot_ShouldReturnTrueOrFalseAccordingly()
         {
             // Arrange
             await using var ctx = new BookingsDbContext(_options);
@@ -127,7 +127,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
         }
 
         [Test]
-        public async Task UpdateAsync_EntityMissingDuringSave_ReturnsFalse()
+        public async Task UpdateAsync_WhenEntityIsMissingDuringSave_ShouldReturnFalse()
         {
             // Arrange
             await using var ctx1 = new BookingsDbContext(_options);
@@ -151,7 +151,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
         }
 
         [Test]
-        public async Task DeleteAsync_RemovesRow_ReturnsTrue()
+        public async Task DeleteAsync_WhenEntityExists_ShouldRemoveRowAndReturnTrue()
         {
             // Arrange
             await using var ctx = new BookingsDbContext(_options);
@@ -166,7 +166,7 @@ namespace TheBlueSky.Bookings.Tests.Repositories
         }
 
         [Test]
-        public async Task DeleteAsync_NotFound_ReturnsFalse()
+        public async Task DeleteAsync_WhenEntityDoesNotExist_ShouldReturnFalse()
         {
             // Arrange
             await using var ctx = new BookingsDbContext(_options);

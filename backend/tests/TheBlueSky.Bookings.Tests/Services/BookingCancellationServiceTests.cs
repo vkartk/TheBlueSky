@@ -73,7 +73,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Create_ReturnsCreatedItem()
+        public async Task CreateAsync_WhenRequestIsValid_ShouldReturnCreatedBookingCancellation()
         {
             // Arrange
             var req = new CreateBookingCancellationRequest
@@ -131,7 +131,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Update_Found_ReturnsTrue()
+        public async Task UpdateAsync_WhenEntityFound_ShouldReturnTrue()
         {
             // Arrange
             var req = new UpdateBookingCancellationRequest
@@ -160,7 +160,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Update_NotFound_ReturnsFalse()
+        public async Task UpdateAsync_WhenEntityNotFound_ShouldReturnFalse()
         {
             // Arrange
             var req = new UpdateBookingCancellationRequest
@@ -189,7 +189,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public async Task Delete_Found_ReturnsTrue()
+        public async Task DeleteAsync_WhenEntityFound_ShouldReturnTrue()
         {
             // Arrange
             _repo.Setup(r => r.DeleteAsync(10)).ReturnsAsync(true);
@@ -202,7 +202,7 @@ namespace TheBlueSky.Bookings.Tests.Services
         }
 
         [Test]
-        public void Create_WhenRepositoryFails_ThrowsException()
+        public void CreateAsync_WhenRepositoryFails_ShouldThrowInvalidOperationException()
         {
             // Arrange
             var req = new CreateBookingCancellationRequest
@@ -218,7 +218,7 @@ namespace TheBlueSky.Bookings.Tests.Services
 
             var mapped = new BookingCancellation() { CancelledByUserId = "1" };
             _mapper.Setup(m => m.Map<BookingCancellation>(req)).Returns(mapped);
-            _repo.Setup(r => r.AddAsync(mapped)).ThrowsAsync(new InvalidOperationException("boom"));
+            _repo.Setup(r => r.AddAsync(mapped)).ThrowsAsync(new InvalidOperationException());
 
             // Act / Assert
             Assert.That(async () => await _sut.CreateAsync(req), Throws.InvalidOperationException);
