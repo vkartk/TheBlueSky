@@ -48,7 +48,7 @@ export const BookingsTable = ({ bookings, onCancel }: BookingsTableProps) => {
                   {new Date(booking.bookingDate).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  ${booking.totalAmount.toFixed(2)}
+                  ₹{booking.totalAmount.toFixed(2)}
                 </TableCell>
                 <TableCell>
                   <Badge variant={getBookingStatusVariant(booking.bookingStatus)}>
