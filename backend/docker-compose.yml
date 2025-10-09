@@ -2,6 +2,7 @@ name: thebluesky
 
 networks:
   bluesky-net:
+    driver: bridge
 
 volumes:
   auth-sql-data:

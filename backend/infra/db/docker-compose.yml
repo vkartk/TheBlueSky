@@ -1,0 +1,65 @@
+name: thebluesky-dbs
+
+networks:
+  bluesky-net:
+    driver: bridge
+
+volumes:
+  auth-sql-data:
+  bookings-sql-data:
+  flights-sql-data:
+
+services:
+  auth-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: auth-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngP@ssw0rd!
+      - MSSQL_PID=Express
+    ports:
+      - "1436:1433"
+    volumes:
+      - auth-sql-data:/var/opt/mssql
+    networks: [bluesky-net]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bookings-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: bookings-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngP@ssw0rd!
+      - MSSQL_PID=Express
+    ports:
+      - "1434:1433"
+    volumes:
+      - bookings-sql-data:/var/opt/mssql
+    networks: [bluesky-net]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  flights-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: flights-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngP@ssw0rd!
+      - MSSQL_PID=Express
+    ports:
+      - "1435:1433"
+    volumes:
+      - flights-sql-data:/var/opt/mssql
+    networks: [bluesky-net]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10

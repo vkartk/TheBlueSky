@@ -18,11 +18,6 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("GatewayCors", policy =>
     {
-        if (allowedOrigins.Length > 0)
-            policy.WithOrigins(allowedOrigins)
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        else
             policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });

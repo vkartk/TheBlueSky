@@ -1,40 +1,44 @@
 {
   "Routes": [
     {
-      "UpstreamPathTemplate": "/gateway/Auth/{path}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "UpstreamPathTemplate": "/gateway/auth/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/{path}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7249
+          "Host": "auth",
+          "Port": 8080
         }
       ]
     },
     {
-      "UpstreamPathTemplate": "/gateway/Bookings/{path}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/gateway/bookings/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/{path}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7084
+          "Host": "bookings",
+          "Port": 8080
         }
       ]
     },
     {
-      "UpstreamPathTemplate": "/gateway/Flights/{path}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/gateway/flights/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/{path}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7156
+          "Host": "flights",
+          "Port": 8080
         }
       ]
     }
-  ]
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://gateway:8080",
+    "RequestIdKey": "X-Request-Id"
+  }
 }
