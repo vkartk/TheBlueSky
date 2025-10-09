@@ -26,19 +26,19 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Brand */}
+         
           <Link
             to="/"
             className="flex items-center gap-2 font-bold"
             aria-label="TheBlueSky home"
           >
-            <Plane className="h-6 w-6 text-blue-500" />
-            <span className="text-xl">
+            <Plane className="h-12 w-12 text-blue-500" />
+            <span className="text-3xl">
               The<span className="text-blue-500">BlueSky</span>
             </span>
           </Link>
 
-          {/* Desktop Nav */}
+         
           <div className="hidden md:flex md:items-center md:gap-8">
             <NavigationMenu className="!bg-transparent">
               <NavigationMenuList>
@@ -60,7 +60,7 @@ const Header = () => {
             <UserMenu />
           </div>
 
-          {/* Mobile Menu */}
+          
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>

@@ -11,8 +11,8 @@ export default function Footer() {
           
           <div className="space-y-4">
             <div className="flex items-center gap-2 font-bold">
-              <Plane className="h-6 w-6 text-blue-500" />
-              <span className="text-xl text-slate-900">The<span className="text-blue-500">BlueSky</span></span>
+              <Plane className="h-12 w-12 text-blue-500" />
+              <span className="text-3xl text-slate-900">The<span className="text-blue-500">BlueSky</span></span>
             </div>
             <p className="text-sm text-slate-600">
               Your trusted partner for seamless flight bookings and unforgettable travel experiences around the globe.
