@@ -33,7 +33,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task GetAll_ReturnsList()
+        public async Task GetAllAirportsAsync_WhenRepositoryHasAirports_ReturnsAllAirports()
         {
             var airports = new List<Airport>
             {
@@ -48,7 +48,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task GetById_NotFound_ReturnsNull()
+        public async Task GetAirportByIdAsync_WhenAirportDoesNotExist_ReturnsNull()
         {
             _repo.Setup(r => r.GetAirportByIdAsync(99)).ReturnsAsync((Airport?)null);
 
@@ -58,7 +58,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task Create_ReturnsCreatedAirport()
+        public async Task CreateAirportAsync_WhenRequestIsValid_ReturnsCreatedAirport()
         {
             var request = new CreateAirportRequest("DEL", "Indira Gandhi", "Delhi", "IN");
             var created = new Airport { AirportId = 1, AirportCode = "DEL", AirportName = "Indira Gandhi", City = "Delhi", CountryId = "IN" };
@@ -71,7 +71,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task Update_NotFound_ReturnsFalse()
+        public async Task UpdateAirportAsync_WhenAirportDoesNotExist_ReturnsFalse()
         {
             var request = new UpdateAirportRequest(99, "DEL", "Indira Gandhi", "Delhi", "IN", true);
             _repo.Setup(r => r.GetAirportByIdAsync(99)).ReturnsAsync((Airport?)null);
@@ -82,7 +82,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task Update_Found_ReturnsTrue()
+        public async Task UpdateAirportAsync_WhenAirportExists_ReturnsTrue()
         {
             var existing = new Airport { AirportId = 1, AirportCode = "DEL", AirportName = "Indira Gandhi", City = "Delhi", CountryId = "IN" };
             var request = new UpdateAirportRequest(1, "DEL", "Indira Gandhi", "Delhi", "IN", true);

@@ -26,7 +26,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetAll_ReturnsOk()
+        public async Task GetAllFlights_WhenCalled_ShouldReturnOk()
         {
             var list = new List<FlightResponse>
             {
@@ -40,7 +40,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetById_NotFound_Returns404()
+        public async Task GetFlightById_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             _service.Setup(s => s.GetFlightByIdAsync(99)).ReturnsAsync((FlightDetailsResponse?)null);
 
@@ -50,7 +50,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_InvalidModel_Returns400()
+        public async Task CreateFlight_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             _controller.ModelState.AddModelError("FlightDate", "Required");
 
@@ -60,7 +60,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidRequest_Returns201()
+        public async Task CreateFlight_WhenRequestIsValid_ShouldReturnCreated()
         {
             var request = new CreateFlightRequest(10, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(2), FlightStatus.Scheduled, 100);
             var created = new FlightResponse(1, 10, request.FlightDate, request.DepartureDateTime, request.ArrivalDateTime, FlightStatus.Scheduled, 100,5000, DateTime.UtcNow);
@@ -73,7 +73,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_NotFound_Returns404()
+        public async Task UpdateFlight_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             var request = new UpdateFlightRequest(99, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), FlightStatus.Scheduled, 100);
             _service.Setup(s => s.UpdateFlightAsync(request)).ReturnsAsync(false);
@@ -84,7 +84,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_Found_Returns204()
+        public async Task UpdateFlight_WhenIdIsValid_ShouldReturnNoContent()
         {
             var request = new UpdateFlightRequest(1, DateOnly.FromDateTime(DateTime.Today), DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), FlightStatus.Scheduled, 100);
             _service.Setup(s => s.UpdateFlightAsync(request)).ReturnsAsync(true);
@@ -95,7 +95,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_NotFound_Returns404()
+        public async Task DeleteFlight_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             _service.Setup(s => s.DeleteFlightAsync(99)).ReturnsAsync(false);
 
@@ -105,7 +105,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_Found_Returns204()
+        public async Task DeleteFlight_WhenIdIsValid_ShouldReturnNoContent()
         {
             _service.Setup(s => s.DeleteFlightAsync(1)).ReturnsAsync(true);
 

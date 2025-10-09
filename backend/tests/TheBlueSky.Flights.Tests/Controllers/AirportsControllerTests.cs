@@ -25,7 +25,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetAll_ReturnsOk()
+        public async Task GetAllAirports_WhenCalled_ShouldReturnOk()
         {
             var list = new List<AirportResponse> { new(1, "DEL", "Indira Gandhi", "Delhi", "IN", true) };
             _service.Setup(s => s.GetAllAirportsAsync()).ReturnsAsync(list);
@@ -36,7 +36,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetById_NotFound_Returns404()
+        public async Task GetAirportById_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             _service.Setup(s => s.GetAirportByIdAsync(99)).ReturnsAsync((AirportResponse?)null);
 
@@ -46,7 +46,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_InvalidModel_Returns400()
+        public async Task CreateAirport_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             _controller.ModelState.AddModelError("AirportCode", "Required");
 
@@ -56,7 +56,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidRequest_Returns201()
+        public async Task CreateAirport_WhenRequestIsValid_ShouldReturnCreated()
         {
             var request = new CreateAirportRequest("DEL", "Indira Gandhi", "Delhi", "IN");
             var created = new AirportResponse(1, "DEL", "Indira Gandhi", "Delhi", "IN", true);
@@ -69,7 +69,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_NotFound_Returns404()
+        public async Task UpdateAirport_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             var request = new UpdateAirportRequest(99, "DEL", "Indira Gandhi", "Delhi", "IN", true);
             _service.Setup(s => s.UpdateAirportAsync(request)).ReturnsAsync(false);
@@ -80,7 +80,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_Found_Returns204()
+        public async Task UpdateAirport_WhenIdIsValid_ShouldReturnNoContent()
         {
             var request = new UpdateAirportRequest(1, "DEL", "Indira Gandhi", "Delhi", "IN", true);
             _service.Setup(s => s.UpdateAirportAsync(request)).ReturnsAsync(true);
@@ -91,7 +91,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_NotFound_Returns404()
+        public async Task DeleteAirport_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             _service.Setup(s => s.DeleteAirportAsync(99)).ReturnsAsync(false);
 
@@ -101,7 +101,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_Found_Returns204()
+        public async Task DeleteAirport_WhenIdIsValid_ShouldReturnNoContent()
         {
             _service.Setup(s => s.DeleteAirportAsync(1)).ReturnsAsync(true);
 

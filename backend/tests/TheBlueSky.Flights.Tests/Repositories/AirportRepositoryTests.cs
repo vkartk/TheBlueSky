@@ -54,7 +54,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task GetAll_ReturnsList()
+        public async Task GetAllAirportsAsync_WhenAirportsExist_ShouldReturnList()
         {
             using (var seedCtx = new FlightsDbContext(_options))
             {
@@ -77,7 +77,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task GetById_NotFound_ReturnsNull()
+        public async Task GetByIdAsync_WhenEntityNotFound_ShouldReturnNull()
         {
             using var ctx = new FlightsDbContext(_options);
             var repo = new AirportRepository(ctx);
@@ -88,7 +88,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task Delete_Existing_ReturnsTrue()
+        public async Task DeleteAsync_WhenEntityExists_ShouldReturnTrue()
         {
             int id;
             using (var seedCtx = new FlightsDbContext(_options))

@@ -70,7 +70,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task GetAllAircraftsAsync_ReturnsSeededRows()
+        public async Task GetAllAircraftsAsync_WhenSeededDataExists_ShouldReturnAllRows()
         {
             // Arrange
             await using var ctx = new FlightsDbContext(_options);
@@ -85,7 +85,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task GetAircraftByIdAsync_NotFound_ReturnsNull()
+        public async Task GetAircraftByIdAsync_WhenEntityNotFound_ShouldReturnNull()
         {
             // Arrange
             await using var ctx = new FlightsDbContext(_options);
@@ -99,7 +99,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task ExistsAsync_TrueAndFalse_WorkAsExpected()
+        public async Task ExistsAsync_WhenCheckingExistingAndNonExistingEntities_ShouldReturnTrueAndFalse()
         {
             // Arrange
             await using var ctx = new FlightsDbContext(_options);
@@ -111,7 +111,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task UpdateAircraftAsync_EntityMissingDuringSave_ReturnsFalse()
+        public async Task UpdateAircraftAsync_WhenEntityMissingDuringSave_ShouldReturnFalse()
         {
             // Arrange
             await using var ctx1 = new FlightsDbContext(_options);
@@ -134,7 +134,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task DeleteAircraftAsync_RemovesRow_ReturnsTrue()
+        public async Task DeleteAircraftAsync_WhenEntityExists_ShouldRemoveRowAndReturnTrue()
         {
             // Arrange
             await using var ctx = new FlightsDbContext(_options);
@@ -149,7 +149,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task DeleteAircraftAsync_NotFound_ReturnsFalse()
+        public async Task DeleteAircraftAsync_WhenEntityNotFound_ShouldReturnFalse()
         {
             // Arrange
             await using var ctx = new FlightsDbContext(_options);

@@ -41,7 +41,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task GetAll_ReturnsList()
+        public async Task GetAllFlightSchedulesAsync_WhenSchedulesExist_ShouldReturnList()
         {
             // Arrange
             using (var seedCtx = new FlightsDbContext(_options))
@@ -73,7 +73,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task GetById_NotFound_ReturnsNull()
+        public async Task GetFlightScheduleByIdAsync_WhenEntityNotFound_ShouldReturnNull()
         {
             // Arrange
             using var ctx = new FlightsDbContext(_options);
@@ -87,7 +87,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task Delete_Existing_ReturnsTrue()
+        public async Task DeleteFlightScheduleAsync_WhenEntityExists_ShouldRemoveAndReturnTrue()
         {
             // Arrange
             int id;
@@ -124,7 +124,7 @@ namespace TheBlueSky.Flights.Tests.Repositories
         }
 
         [Test]
-        public async Task Update_WhenDeletedInOtherContext_ReturnsFalse()
+        public async Task UpdateFlightScheduleAsync_WhenEntityDeletedInOtherContext_ShouldReturnFalse()
         {
             // Arrange
             int id;

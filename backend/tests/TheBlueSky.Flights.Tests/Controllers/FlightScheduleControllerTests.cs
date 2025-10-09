@@ -25,7 +25,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetAll_ReturnsOk()
+        public async Task GetAllFlightSchedules_WhenCalled_ShouldReturnOk()
         {
             // Arrange
             var list = new List<FlightScheduleResponse>
@@ -43,7 +43,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetById_NotFound_Returns404()
+        public async Task GetFlightScheduleById_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             // Arrange
             _service.Setup(s => s.GetFlightScheduleByIdAsync(999)).ReturnsAsync((FlightScheduleResponse?)null);
@@ -56,7 +56,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_InvalidModel_Returns400()
+        public async Task CreateFlightSchedule_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             // Arrange
             _controller.ModelState.AddModelError("FlightNumber", "Required");
@@ -73,7 +73,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidRequest_Returns201()
+        public async Task CreateFlightSchedule_WhenRequestIsValid_ShouldReturnCreated()
         {
             // Arrange
             var req = new CreateFlightScheduleRequest(
@@ -97,7 +97,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_InvalidModel_Returns400()
+        public async Task UpdateFlightSchedule_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             // Arrange
             _controller.ModelState.AddModelError("FlightNumber", "Required");
@@ -118,7 +118,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_NotFound_Returns404()
+        public async Task UpdateFlightSchedule_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             // Arrange
             var req = new UpdateFlightScheduleRequest(
@@ -139,7 +139,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_Found_Returns204()
+        public async Task UpdateFlightSchedule_WhenIdIsValid_ShouldReturnNoContent()
         {
             // Arrange
             var req = new UpdateFlightScheduleRequest(
@@ -160,7 +160,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_NotFound_Returns404()
+        public async Task DeleteFlightSchedule_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             // Arrange
             _service.Setup(s => s.DeleteFlightScheduleAsync(999)).ReturnsAsync(false);
@@ -173,7 +173,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_Found_Returns204()
+        public async Task DeleteFlightSchedule_WhenIdIsValid_ShouldReturnNoContent()
         {
             // Arrange
             _service.Setup(s => s.DeleteFlightScheduleAsync(1)).ReturnsAsync(true);

@@ -30,7 +30,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetAllAircrafts_HappyPath_ReturnsOk200()
+        public async Task GetAllAircrafts_WhenCalled_ShouldReturnOkkWithAircraftList()
         {
             // Arrange
             var list = new List<AircraftResponse>
@@ -52,7 +52,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetAircraftById_NotFound_Returns404()
+        public async Task GetAircraftById_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             // Arrange
             _serviceMock.Setup(s => s.GetAircraftByIdAsync(999)).ReturnsAsync((AircraftResponse?)null);
@@ -65,7 +65,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task CreateAircraft_InvalidModelState_Returns400()
+        public async Task CreateAircraft_WhenModelStateIsInvalid_ShouldReturnBadRequest()
         {
             // Arrange
             _sut.ModelState.AddModelError("AircraftName", "Required");
@@ -83,7 +83,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task CreateAircraft_Valid_Returns201Created()
+        public async Task CreateAircraft_WhenModelIsValid_ShouldReturnCreated()
         {
             // Arrange
             var request = new CreateAircraftRequest(
@@ -123,7 +123,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task UpdateAircraft_NotFound_Returns404()
+        public async Task UpdateAircraft_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             // Arrange
             var update = new UpdateAircraftRequest(
@@ -140,7 +140,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task DeleteAircraftById_NotFound_Returns404()
+        public async Task DeleteAircraftById_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             // Arrange
             _serviceMock.Setup(s => s.DeleteAircraftAsync(77)).ReturnsAsync(false);
@@ -153,7 +153,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task DeleteAircraftById_Success_Returns204()
+        public async Task DeleteAircraftById_WhenIdIsValid_ShouldReturnNoContent()
         {
             // Arrange
             _serviceMock.Setup(s => s.DeleteAircraftAsync(1)).ReturnsAsync(true);

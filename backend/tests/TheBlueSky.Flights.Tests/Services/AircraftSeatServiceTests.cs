@@ -34,7 +34,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task GetAll_ReturnsList()
+        public async Task GetAllAircraftSeatsAsync_WhenRepositoryHasSeats_ReturnsTwoSeats()
         {
             var seats = new List<AircraftSeat>
             {
@@ -49,7 +49,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task GetById_NotFound_ReturnsNull()
+        public async Task GetAircraftSeatByIdAsync_WhenSeatDoesNotExist_ReturnsNull()
         {
             _repo.Setup(r => r.GetAircraftSeatByIdAsync(999)).ReturnsAsync((AircraftSeat?)null);
 
@@ -59,7 +59,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task Create_ReturnsCreatedSeat()
+        public async Task CreateAircraftSeatAsync_WhenSeatIsValid_ReturnsCreatedSeat()
         {
             var request = new CreateAircraftSeatRequest(10, SeatClass.Economy, "2A", "Window", 75, 2, 1);
             var created = new AircraftSeat { AircraftSeatId = 123, AircraftId = 10, SeatClass = SeatClass.Economy, SeatNumber = "2A", SeatPosition = "Window", AdditionalFare = 75, SeatRow = 2, SeatColumn = 1, IsActive = true };
@@ -72,7 +72,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task Update_NotFound_ReturnsFalse()
+        public async Task UpdateAircraftSeatAsync_WhenSeatDoesNotExist_ReturnsFalse()
         {
             var request = new UpdateAircraftSeatRequest(999, "X", "Aisle", SeatClass.Economy, 0, 1, 1, true);
             _repo.Setup(r => r.GetAircraftSeatByIdAsync(999)).ReturnsAsync((AircraftSeat?)null);
@@ -83,7 +83,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task Update_ValidRequest_ReturnsTrue()
+        public async Task UpdateAircraftSeatAsync_WhenRequestIsValid_ReturnsTrue()
         {
             var existing = new AircraftSeat {AircraftSeatId = 5, AircraftId = 10, SeatPosition = "Aisle", AdditionalFare = 10, SeatRow = 5, SeatColumn = 3, IsActive = true };
             var request = new UpdateAircraftSeatRequest(5, "5D", "Window", SeatClass.Economy, 20, 5, 4, false);
@@ -97,7 +97,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public void Create_WhenRepositoryFails_ThrowsException()
+        public void CreateAircraftSeatAsync_WhenRepositoryFails_ThrowsInvalidOperationExceptionWithMessageError()
         {
             // Arrange
             var request = new CreateAircraftSeatRequest(10, SeatClass.Economy, "X", "Y", 1, 1, 1);

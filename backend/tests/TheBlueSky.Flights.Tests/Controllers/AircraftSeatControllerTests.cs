@@ -26,7 +26,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetAll_ReturnsOk()
+        public async Task GetAllAircraftSeats_WhenCalled_ShouldReturnOk()
         {
             var list = new List<AircraftSeatResponse> { new(1, 10, SeatClass.Economy, "1A", "Window", 100, 1, 1, true) };
             _service.Setup(s => s.GetAllAircraftSeatsAsync()).ReturnsAsync(list);
@@ -37,7 +37,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetById_NotFound_Returns404()
+        public async Task GetById_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             _service.Setup(s => s.GetAircraftSeatByIdAsync(999)).ReturnsAsync((AircraftSeatResponse?)null);
 
@@ -47,7 +47,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task GetById_Found_ReturnsOk()
+        public async Task GetById_WhenIdIsValid_ShouldReturnOk()
         {
             var dto = new AircraftSeatResponse(5, 10, SeatClass.Economy, "5C", "Aisle", 25, 5, 3, true);
             _service.Setup(s => s.GetAircraftSeatByIdAsync(5)).ReturnsAsync(dto);
@@ -58,7 +58,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_InvalidModel_Returns400()
+        public async Task Create_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             _controller.ModelState.AddModelError("SeatNumber", "Required");
 
@@ -68,7 +68,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidRequest_Returns201()
+        public async Task Create_WhenRequestIsValid_ShouldReturnCreated()
         {
             var request = new CreateAircraftSeatRequest(10, SeatClass.Economy, "2A", "Window", 50, 2, 1);
             var created = new AircraftSeatResponse(123, 10, SeatClass.Economy, "2A", "Window", 50, 2, 1, true);
@@ -81,7 +81,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_InvalidModel_Returns400()
+        public async Task Update_WhenModelIsInvalid_ShouldReturnBadRequest()
         {
             _controller.ModelState.AddModelError("SeatNumber", "Required");
             var request = new UpdateAircraftSeatRequest(5, "", "Window",SeatClass.Economy, 0, 1, 1, true);
@@ -92,7 +92,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_NotFound_Returns404()
+        public async Task Update_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             var request = new UpdateAircraftSeatRequest(999, "X", "Aisle", SeatClass.Economy, 0, 1, 1, true);
             _service.Setup(s => s.UpdateAircraftSeatAsync(request)).ReturnsAsync(false);
@@ -103,7 +103,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Update_Found_Returns204()
+        public async Task Update_WhenIdIsValid_ShouldReturnNoContent()
         {
             var request = new UpdateAircraftSeatRequest(5, "5D", "Window", SeatClass.Economy, 10, 5, 4, false);
             _service.Setup(s => s.UpdateAircraftSeatAsync(request)).ReturnsAsync(true);
@@ -114,7 +114,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_NotFound_Returns404()
+        public async Task Delete_WhenIdIsUnknown_ShouldReturnNotFound()
         {
             _service.Setup(s => s.DeleteAircraftSeatAsync(321)).ReturnsAsync(false);
 
@@ -124,7 +124,7 @@ namespace TheBlueSky.Flights.Tests.Controllers
         }
 
         [Test]
-        public async Task Delete_Found_Returns204()
+        public async Task Delete_WhenIdIsValid_ShouldReturnNoContent()
         {
             _service.Setup(s => s.DeleteAircraftSeatAsync(321)).ReturnsAsync(true);
 

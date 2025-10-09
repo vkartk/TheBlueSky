@@ -55,7 +55,7 @@ namespace TheBlueSky.Flights.Tests.Services
 
 
         [Test]
-        public async Task GetAllAircraftsAsync_HappyPath_ReturnsMappedDtos()
+        public async Task GetAllAircraftsAsync_WhenCalled_ReturnsAircrafts()
         {
             // Arrange
             var entities = new List<Aircraft>
@@ -82,7 +82,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task GetAircraftByIdAsync_NotFound_ReturnsNull()
+        public async Task GetAircraftByIdAsync_WhenAircraftDoesNotExist_ReturnsNull()
         {
             // Arrange
             _repoMock.Setup(r => r.GetAircraftByIdAsync(999)).ReturnsAsync((Aircraft?)null);
@@ -96,7 +96,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task CreateAircraftAsync_ValidRequest_ReturnsCreatedDto()
+        public async Task CreateAircraftAsync_WhenRequestIsValid_ReturnsCreatedDto()
         {
             // Arrange
             var request = new CreateAircraftRequest(
@@ -137,7 +137,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task UpdateAircraftAsync_NotFound_ReturnsFalse()
+        public async Task UpdateAircraftAsync_WhenAircraftDoesNotExist_ReturnsFalse()
         {
             // Arrange
             var update = new UpdateAircraftRequest(
@@ -163,7 +163,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public async Task UpdateAircraftAsync_HappyPath_MapsAndCallsRepo()
+        public async Task UpdateAircraftAsync_WhenValid_UpdatesEntityAndReturnsTrue()
         {
             // Arrange
             var existing = new Aircraft
@@ -204,7 +204,7 @@ namespace TheBlueSky.Flights.Tests.Services
         }
 
         [Test]
-        public void CreateAircraftAsync_RepoThrows_PropagatesException()
+        public void CreateAircraftAsync_WhenRepositoryThrows_ThrowsInvalidOperationException()
         {
             // Arrange
             var request = new CreateAircraftRequest(
