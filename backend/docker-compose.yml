@@ -1,0 +1,129 @@
+name: thebluesky
+
+networks:
+  bluesky-net:
+
+volumes:
+  auth-sql-data:
+  bookings-sql-data:
+  flights-sql-data:
+
+services:
+
+  auth-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: auth-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - auth-sql-data:/var/opt/mssql
+    networks: [bluesky-net]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bookings-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: bookings-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+      - MSSQL_PID=Express
+    ports:
+      - "1434:1433"
+    volumes:
+      - bookings-sql-data:/var/opt/mssql
+    networks: [bluesky-net]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  flights-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: flights-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+      - MSSQL_PID=Express
+    ports:
+      - "1435:1433"
+    volumes:
+      - flights-sql-data:/var/opt/mssql
+    networks: [bluesky-net]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  auth:
+    build:
+      context: ./src/TheBlueSky.Auth
+      dockerfile: Dockerfile
+    container_name: auth-svc
+    depends_on:
+      auth-sql:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__Default=Server=auth-sql,1433;Database=AuthDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=True
+    ports:
+      - "5001:8080"
+    networks: [bluesky-net]
+
+  bookings:
+    build:
+      context: ./src/TheBlueSky.Bookings
+      dockerfile: Dockerfile
+    container_name: bookings-svc
+    depends_on:
+      bookings-sql:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__Default=Server=bookings-sql,1433;Database=BookingsDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=True
+    ports:
+      - "5002:8080"
+    networks: [bluesky-net]
+
+  flights:
+    build:
+      context: ./src/TheBlueSky.Flights
+      dockerfile: Dockerfile
+    container_name: flights-svc
+    depends_on:
+      flights-sql:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__Default=Server=flights-sql,1433;Database=FlightsDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=True
+    ports:
+      - "5003:8080"
+    networks: [bluesky-net]
+
+  gateway:
+    build:
+      context: ./src/TheBlueSky.Gateway
+      dockerfile: Dockerfile
+    container_name: gateway-svc
+    depends_on:
+      - auth
+      - bookings
+      - flights
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Services__Auth__BaseUrl=http://auth:8080
+      - Services__Bookings__BaseUrl=http://bookings:8080
+      - Services__Flights__BaseUrl=http://flights:8080
+    ports:
+      - "5000:8080"
+    networks: [bluesky-net]
